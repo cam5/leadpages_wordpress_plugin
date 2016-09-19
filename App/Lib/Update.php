@@ -57,8 +57,10 @@ class Update
             return $r;
         } // Not a plugin update request. Bail immediately.
         $plugins = unserialize($r['body']['plugins']);
-        unset($plugins->plugins['leadpages']);
-        unset($plugins->active[array_search('leadpages', $plugins->active)]);
+        if (isset($plugins->plugins['leadpages'])) {
+            unset($plugins->plugins['leadpages']);
+            unset($plugins->active[array_search('leadpages', $plugins->active)]);
+        }
         $r['body']['plugins'] = serialize($plugins);
 
         return $r;
@@ -245,7 +247,6 @@ class Update
         echo '<div id="message" class="error">';
         echo '<p><strong>' . self::$message . '</strong></p></div>';
     }
-
 
 
     public function scheduleCacheUpdates()
