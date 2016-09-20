@@ -6,3 +6,6 @@ node_modules/**/*
 tests/_output/*
 codecept
 bin
+
+tests/_output/*
+tests/_output/*

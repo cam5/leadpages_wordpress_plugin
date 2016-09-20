@@ -43,7 +43,7 @@ define('REQUIRED_PHP_VERSION', 5.4);
   |--------------------------------------------------------------------------
   */
 
-    checkPHPVersion($plugin_version);
+checkPHPVersion($plugin_version);
 
 
 

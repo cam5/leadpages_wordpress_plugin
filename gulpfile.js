@@ -2,6 +2,7 @@ var gulp  = require('gulp');
 var del = require('del');
 var zip = require('gulp-zip');
 var shell = require('gulp-shell');
+var args   = require('yargs').argv;
 var composer = require('gulp-composer');
 var runSequence = require('run-sequence');
 
@@ -64,4 +65,34 @@ gulp.task('deploy', function(){
         'runcomposer2'
     );
 });
+
+
+/******
+ * Unit test setup
+ */
+
+var testingFolder ='/Applications/MAMP/htdocs/wordpress_unit_test/wp-content/plugins/leadpages';
+var enviroment = args.env;
+
+gulp.task('move_to_test', function(){
+
+    return gulp.src(['**/*'], {"base" : "."})
+        .pipe(gulp.dest(testingFolder));
+});
+
+gulp.task('run_composer_tests', function(){
+    return composer("update --no-dev --working-dir /Applications/MAMP/htdocs/wordpress_unit_test/wp-content/plugins/leadpages");
+});
+
+gulp.task('run_integration_tests', shell.task([
+    "php vendor/bin/wpcept run integration --env "+ enviroment
+]));
+
+gulp.task('setup_unit_test_plugin', function(){
+    runSequence(
+        'move_to_test',
+        'run_composer_tests'
+    );
+});
+
 

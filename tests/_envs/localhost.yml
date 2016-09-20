@@ -1,0 +1,31 @@
+# `localhost` environment config goes here
+
+modules:
+    config:
+        - WPLoader:
+            wpRootFolder: /Applications/MAMP/htdocs/wordpress_unit_test
+            dbName: wordpress-test
+            dbHost: 127.0.0.1
+            dbUser: root
+            dbPassword: root
+            wpDebug: true
+            tablePrefix: wptests_
+            domain: localhost:8888/wordpress_unit_test
+            plugins:
+                - leadpages/leadpages.php
+            activatePlugins:
+                - leadpages/leadpages.php
+        - WPDb:
+            dsn: 'mysql:host=localhost;dbname=wordpress-tests'
+            user: root
+            password: root
+            dump: tests/_data/dump.sql
+            populate: true
+            cleanup: true
+            url: 'http://localhost:8888/wordpress_unit_test/'
+            tablePrefix: wptests_
+        - WordPress:
+            depends: WPDb
+            wpRootFolder: /Applications/MAMP/htdocs/wordpress_unit_test
+            adminUsername: admin
+            adminPassword: $T4FR(3PxNL9%)suTS

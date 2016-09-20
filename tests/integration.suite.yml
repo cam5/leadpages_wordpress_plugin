@@ -1,0 +1,23 @@
+# Codeception Test Suite Configuration
+
+# Suite for integration tests.
+# Load WordPress and test classes that rely on its functions and classes.
+
+
+class_name: IntegrationTester
+modules:
+    enabled:
+        - \Helper\Integration
+        - WPLoader:
+            wpRootFolder: /Applications/MAMP/htdocs/wordpress_unit_test
+            dbName: wordpress-test
+            dbHost: 127.0.0.1
+            dbUser: root
+            dbPassword: root
+            wpDebug: true
+            tablePrefix: wptests_
+            domain: localhost:8888/wordpress_unit_test/
+            plugins:
+            - leadpages/leadpages.php
+            activatePlugins:
+            - leadpages/leadpages.php

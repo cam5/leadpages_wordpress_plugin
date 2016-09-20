@@ -11,9 +11,10 @@
         "moontoast/math": "*"
     },
     "require-dev": {
-        "codeception/codeception": "2.2.4",
+        "codeception/codeception": "^2.2",
         "site5/phantoman": "^1.1",
-        "jakoch/phantomjs-installer": "2.1.1-p06"
+        "jakoch/phantomjs-installer": "2.1.1-p06",
+        "lucatume/wp-browser": "*"
     },
     "autoload": {
         "psr-4": {
