@@ -55,6 +55,7 @@ class LeadboxTinyMCE
         $allLeadBoxes = $allLeadBoxes['_items'];
         $leadboxesJavascript = [];
         $i = 0;
+        if(!empty($allLeadBoxes)){
         foreach($allLeadBoxes as $leadBox) {
             //echo '<pre>'; print_r($leadBox);
             if (isset($leadBox['publish_settings']['embed']) && strpos($leadBox['publish_settings']['embed'],
@@ -66,6 +67,10 @@ class LeadboxTinyMCE
                 $i++;
             }
         }
+      }else{
+        $leadboxesJavascript[$i]['name']   = 'No Standard Leadboxes Configured';
+        $leadboxesJavascript[$i]['xor_id'] = '000';
+      }
         ?>
         <!-- TinyMCE Shortcode Plugin -->
 		<script type='text/javascript'>
