@@ -54,26 +54,24 @@ class LeadpageController
     public function isFrontPage($posts)
     {
         if (is_home() || is_front_page()) {
+
             //see if a front page exists
             $post = LeadpageType::get_front_lead_page();
             //see if the post actually exists
-            $postExists = $this->checkLeadpagePostExists($post);
+            $postExists = self::checkLeadpagePostExists($post);
             //if the post does not exist remove the option from the db
             if(!$postExists){
-                $this->deleteOrphanPost('leadpages_front_page_id');
+                self::deleteOrphanPost('leadpages_front_page_id');
                 return $posts;
             }
 
             //if $post is > 0 that means one exists and we need to display it
             if ($post > 0) {
                 $pageId = $this->leadpagesModel->getLeadpagePageId($post);
-
-                if($pageId = '') {
+                if($pageId == '') {
                     return $posts;
                 }
-
                 //check for cache
-
                 $getCache = get_post_meta($post, 'cache_page', true);
                 if($getCache == 'true'){
                     $html = $this->leadpagesModel->getCacheForPage($pageId);
@@ -188,7 +186,7 @@ class LeadpageController
         return $tokens;
     }
 
-    public function checkLeadpagePostExists($postId)
+    public static function checkLeadpagePostExists($postId)
     {
         $exists = get_post($postId);
         if(empty($exists)){
@@ -202,7 +200,7 @@ class LeadpageController
      * @param $postType
      * postType should be the Leadpages Post type of leadpages_front_page_id or welcome gate ect
      */
-    public function deleteOrphanPost($postType)
+    public static function deleteOrphanPost($postType)
     {
         delete_option($postType);
     }
