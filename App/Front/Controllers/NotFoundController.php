@@ -29,6 +29,12 @@ class NotFoundController
     protected function nfPageExists()
     {
         $this->nfPageId = LeadpageType::get_404_lead_page();
+        $postExists = LeadpageController::checkLeadpagePostExists($this->nfPageId);
+        //if the post does not exist remove the option from the db
+        if(!$postExists){
+            LeadpageController::deleteOrphanPost('leadpages_404_page_id');
+            return false;
+        }
         if (!$this->nfPageId) {
             return false;
         }

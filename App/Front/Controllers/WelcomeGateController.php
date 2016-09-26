@@ -4,6 +4,7 @@
 namespace LeadpagesWP\Front\Controllers;
 
 use LeadpagesWP\Helpers\LeadpageType;
+use LeadpagesWP\Front\Controllers\LeadpageController;
 
 class WelcomeGateController
 {
@@ -14,6 +15,12 @@ class WelcomeGateController
     protected function welcomeGateExists()
     {
         $this->welcomeGateId = LeadpageType::get_wg_lead_page();
+        $postExists = LeadpageController::checkLeadpagePostExists($this->welcomeGateId);
+        //if the post does not exist remove the option from the db
+        if(!$postExists){
+            LeadpageController::deleteOrphanPost('leadpages_wg_page_id');
+            return false;
+        }
         if (!$this->welcomeGateId) {
             return false;
         }
