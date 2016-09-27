@@ -3,6 +3,7 @@
 use GuzzleHttp\Client;
 use ICanBoogie\Inflector;
 use Leadpages\Pages\LeadpagesPages;
+use LeadpagesMetrics\LeadpagesErrorEvent;
 use LeadpagesWP\Front\ShortCodes\LeadboxShortCodes;
 use LeadpagesWP\models\LeadboxesModel;
 use LeadpagesWP\Lib\ApiResponseHandler;
@@ -114,7 +115,9 @@ $leadpagesApp['leadboxShortCode'] = function($leadpagesApp){
   return new LeadboxShortCodes();
 };
 
-
+$leadpagesApp['errorEventsHandler'] = function(){
+    return new LeadpagesErrorEvent();
+};
 /*
 |--------------------------------------------------------------------------
 | API Providers

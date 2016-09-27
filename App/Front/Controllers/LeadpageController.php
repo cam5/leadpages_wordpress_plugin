@@ -4,6 +4,7 @@ namespace LeadpagesWP\Front\Controllers;
 
 use Leadpages\Pages\LeadpagesPages;
 use LeadpagesWP\Helpers\LeadpageType;
+use LeadpagesMetrics\LeadpagesErrorEvent;
 use LeadpagesWP\Helpers\PasswordProtected;
 use LeadpagesWP\models\LeadPagesPostTypeModel;
 
@@ -53,6 +54,8 @@ class LeadpageController
      */
     public function isFrontPage($posts)
     {
+        global $leadpagesApp;
+
         if (is_home() || is_front_page()) {
 
             //see if a front page exists
@@ -83,6 +86,11 @@ class LeadpageController
                 }else {
                     //no cache download html
                     $apiResponse = $this->pagesApi->downloadPageHtml($pageId);
+                    if(isset($apiResponse['error'])){
+                        $leadpagesApp['errorEventsHandler']->reportError($apiResponse, ['pageId' => $pageId]);
+                        //output error to screen
+                        return $posts;
+                    }
                     $html = $apiResponse['response'];
                 }
                 echo $html;
@@ -118,6 +126,7 @@ class LeadpageController
      */
     public function normalPage()
     {
+        global $leadpagesApp;
         //get page uri
         $requestedPage = $this->parse_request();
         if ( false == $requestedPage ) {
@@ -155,6 +164,11 @@ class LeadpageController
             }
         }else {
             $apiResponse = $this->pagesApi->downloadPageHtml($pageId);
+            if(isset($apiResponse['error'])){
+                $leadpagesApp['errorEventsHandler']->reportError($apiResponse, ['pageId' => $pageId]);
+                //output error to screen
+                return;
+            }
             $html = $apiResponse['response'];
         }
 

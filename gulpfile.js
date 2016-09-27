@@ -10,8 +10,8 @@ gulp.task('setupTestEnv', shell.task([
     "bash bin/install-wp-tests.sh wordpress2 root root 127.0.0.1 latest"
 ]));
 
-var releaseBase = '/Users/brandonbraner/projects/releases/leadpages-wordpress-v2/beta2/'
-var releaseFolder = releaseBase+'leadpages';
+var releaseBase = '/Users/brandonbraner/projects/releases/leadpages-wordpress-v2/'
+var releaseFolder = releaseBase+'leadpagesv2';
 var zipsFolder = '/Users/brandonbraner/projects/releases/leadpages-wordpress-v2/archive/';
 
 gulp.task('removeallfiles',function(){
@@ -81,7 +81,7 @@ gulp.task('move_to_test', function(){
 });
 
 gulp.task('run_composer_tests', function(){
-    return composer("update --no-dev --working-dir /Applications/MAMP/htdocs/wordpress_unit_test/wp-content/plugins/leadpages");
+    return composer("update --working-dir /Applications/MAMP/htdocs/wordpress_unit_test/wp-content/plugins/leadpages");
 });
 
 gulp.task('run_integration_tests', shell.task([

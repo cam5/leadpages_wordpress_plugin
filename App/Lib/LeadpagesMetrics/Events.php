@@ -41,6 +41,7 @@ abstract class Events
 
     protected function baseEvent()
     {
+        global $leadpages_connector_plugin_version;
         return [
           'event'              => $this->event, //comes form class being extended
           'events_tracking_id' => $this->getEventsTrackingId(),
@@ -50,7 +51,8 @@ abstract class Events
           'domain'             => $this->getDomain(),
           'platform'           => 'WordPress',
           'event_date'         => $this->getDate(),
-          'event_time'         => $this->getTime()
+          'event_time'         => $this->getTime(),
+          'plugin_version'     => $leadpages_connector_plugin_version
           ];
     }
 
