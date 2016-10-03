@@ -1,10 +1,25 @@
 var gulp  = require('gulp');
 var del = require('del');
 var zip = require('gulp-zip');
+var sass = require('gulp-sass');
 var shell = require('gulp-shell');
 var args   = require('yargs').argv;
 var composer = require('gulp-composer');
 var runSequence = require('run-sequence');
+
+/********
+ sass
+ *******/
+
+gulp.task('sass', function () {
+    return gulp.src('./App/assets/sass/styles.scss')
+        .pipe(sass().on('error', sass.logError))
+        .pipe(gulp.dest('./App/assets/css'));
+});
+
+gulp.task('sass:watch', function () {
+    gulp.watch('./App/assets/sass/*.scss', ['sass']);
+});
 
 gulp.task('setupTestEnv', shell.task([
     "bash bin/install-wp-tests.sh wordpress2 root root 127.0.0.1 latest"

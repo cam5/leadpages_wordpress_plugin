@@ -2,6 +2,7 @@
 
 namespace LeadpagesWP\Bootstrap;
 
+use LeadpagesWP\Admin\MetaBoxes\LeadpagesCreate;
 use LeadpagesWP\Lib\AdminNotices;
 use LeadpagesWP\models\LeadboxesModel;
 use LeadpagesWP\Lib\LeadpagesCronJobs;
@@ -90,10 +91,18 @@ class AdminBootstrap
         }
 
         CustomPostType::create(LeadpagesPostType::getName());
+        MetaBoxes::create(LeadpagesCreate::getName());
         MetaBoxes::create(LeadpageSlug::getName());
         MetaBoxes::create(LeadpageType::getName());
-        Metaboxes::create(LeadpageSelect::getName());
+        //Metaboxes::create(LeadpageSelect::getName());
         add_action('admin_enqueue_scripts', array($this, 'loadJS'));
+
+        //force Leadpages Post Type to one column
+        add_filter('get_user_option_screen_layout_leadpages_post', function() {
+            return 1;
+        } );
+        remove_filter('get_user_option_meta-box-order_leadpages_post', array(LeadpagesPostType::getName(), 'forceAllMetaboxsInMainColumn'));
+        add_filter('get_user_option_meta-box-order_leadpages_post', array(LeadpagesPostType::getName(), 'forceAllMetaboxsInMainColumn'));
 
         //setup hook for saving Leadpages Post Type
         $this->postTypeModel->save();
@@ -127,6 +136,8 @@ class AdminBootstrap
         if ($leadpagesConfig['currentScreen'] == 'leadpages_post') {
             wp_enqueue_script('LeadpagesPostType', $leadpagesConfig['admin_assets'] . '/js/LeadpagesPostType.js',
               array('jquery'));
+            wp_enqueue_script('style-2-js', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js', array('jquery'));
+
         }
         wp_localize_script('LeadpagesPostType', 'ajax_object', array(
           'ajax_url' => admin_url('admin-ajax.php'),
@@ -143,7 +154,11 @@ class AdminBootstrap
         wp_enqueue_style( 'center_admin_css_icons', 'https://static.leadpages.net/icons/v25/lp-icons.css', false, '1.0.0' );
 
         wp_enqueue_style('lp-styles', $leadpagesConfig['admin_css'] . 'styles.css');
+        wp_enqueue_style('google-font', 'https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700');
+        wp_enqueue_style('style-2', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css');
+
     }
+
 
     protected function setupAdminNotices()
     {

@@ -58,9 +58,13 @@ class LeadpagesPostType extends CustomPostType
         remove_post_type_support($this->postTypeName, 'editor');
         remove_post_type_support($this->postTypeName, 'title');
 
+        add_action( 'add_meta_boxes',function(){
+            remove_meta_box( 'submitdiv', $this->postTypeName, 'side' );
+        });
+
+
         if(is_admin()){
             add_filter('post_updated_messages', array($this, 'post_updated_messages'));
-
         }
 
     }
@@ -74,6 +78,8 @@ class LeadpagesPostType extends CustomPostType
         add_action('admin_head-post.php', array($this, 'hide_publishing_actions'));
         add_action('admin_head-post-new.php', array($this, 'hide_publishing_actions'));
         //add_filter( 'wp_insert_post_data', array($this,'force_published'));
+
+
 
     }
 
@@ -234,5 +240,27 @@ class LeadpagesPostType extends CustomPostType
             }
             return $post;
         }
+    }
+
+    public static function forceAllMetaboxsInMainColumn( $order )
+    {
+        $order = array(
+          'normal'   => join( ",", array(
+            'postexcerpt',
+            'formatdiv',
+            'trackbacksdiv',
+            'tagsdiv-post_tag',
+            'categorydiv',
+            'postimagediv',
+            'postcustom',
+            'commentstatusdiv',
+            'slugdiv',
+            'authordiv',
+            'submitdiv',
+          ) ),
+          'side'     => '',
+          'advanced' => '',
+        );
+        return $order;
     }
 }

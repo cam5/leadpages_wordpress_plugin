@@ -1,74 +1,122 @@
 .leadboxButton {
-    -moz-box-shadow:inset 0px 1px 0px 0px #54a3f7;
-    -webkit-box-shadow:inset 0px 1px 0px 0px #54a3f7;
-    box-shadow:inset 0px 1px 0px 0px #54a3f7;
-    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #007dc1), color-stop(1, #0061a7));
-    background:-moz-linear-gradient(top, #007dc1 5%, #0061a7 100%);
-    background:-webkit-linear-gradient(top, #007dc1 5%, #0061a7 100%);
-    background:-o-linear-gradient(top, #007dc1 5%, #0061a7 100%);
-    background:-ms-linear-gradient(top, #007dc1 5%, #0061a7 100%);
-    background:linear-gradient(to bottom, #007dc1 5%, #0061a7 100%);
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#007dc1', endColorstr='#0061a7',GradientType=0);
-    background-color:#007dc1;
-    -moz-border-radius:5px;
-    -webkit-border-radius:5px;
-    border-radius:5px;
-    border:1px solid #124d77;
-    display:inline-block;
-    cursor:pointer;
-    color:#ffffff;
-    font-family:Arial;
-    font-size:13px;
-    font-weight:bold;
-    padding:10px 21px;
-    text-decoration:none;
-    text-shadow:0px 1px 0px #154682;
-    margin-top:20px;
-}
+  -moz-box-shadow: inset 0px 1px 0px 0px #54a3f7;
+  -webkit-box-shadow: inset 0px 1px 0px 0px #54a3f7;
+  box-shadow: inset 0px 1px 0px 0px #54a3f7;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #007dc1), color-stop(1, #0061a7));
+  background: -moz-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+  background: -webkit-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+  background: -o-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+  background: -ms-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+  background: linear-gradient(to bottom, #007dc1 5%, #0061a7 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#007dc1', endColorstr='#0061a7',GradientType=0);
+  background-color: #007dc1;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  border: 1px solid #124d77;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 10px 21px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #154682;
+  margin-top: 20px; }
+
 .leadboxButton:hover {
-    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #0061a7), color-stop(1, #007dc1));
-    background:-moz-linear-gradient(top, #0061a7 5%, #007dc1 100%);
-    background:-webkit-linear-gradient(top, #0061a7 5%, #007dc1 100%);
-    background:-o-linear-gradient(top, #0061a7 5%, #007dc1 100%);
-    background:-ms-linear-gradient(top, #0061a7 5%, #007dc1 100%);
-    background:linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#0061a7', endColorstr='#007dc1',GradientType=0);
-    background-color:#0061a7;
-}
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #0061a7), color-stop(1, #007dc1));
+  background: -moz-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+  background: -webkit-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+  background: -o-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+  background: -ms-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+  background: linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0061a7', endColorstr='#007dc1',GradientType=0);
+  background-color: #0061a7; }
+
 .leadboxButton:active {
-    position:relative;
-    top:1px;
-}
+  position: relative;
+  top: 1px; }
 
-#exitLeadboxRefresh, #timedLeadboxRefresh{
-    margin:5px 0 0 5px;
-}
+#exitLeadboxRefresh, #timedLeadboxRefresh {
+  margin: 5px 0 0 5px; }
 
-#timedLoading, #exitLoading{
-    display: none;
-}
+#timedLoading, #exitLoading {
+  display: none; }
 
-.leadpagesSelect, .leadpagesSlug, .leadpageType{
-    display: none;
-}
+.leadpagesSelect, .leadpagesSlug, .leadpageType {
+  display: none; }
 
-.mce-i-leadbox_shortcode_icon{
-    background: url(../images/menu-icon.png) no-repeat !important; background-size: 100% !important;
-}
+.mce-i-leadbox_shortcode_icon {
+  background: url(../images/menu-icon.png) no-repeat !important;
+  background-size: 100% !important; }
 
-#menu-posts-leadpages_post .wp-menu-image::before, #toplevel_page_Leadpages .wp-menu-image::before{
-    display: inline-block;
-    vertical-align: middle;
-    font: normal 1.25rem/1.4 'LeadPages-Icons';
-    speak: none;
-    text-transform: none;
-    letter-spacing: normal;
-    word-wrap: normal;
-    white-space: nowrap;
-    direction: ltr;
-    padding-top: 3px;
-    content: "\e60b";
-}
+#menu-posts-leadpages_post .wp-menu-image::before, #toplevel_page_Leadpages .wp-menu-image::before {
+  display: inline-block;
+  vertical-align: middle;
+  font: normal 1.25rem/1.4 'LeadPages-Icons';
+  speak: none;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  padding-top: 3px;
+  content: "\e60b"; }
 
+/********************
+Leadpage Create Page
+********************/
+body {
+  font-family: 'Roboto', Arial; }
 
+#leadpage-create {
+  background-color: #fff;
+  padding-left: 20px;
+  padding-right: 20px; }
+  #leadpage-create .ui-title-nav__content {
+    font-size: 25px;
+    font-family: 'Roboto';
+    font-weight: 500; }
+  #leadpage-create .lp-icon {
+    font-size: 30px; }
 
+#leadpages-header-wrapper {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+  height: 75px;
+  border-bottom: 1px solid #B1BACC; }
+
+.leadpages-edit-body {
+  margin-top: 20px; }
+  .leadpages-edit-body h1, .leadpages-edit-body h2, .leadpages-edit-body h3, .leadpages-edit-body h4 {
+    font-family: "Roboto", Helvetica, san-serif;
+    font-weight: 500; }
+  .leadpages-edit-body p {
+    font-family: "Roboto", Helvetica, san-serif; }
+  .leadpages-edit-body .select_a_leadpage {
+    flex-direction: column;
+    position: relative;
+    padding: 0px 0px 9px 16px; }
+  .leadpages-edit-body .leadpages_search_container {
+    width: 100%;
+    max-width: 480px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    padding: 12px;
+    border-bottom: 1px solid #ccc;
+    flex-direction: column; }
+    .leadpages-edit-body .leadpages_search_container #leadpages_my_selected_page select {
+      height: 100%;
+      max-height: 269px;
+      width: 100%;
+      max-width: 480px;
+      border: 0px;
+      outline: 0px; }
+
+@media screen and (max-width: 655px) {
+  .leadpages-edit-body .select-a-leadpage:after {
+    right: 35px;
+    position: absolute;
+    top: 48px; } }

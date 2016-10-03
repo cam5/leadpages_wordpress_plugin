@@ -33,7 +33,12 @@
                     $("#leadpages_my_selected_page").append(response);
                 },complete: function(data){
                     $("#leadpages_my_selected_page").trigger('change');
-                }
+                    $(".leadpage_select_dropdown").select2({
+                      placeholder: "Select a Leadpage",
+                      allowClear: true
+                    });
+
+              }
             });
         }
 
@@ -108,6 +113,23 @@
             if(error == true){
                 return;
             }
+        });
+
+        //remove all the unneeded styling from metaboxes
+        function removeMetaBoxExpand(){
+            $('.postbox .hndle').unbind('click.postboxes');
+            $('.postbox .handlediv').remove();
+            $('.postbox').removeClass('closed');
+            $('.postbox .hndle').remove();
+        }
+        removeMetaBoxExpand();
+
+        //setting up the Leadpages Post Type Page for redesign
+        $("#leadpage-create").removeClass('postbox');
+        $("#leadpage-create > div").removeClass('inside');
+
+        $("#leadpages_my_selected_page").on('click',function(){
+             //alert('123');
         });
 
     });
