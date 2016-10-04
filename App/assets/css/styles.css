@@ -71,6 +71,9 @@ Leadpage Create Page
 body {
   font-family: 'Roboto', Arial; }
 
+.wrap h1:first-of-type {
+  display: none; }
+
 #leadpage-create {
   background-color: #fff;
   padding-left: 20px;
@@ -82,38 +85,135 @@ body {
   #leadpage-create .lp-icon {
     font-size: 30px; }
 
+.select2-search {
+  border-bottom: 1px solid #ccc !important; }
+
+.select2-search__field {
+  border-radius: 5px !important;
+  padding: 6px !important; }
+
+.select2-selection__rendered, .select2-results__option {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  font-family: "Roboto", Arial, san-serif; }
+
 #leadpages-header-wrapper {
   margin-left: 0px !important;
   margin-right: 0px !important;
   height: 75px;
   border-bottom: 1px solid #B1BACC; }
 
+#leadpages-footer-wrapper {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+  height: 75px;
+  border-top: 1px solid #B1BACC; }
+
 .leadpages-edit-body {
-  margin-top: 20px; }
-  .leadpages-edit-body h1, .leadpages-edit-body h2, .leadpages-edit-body h3, .leadpages-edit-body h4 {
-    font-family: "Roboto", Helvetica, san-serif;
+  max-width: 920px;
+  width: 100%;
+  margin-top: 20px;
+  padding-bottom: 50px; }
+  .leadpages-edit-body .header_text {
+    padding-left: 4px;
     font-weight: 500; }
+  .leadpages-edit-body h1, .leadpages-edit-body h2, .leadpages-edit-body h3, .leadpages-edit-body h4 {
+    font-family: "Roboto", Arial, san-serif;
+    font-weight: 700; }
+  .leadpages-edit-body h3 {
+    font-size: 14px !important; }
   .leadpages-edit-body p {
-    font-family: "Roboto", Helvetica, san-serif; }
+    font-weight: 400;
+    font-family: "Roboto", Arial, san-serif; }
+  .leadpages-edit-body .leadpages-loading {
+    margin-top: 12px;
+    margin-bottom: 12px; }
+    .leadpages-edit-body .leadpages-loading .ui-loading {
+      margin-left: auto;
+      margin-right: auto; }
+  .leadpages-edit-body .section_description {
+    max-width: 470px;
+    width: 100%; }
   .leadpages-edit-body .select_a_leadpage {
-    flex-direction: column;
     position: relative;
     padding: 0px 0px 9px 16px; }
+  .leadpages-edit-body .sync-leadpages {
+    display: none;
+    height: 24px !important;
+    width: 24px !important;
+    color: #0069FF !important; }
+  .leadpages-edit-body .sync-leadpages::before {
+    font-size: 24px !important;
+    position: relative;
+    top: -10px;
+    cursor: pointer; }
   .leadpages-edit-body .leadpages_search_container {
     width: 100%;
     max-width: 480px;
-    border: 1px solid #cccccc;
-    border-radius: 5px;
-    padding: 12px;
-    border-bottom: 1px solid #ccc;
+    padding: 0;
     flex-direction: column; }
     .leadpages-edit-body .leadpages_search_container #leadpages_my_selected_page select {
       height: 100%;
       max-height: 269px;
       width: 100%;
-      max-width: 480px;
+      max-width: 500px;
       border: 0px;
       outline: 0px; }
+  .leadpages-edit-body .leadpage_type_container {
+    padding-left: 0px !important;
+    margin-left: 0px !important; }
+  .leadpages-edit-body .select_a_leadpage_type {
+    margin-top: 5px;
+    width: 100%; }
+  .leadpages-edit-body .leadpage_type_box {
+    height: 203px;
+    width: 184px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    padding: 12px; }
+    .leadpages-edit-body .leadpage_type_box:first-of-type {
+      margin-left: 12px; }
+    .leadpages-edit-body .leadpage_type_box:not(:first-of-type) {
+      margin-left: 20px; }
+    .leadpages-edit-body .leadpage_type_box .header {
+      font-size: 14px;
+      font-weight: 400;
+      text-transform: uppercase; }
+    .leadpages-edit-body .leadpage_type_box p {
+      font-size: 14px;
+      line-height: 15px;
+      font-weight: 400;
+      padding-bottom: 25px;
+      height: 90px; }
+  .leadpages-edit-body .leadpage_slug_container {
+    padding-left: 0px !important; }
+  .leadpages-edit-body .leadbox_slug {
+    margin-top: 35px; }
+    .leadpages-edit-body .leadbox_slug .lp_site_main_url {
+      display: inline-block;
+      height: 36px;
+      font-size: 14px;
+      font-weight: 200;
+      line-height: 16px;
+      background-color: #F5F7F9;
+      border: 1px solid #B1BACC;
+      border-right: none;
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+      padding: 10px;
+      margin-left: 12px; }
+    .leadpages-edit-body .leadbox_slug .leadpages_slug_input {
+      border: 1px solid #B1BACC;
+      font-size: 14px;
+      line-height: 36px;
+      height: 37px;
+      max-width: 500px;
+      width: 100%;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+      margin-left: -5px; }
 
 @media screen and (max-width: 655px) {
   .leadpages-edit-body .select-a-leadpage:after {

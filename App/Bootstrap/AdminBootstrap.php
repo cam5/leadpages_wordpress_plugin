@@ -92,9 +92,6 @@ class AdminBootstrap
 
         CustomPostType::create(LeadpagesPostType::getName());
         MetaBoxes::create(LeadpagesCreate::getName());
-        MetaBoxes::create(LeadpageSlug::getName());
-        MetaBoxes::create(LeadpageType::getName());
-        //Metaboxes::create(LeadpageSelect::getName());
         add_action('admin_enqueue_scripts', array($this, 'loadJS'));
 
         //force Leadpages Post Type to one column
@@ -151,7 +148,7 @@ class AdminBootstrap
         if ($leadpagesConfig['currentScreen'] == 'leadpages_post' || $leadpagesConfig['currentScreenAll']->base == 'toplevel_page_Leadboxes') {
             wp_enqueue_style('lp-lego', 'https://static.leadpages.net/lego/1.0.30/lego.min.css');
         }
-        wp_enqueue_style( 'center_admin_css_icons', 'https://static.leadpages.net/icons/v25/lp-icons.css', false, '1.0.0' );
+        wp_enqueue_style( 'leadpages_admin_css_icons', 'https://static.leadpages.net/icons/v29/lp-icons.css', false, '1.0.0' );
 
         wp_enqueue_style('lp-styles', $leadpagesConfig['admin_css'] . 'styles.css');
         wp_enqueue_style('google-font', 'https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700');
