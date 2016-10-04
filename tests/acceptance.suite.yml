@@ -8,8 +8,12 @@ class_name: AcceptanceTester
 modules:
     enabled:
         - \Helper\Acceptance
-        - WPBrowser:
+        - WPWebDriver:
             url: 'http://localhost:8888/wordpress_unit_test'
+            browser: phantomjs
+            port: 4444
+            restart: true
+            wait: 2
             adminUsername: admin
             adminPassword: password
             adminPath: /wp-admin
