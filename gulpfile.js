@@ -90,7 +90,6 @@ var testingFolder ='/Applications/MAMP/htdocs/wordpress_unit_test/wp-content/plu
 var enviroment = args.env;
 
 gulp.task('move_to_test', function(){
-
     return gulp.src(['**/*'], {"base" : "."})
         .pipe(gulp.dest(testingFolder));
 });
@@ -101,6 +100,10 @@ gulp.task('run_composer_tests', function(){
 
 gulp.task('run_integration_tests', shell.task([
     "php vendor/bin/wpcept run integration --env "+ enviroment
+]));
+
+gulp.task('accept_test', shell.task([
+    "php vendor/bin/codecept run acceptance --env "+ enviroment
 ]));
 
 gulp.task('setup_unit_test_plugin', function(){

@@ -71,9 +71,6 @@ Leadpage Create Page
 body {
   font-family: 'Roboto', Arial; }
 
-.wrap h1:first-of-type {
-  display: none; }
-
 #leadpage-create {
   background-color: #fff;
   padding-left: 20px;
@@ -220,3 +217,159 @@ body {
     right: 35px;
     position: absolute;
     top: 48px; } }
+
+#leadbox-configure {
+  width: 1000px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto; }
+  #leadbox-configure .ui-title-nav__content {
+    font-size: 25px;
+    font-family: 'Roboto';
+    font-weight: 500; }
+  #leadbox-configure .lp-icon {
+    font-size: 30px !important; }
+  #leadbox-configure #leadpages-header-wrapper {
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.32);
+    border: none;
+    padding: 20px;
+    height: 195px; }
+    #leadbox-configure #leadpages-header-wrapper #leadbox_header {
+      margin-left: 0px;
+      margin-right: 0px; }
+    #leadbox-configure #leadpages-header-wrapper hr {
+      margin: 20px 0; }
+    #leadbox-configure #leadpages-header-wrapper p, #leadbox-configure #leadpages-header-wrapper a {
+      font-size: 16px;
+      line-height: 24px;
+      color: #797F89;
+      width: 700px; }
+    #leadbox-configure #leadpages-header-wrapper a {
+      color: #000 !important; }
+  #leadbox-configure .leadbox-config-wrapper {
+    display: flex;
+    margin-top: 16px;
+    justify-content: space-between; }
+  #leadbox-configure .leadbox-container {
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.32);
+    width: 490px;
+    padding: 20px; }
+    #leadbox-configure .leadbox-container select {
+      width: 407px; }
+    #leadbox-configure .leadbox-container .dashicons-image-rotate {
+      color: #0069FF;
+      cursor: pointer; }
+    #leadbox-configure .leadbox-container h3 {
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 500;
+      color: #000; }
+    #leadbox-configure .leadbox-container p {
+      font-size: 14px;
+      line-height: 20px;
+      color: #797f89; }
+    #leadbox-configure .leadbox-container .leadbox-stats li {
+      margin-top: 0px;
+      margin-bottom: 5px;
+      font-size: 13px;
+      line-height: 16px; }
+
+.logout-wrapper {
+  height: 900px;
+  margin: auto;
+  margin-left: -20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff; }
+
+.logout_form {
+  font-family: 'Roboto';
+  width: 600px;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 5px;
+  background-color: #F2F4F7;
+  border: 1px solid #F2F4F7; }
+  .logout_form .form_header {
+    background-color: #0069FF;
+    height: 60px;
+    width: 100%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    opacity: .6; }
+    .logout_form .form_header h1 {
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 28px;
+      line-height: 60px;
+      color: #fff;
+      margin-bottom: 20px;
+      font-weight: 400;
+      text-align: center;
+      padding-left: 20px; }
+      .logout_form .form_header h1:before {
+        font-family: 'LeadPages-Icons';
+        content: '\e933';
+        color: #fff;
+        font-size: 24px;
+        line-height: 60px;
+        padding: 5px;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        margin-right: 10px; }
+  .logout_form h3 {
+    text-align: center;
+    color: #797F89;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: 200; }
+    .logout_form h3 a {
+      text-align: center;
+      color: #797F89;
+      margin-bottom: 20px;
+      font-weight: 400;
+      text-decoration: underline; }
+  .logout_form form {
+    margin-top: 10px; }
+  .logout_form .button_container {
+    display: flex;
+    align-items: center;
+    margin-top: 15px; }
+  .logout_form .cancel_button {
+    cursor: pointer;
+    display: inline-block;
+    background-color: #FF0000;
+    border: 2px solid #fff;
+    border-radius: 100px;
+    font-size: 14px;
+    color: #fff;
+    letter-spacing: 0.89px;
+    text-transform: uppercase;
+    width: 144px;
+    height: 56px;
+    text-align: center;
+    padding-top: 5px;
+    font-weight: 200;
+    margin-left: auto;
+    margin-right: auto; }
+  .logout_form .logout_button {
+    cursor: pointer;
+    display: inline-block;
+    background-color: #0069FF;
+    border: 2px solid #fff;
+    border-radius: 100px;
+    font-size: 14px;
+    color: #fff;
+    letter-spacing: 0.89px;
+    text-transform: uppercase;
+    width: 144px;
+    height: 56px;
+    text-align: center;
+    padding-top: 5px;
+    font-weight: 200;
+    margin-left: auto;
+    margin-right: auto; }

@@ -9,3 +9,9 @@ settings:
     bootstrap: _bootstrap.php
     colors: true
     memory_limit: 1024M
+extensions:
+    enabled:
+        - Codeception\Extension\Phantoman
+    config:
+      Codeception\Extension\Phantoman:
+      suites: ['acceptance']

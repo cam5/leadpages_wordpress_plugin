@@ -13,23 +13,101 @@ class Leadboxes implements SettingsPage
     use ServiceContainerTrait;
     use LeadboxDisplay;
 
-    public static function getName(){
+    public static function getName()
+    {
         return get_called_class();
     }
 
-    public function definePage() {
+    public function definePage()
+    {
         global $leadpagesConfig;
 
-        if(isset($_GET['page']) && $_GET['page'] == 'Leadboxes') {
+        if (isset($_GET['page']) && $_GET['page'] == 'Leadboxes') {
             add_action('admin_enqueue_scripts', array($this, 'leadboxScripts'));
         }
 
-        add_menu_page('leadboxes', 'Leadboxes', 'manage_options', 'Leadboxes', array($this, 'displayCallback'), $leadpagesConfig['admin_images'].'/leadboxes_sm.png' );
+        add_menu_page('leadboxes', 'Leadboxes', 'manage_options', 'Leadboxes', array($this, 'displayCallback'),
+          $leadpagesConfig['admin_images'] . '/leadboxes_sm.png');
     }
 
-    public function displayCallback(){
+    public function displayCallback()
+    {
         ?>
-        <div id="leadboxesLoading">
+
+        <div id="leadbox-configure">
+            <form action="admin-post.php" method="post">
+                <div class="leadpages-edit-wrapper">
+                    <div id="leadpages-header-wrapper">
+                        <div id="leadbox_header" class="flex flex--xs-between flex--xs-middle">
+                            <div class="ui-title-nav" aria-controls="navigation">
+                                <div class="ui-title-nav__img">
+                                    <i class="lp-icon lp-icon--alpha">leadpages_mark</i>
+                                </div>
+                                <div class="ui-title-nav__content">
+                                    Configure Leadboxes
+                                </div>
+                            </div>
+
+                            <button id="leadpages-save" class="ui-btn">
+                                Save
+                                <!-- Loading icons-->
+                                <div class="ui-loading ui-loading--sm ui-loading--inverted">
+                                    <div class="ui-loading__dots ui-loading__dots--1"></div>
+                                    <div class="ui-loading__dots ui-loading__dots--2"></div>
+                                    <div class="ui-loading__dots ui-loading__dots--3"></div>
+                                </div>
+                                <!-- End Loading Icons-->
+                            </button>
+                        </div>
+                        <hr>
+                        <p>
+                            Here you can setup timed and exit Leadboxes®. If you want to place a Leadbox via link,
+                            button,
+                            or image to any page, you need to copy and paste the HTML code you'll find in the Leadbox
+                            publish interface <a href="http://my.leadpages.net/my-leadboxes/" target="_blank">inside the
+                                Leadpages™ application.</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="leadbox-config-wrapper">
+                    <div class="leadbox-container">
+                        <h3 class="leadbox-header">
+                            Timed Leadbox Configuration
+                        </h3>
+
+                        <p class="leadbox-body">
+                            All your Leadboxes with timed configuration are listed below. 
+                            To edit settings for your Leadboxes please <a href="http://my.leadpages.net/my-leadboxes/"
+                                                                          target="_blank">visit our application.</a>
+                        </p>
+
+                        <div class="timeLeadBoxes"></div>
+                        <div class="postTypesForTimedLeadbox"></div>
+                        <div id="selectedLeadboxSettings"></div>
+                    </div>
+
+                    <div class="leadbox-container">
+                        <h3 class="leadbox-header">
+                            Exit Leadbox Configuration
+                        </h3>
+
+                        <p class="leadbox-body">
+                            All your Leadboxes with exit configuration are listed below. 
+                            To edit settings for your Leadboxes please <a href="http://my.leadpages.net/my-leadboxes/"
+                                                                          target="_blank">visit our application.</a>
+                        </p>
+
+                        <div class="exitLeadBoxes"></div>
+                        <div class="postTypesForExitLeadbox"></div>
+                        <div id="selectedExitLeadboxSettings"></div>
+                    </div>
+                </div>
+                <input type="hidden" name="action" value="save_leadbox_options" />
+                <?php wp_nonce_field('save_leadbox_options'); ?>
+            </form>
+        </div>
+        <!--End leadbox-configure -->
+        <!--div id="leadboxesLoading">
             <div class="ui-loading">
                 <div class="ui-loading__dots ui-loading__dots--1"></div>
                 <div class="ui-loading__dots ui-loading__dots--2"></div>
@@ -66,41 +144,44 @@ class Leadboxes implements SettingsPage
                 </div>
 
                 <input type="hidden" name="action" value="save_leadbox_options" />
-                <?php wp_nonce_field( 'save_leadbox_options' ); ?>
+                <?php wp_nonce_field('save_leadbox_options'); ?>
                 <input type="submit" value="Save Global Leadboxes" class="leadboxButton">
             </form>
-        </div>
+        </div -->
         <?php
 
     }
 
-    public function registerPage(){
-        add_action( 'admin_menu', array($this, 'definePage') );
+    public function registerPage()
+    {
+        add_action('admin_menu', array($this, 'definePage'));
 
     }
 
 
-    public function leadboxScripts(){
+    public function leadboxScripts()
+    {
         global $leadpagesConfig;
         global $leadpagesApp;
 
-        $apiResponse = $leadpagesApp['leadboxesApi']->getAllLeadboxes();
-        $allLeadboxes = json_decode($apiResponse['response'], true);
+        $apiResponse         = $leadpagesApp['leadboxesApi']->getAllLeadboxes();
+        $allLeadboxes        = json_decode($apiResponse['response'], true);
         $leadboxes['_items'] = array_filter($allLeadboxes['_items'], array($this, 'filterLeadpageGeneratedLeadboxes'));
 
         wp_enqueue_script('Leadboxes', $leadpagesConfig['admin_assets'] . '/js/Leadboxes.js', array('jquery'));
         wp_localize_script('Leadboxes', 'leadboxes_object', array(
-          'ajax_url'  => admin_url('admin-ajax.php'),
-          'timedLeadboxes' => $this->timedDropDown($leadboxes),
+          'ajax_url'                   => admin_url('admin-ajax.php'),
+          'timedLeadboxes'             => $this->timedDropDown($leadboxes),
           'postTypesForTimedLeadboxes' => $this->postTypesForTimedLeadboxes(),
-          'postTypesForExitLeadboxes' => $this->postTypesForExitLeadboxes(),
-          'exitLeadboxes'  => $this->exitDropDown($leadboxes),
+          'postTypesForExitLeadboxes'  => $this->postTypesForExitLeadboxes(),
+          'exitLeadboxes'              => $this->exitDropDown($leadboxes),
         ));
     }
 
     /**
      * Loop over leadboxes using array filter and only return leadboxes
      * that actually have embed code
+     *
      * @param $leadboxes
      * @param $body
      */
@@ -108,7 +189,7 @@ class Leadboxes implements SettingsPage
     {
         //if embed is not set it is not published so it must be removed
         if (!empty($leadbox['publish_settings']['embed'])) {
-           return $leadbox;
+            return $leadbox;
         }
     }
 

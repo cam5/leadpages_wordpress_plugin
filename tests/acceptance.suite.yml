@@ -8,12 +8,28 @@ class_name: AcceptanceTester
 modules:
     enabled:
         - \Helper\Acceptance
-        - WPWebDriver:
-            url: 'http://localhost:8888/wordpress_unit_test'
-            browser: phantomjs
-            port: 4444
-            restart: true
-            wait: 2
-            adminUsername: admin
-            adminPassword: password
-            adminPath: /wp-admin
+        - WPWebDriver
+        - WPDb
+
+
+env:
+    localhost:
+         modules:
+            config:
+              WPWebDriver:
+                  url: 'http://localhost:8888/wordpress_unit_test'
+                  browser: phantomjs
+                  port: 4444
+                  restart: true
+                  wait: 2
+                  adminUsername: admin
+                  adminPassword: password
+                  adminPath: /wp-admin
+              WPDb:
+                  dsn: 'mysql:host=127.0.0.1;dbname=wordpress_test'
+                  user: root
+                  password: root
+                  dump: tests/_data/dump.sql
+                  populate: true
+                  cleanup: true
+                  url: 'http://localhost:8888/wordpress_unit_test/'

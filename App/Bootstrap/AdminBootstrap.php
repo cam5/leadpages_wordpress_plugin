@@ -20,6 +20,7 @@ use LeadpagesWP\Admin\TinyMCE\LeadboxTinyMCE;
 use LeadpagesWP\Admin\SettingsPages\LeadpagesLoginPage;
 use LeadpagesWP\ServiceProviders\WordPressLeadpagesAuth;
 use LeadpagesWP\Admin\CustomPostTypes\LeadpagesPostType;
+use LeadpagesWP\Admin\SettingsPages\LeadpagesLogoutPage;
 
 class AdminBootstrap
 {
@@ -92,6 +93,7 @@ class AdminBootstrap
 
         CustomPostType::create(LeadpagesPostType::getName());
         MetaBoxes::create(LeadpagesCreate::getName());
+        SettingsPage::create(LeadpagesLogoutPage::getName());
         add_action('admin_enqueue_scripts', array($this, 'loadJS'));
 
         //force Leadpages Post Type to one column

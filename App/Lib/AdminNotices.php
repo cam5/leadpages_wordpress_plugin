@@ -16,7 +16,7 @@ class AdminNotices
         $loginUrl = admin_url()."?page=Leadpages";
         $message = <<<BOM
         <p>You are not logged into Leadpages. Your pages will not work until you login</p>
-        <a href={$loginUrl}>Login to Leadpages</a>
+        <a class="notice_login_link" href={$loginUrl}>Login to Leadpages</a>
 BOM;
 
 

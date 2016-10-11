@@ -12,6 +12,7 @@
             $('#leadboxesLoading').hide();
             $('#timedLoading').hide();
             $('#exitLoading').hide();
+            $('.ui-loading').hide();
             $("#leadboxesForm").show();
         }
 
@@ -50,7 +51,7 @@
                     action: "allLeadboxesAjax"
                 },
                 success: function(response) {
-                    $('#timedLoading').hide();
+                    $('ui-loading').hide();
                     var leadboxes = $.parseJSON(response);
                     $('.timeLeadBoxes').html(leadboxes.timedLeadboxes);
                 }
@@ -80,24 +81,25 @@
             var pageView = $($this).find(':selected').data('pageview');
             var daysTillAppear = $($this).find(':selected').data('daysappear');
 
-            var stats ="<h4 style='background:#E4E4EB'>Timed LeadBox&trade; Pop-Up Settings (from publish settings) <a style='margin-left:50px;' href=\"https://my.leadpages.net\" target=\"_blank\"> Go to LeadPages to change </a></h4>"+
+            var stats = '<ul class="leadbox-stats">'+
                 stat_row("Time before it appears: ", timeTillAppear + ' seconds') +
                 stat_row("Page views before it appears: ", pageView + ' views') +
-                stat_row("Don't reshow for the next: ", daysTillAppear + ' days');
+                stat_row("Don't reshow for the next: ", daysTillAppear + ' days') +
+                    '</ul>';
             $("#selectedLeadboxSettings").html(stats);
         }
 
         function populateExitStats($this) {
             var daysTillAppear = $($this).find(':selected').data('daysappear');
-            var stats ="<h4 style='background:#E4E4EB'>Exit LeadBox&trade; Pop-Up Settings (from publish settings)<a style='margin-left:50px;' href=\"https://my.leadpages.net\" target=\"_blank\"> Go to LeadPages to change </a></h4>"+
-                stat_row("Don't reshow for the next ", daysTillAppear + ' days');
+            var stats ='<ul class="leadbox-stats">'+
+                stat_row("Don't reshow for the next ", daysTillAppear + ' days')+
+                '</ul>';
             $("#selectedExitLeadboxSettings").html(stats);
         }
 
         function stat_row(label, value) {
-            return '<ul>' +
-                '<li><strong>' + label +'</strong> '+ value+'</li>' +
-                '</ul>';
+            return '<li>'+ label + value+'</li>';
+
         }
 
         function timedLeadBoxes() {
