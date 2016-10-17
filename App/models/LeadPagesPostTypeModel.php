@@ -43,6 +43,11 @@ class LeadPagesPostTypeModel
             return $post_id;
         }
 
+        //check to see if the status is draft if so force it to publish
+        if ($_POST['post_status'] != "publish" && isset($_POST['post_status'])) {
+            $_POST['post_status'] = "publish";
+        }
+
         //setup all vars for inserting or deleting posts
         $postType  = sanitize_text_field($_POST['leadpages-post-type']);
 
@@ -265,7 +270,6 @@ class LeadPagesPostTypeModel
     public function getLeadpagePageId($pageId){
         $LeadpageId = get_post_meta($pageId, 'leadpages_page_id', true);
 
-        //if $LeadpageId does not exist try to get it from the xor id...once again maybe something that should be done
         if (empty($LeadpageId)) {
             $LeadpageId = $this->getPageByXORId($pageId);
         }
@@ -276,6 +280,14 @@ class LeadPagesPostTypeModel
         return $LeadpageId;
     }
 
+    /**
+     * Take page xor_id and parse it against all pages to find the correct page id for new api
+     *
+     * @param $pageId
+     * @param string $xorId
+     *
+     * @return bool
+     */
     public function getPageByXORId($pageId, $xorId = '')
     {
 

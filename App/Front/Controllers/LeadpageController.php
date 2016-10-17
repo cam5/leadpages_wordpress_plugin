@@ -129,6 +129,7 @@ class LeadpageController
         global $leadpagesApp;
         //get page uri
         $requestedPage = $this->parse_request();
+
         if ( false == $requestedPage ) {
             return false;
         }

@@ -9,3 +9,4 @@ bin
 
 tests/_output/*
 tests/_output/*
+/tests/_data/test_variables.php

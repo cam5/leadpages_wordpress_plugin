@@ -18,18 +18,20 @@ env:
             config:
               WPWebDriver:
                   url: 'http://localhost:8888/wordpress_unit_test'
-                  browser: phantomjs
-                  port: 4444
-                  restart: true
+                  browser: chrome
                   wait: 2
                   adminUsername: admin
                   adminPassword: password
                   adminPath: /wp-admin
+                  window_size: 1920x1080
               WPDb:
                   dsn: 'mysql:host=127.0.0.1;dbname=wordpress_test'
                   user: root
                   password: root
                   dump: tests/_data/dump.sql
                   populate: true
-                  cleanup: true
+                  cleanup: false
                   url: 'http://localhost:8888/wordpress_unit_test/'
+              WPCLI:
+                  path: /Applications/MAMP/htdocs/wordpress_unit_test
+                  throw: true

@@ -61,7 +61,7 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
                 </div>
             </div>
 
-            <button id="leadpages-save" class="ui-btn">
+            <button id="publish" name="publish" class="ui-btn">
                 Publish
                 <!-- Loading icons-->
                 <div class="ui-loading ui-loading--sm ui-loading--inverted">
@@ -116,7 +116,7 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
                             This display type will allow you to direct people to this leadpage by using the
                             slug below.
                         </p>
-                        <input type="radio" name="leadpages-post-type leadpage-normal-page" class="leadpages-post-type"
+                        <input id="leadpage-normal-page" type="radio" name="leadpages-post-type" class="leadpages-post-type leadpage-normal-page"
                                value="lp" <?php echo $currentType == "lp" ? 'checked=checked"' : ""; ?> >
                     </div>
                     <div class="leadpage_type_box">
@@ -126,7 +126,7 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
                             This will take over your home page on your blog. Anytime someone goes to
                             your home page it will show this page.
                         </p>
-                        <input type="radio" name="leadpages-post-type leadpage-front-page" class="leadpages-post-type"
+                        <input id="leadpage-home-page" type="radio" name="leadpages-post-type" class="leadpages-post-type leadpage-home-page"
                                value="fp" <?php echo $currentType == "fp" ? 'checked=checked"' : ""; ?> >
                     </div>
                     <div class="leadpage_type_box">
@@ -135,7 +135,7 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
                         <p>
                             A Welcome Gate &trade; page will be the first page any new visitor to your site sees.
                         </p>
-                        <input type="radio" name="leadpages-post-type leadpage-welcome-gate" class="leadpages-post-type"
+                        <input id="leadpage-welcome-page" type="radio" name="leadpages-post-type" class="leadpages-post-type leadpage-welcomegate-page"
                                value="wg" <?php echo $currentType == "wg" ? 'checked=checked"' : ""; ?> >
                     </div>
                     <div class="leadpage_type_box">
@@ -145,7 +145,7 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
                             This will allow you to put a Leadpage as your 404
                             page to ensure you are not missing out on any conversions.
                         </p>
-                        <input type="radio" name="leadpages-post-type leadpage-404-page" class="leadpages-post-type"
+                        <input id="leadpage-404-page" type="radio" name="leadpages-post-type" class="leadpages-post-type leadpage-404-page"
                                value="nf" <?php echo $currentType == "nf" ? 'checked=checked"' : ""; ?> >
                     </div>
                 </div>
@@ -181,7 +181,7 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
         </div>
         <div id="leadpages-footer-wrapper" class="flex flex--xs-end flex--xs-middle">
 
-            <button id="leadpages-save" class="ui-btn">
+            <button id="publish" name="publish" class="ui-btn">
                 Publish
                 <!-- Loading icons-->
                 <div class="ui-loading ui-loading--sm ui-loading--inverted">

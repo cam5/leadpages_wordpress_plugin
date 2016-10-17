@@ -26,7 +26,7 @@ gulp.task('setupTestEnv', shell.task([
 ]));
 
 var releaseBase = '/Users/brandonbraner/projects/releases/leadpages-wordpress-v2/'
-var releaseFolder = releaseBase+'leadpagesv2';
+var releaseFolder = releaseBase+'leadpages';
 var zipsFolder = '/Users/brandonbraner/projects/releases/leadpages-wordpress-v2/archive/';
 
 gulp.task('removeallfiles',function(){

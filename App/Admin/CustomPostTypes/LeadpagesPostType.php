@@ -74,13 +74,6 @@ class LeadpagesPostType extends CustomPostType
         $this->defineLabels();
         add_action('init', array($this, 'registerPostType'), 5);
         $this->addColumns();
-        //removing publish options
-        add_action('admin_head-post.php', array($this, 'hide_publishing_actions'));
-        add_action('admin_head-post-new.php', array($this, 'hide_publishing_actions'));
-        //add_filter( 'wp_insert_post_data', array($this,'force_published'));
-
-
-
     }
 
     public function defineColumns($columns)
@@ -201,9 +194,9 @@ class LeadpagesPostType extends CustomPostType
         $messages['leadpages_post'] = array(
           0 => '', // Unused. Messages start at index 1.
           1 => sprintf(__('Leadpage updated. %s', 'Leadpages'), "<a href=\"{$url}\" target='_blank'>View Leadpage</a>"),
-          2 => __('Leadpage updated.', 'Leadpages'),
+          2 => sprintf(__('Leadpage updated. %s', 'Leadpages'), "<a href=\"{$url}\" target='_blank'>View Leadpage</a>"),
           3 => __('Leadpage deleted.', 'Leadpages'),
-          4 => __('Leadpage updated.', 'Leadpages'),
+          4 => sprintf(__('Leadpage updated. %s', 'Leadpages'), "<a href=\"{$url}\" target='_blank'>View Leadpage</a>"),
             /* translators: %s: date and time of the revision */
           5 => isset($_GET['revision']) ? sprintf( __('Field group restored to revision from %s', 'Leadpages'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
           6 => sprintf(__('Leadpage Published. %s', 'Leadpages'), "<a href=\"{$url}\" target='_blank'>View Leadpage</a>"),
@@ -214,32 +207,6 @@ class LeadpagesPostType extends CustomPostType
         );
 
         return $messages;
-    }
-
-    public function hide_publishing_actions(){
-        global $post;
-        if($post->post_type == 'leadpages_post'){
-            echo '
-                <style type="text/css">
-                    #misc-publishing-actions,
-                    #minor-publishing-actions{
-                        display:none;
-                    }
-                </style>
-            ';
-        }
-    }
-
-    /**
-     * Sets the post status to published
-     */
-    function force_published( $post ) {
-        if( 'trash' !== $post[ 'post_status' ] ) { /* We still want to use the trash */
-            if( in_array( $post[ 'post_type' ], array( 'page', 'leadpages_post' ) ) ) {
-                $post['post_status'] = 'publish';
-            }
-            return $post;
-        }
     }
 
     public static function forceAllMetaboxsInMainColumn( $order )
