@@ -158,7 +158,7 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
                 </p>
 
                 <div class="flex__item--xs-12 leadpage_slug_container">
-                    <span class="lp_site_main_url"><?php echo get_site_url() . '/'; ?></span>
+                    <span class="lp_site_main_url"><?php echo $this->leadpages_permalink(); ?></span>
                     <input type="text" name="leadpages_slug" class="leadpages_slug_input" value="<?php echo $slug; ?>">
                 </div>
             </div>
@@ -223,6 +223,20 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
         $optionString .= '</select>';
         echo $optionString;
         die();
+    }
+
+    //replace with get_permalink
+    public function leadpages_permalink()
+    {
+        global $post;
+        if($post->post_status !='publish'){
+            $permalink = 'Publish to see full url';
+        }else{
+            $permalink = get_permalink($post->ID);
+        }
+        $permalink = str_replace('/leadpages_post/', '', $permalink);
+        $permalink = str_replace('/'.$post->post_name.'/', '/', $permalink);
+        return $permalink;
     }
 
 

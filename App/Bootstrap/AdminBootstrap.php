@@ -90,7 +90,7 @@ class AdminBootstrap
         if (!$this->isLoggedIn) {
             return;
         }
-
+        add_filter('post_type_link', array($this, 'leadpages_permalink'), 1, 2);
         CustomPostType::create(LeadpagesPostType::getName());
         MetaBoxes::create(LeadpagesCreate::getName());
         SettingsPage::create(LeadpagesLogoutPage::getName());
@@ -173,6 +173,15 @@ class AdminBootstrap
             }
         }
 
+    }
+
+    public function leadpages_permalink($url, $post)
+    {
+        if ('leadpages_post' == get_post_type($post)) {
+            $url = str_replace('/leadpages_post/', '/', $url);
+        }
+
+        return $url;
     }
 
 

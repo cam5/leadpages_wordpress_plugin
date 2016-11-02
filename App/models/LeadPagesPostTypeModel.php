@@ -46,6 +46,7 @@ class LeadPagesPostTypeModel
         //check to see if the status is draft if so force it to publish
         if ($_POST['post_status'] != "publish" && isset($_POST['post_status'])) {
             $_POST['post_status'] = "publish";
+            wp_update_post(array( 'ID' => $post_id, 'post_status' => 'publish'));
         }
 
         //setup all vars for inserting or deleting posts

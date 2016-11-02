@@ -43,7 +43,7 @@ class WelcomeGateController
     }
 
     protected function getWelcomeGateUrl(){
-        $this->welcomeGateUrl = get_post_meta($this->welcomeGateId, 'leadpages_slug', true);
+        $this->welcomeGateUrl = get_permalink($this->welcomeGateId);
     }
 
     protected function welcomeGateHttpRedirect(){
@@ -60,10 +60,9 @@ class WelcomeGateController
     public function displayWelcomeGate($posts)
     {
         if($this->checkWelcomeGateCookie()){
-            return $posts;
+            //return $posts;
         }
         if($this->welcomeGateExists() && !$this->checkWelcomeGateCookie()){
-
             $this->getWelcomeGateUrl();
             $this->setWelcomeGateCookie();
             $this->welcomeGateHttpRedirect();

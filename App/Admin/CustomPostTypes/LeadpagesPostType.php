@@ -44,13 +44,13 @@ class LeadpagesPostType extends CustomPostType
           'public'               => true,
           'publicly_queryable'   => true,
           'show_ui'              => true,
-          'query_var'            => true,
+          'query_var'            => false,
           'menu_icon'            => '',
           'capability_type'      => 'page',
           'menu_position'        => 10000,
           'can_export'           => false,
           'hierarchical'         => true,
-          'has_archive'          => true,
+          'has_archive'          => false,
           'supports'             => array(),
         );
 

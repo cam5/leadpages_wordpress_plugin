@@ -135,7 +135,6 @@ class LeadpageController
         }
         //get post from database including meta data
         $post = LeadPagesPostTypeModel::get_all_posts($requestedPage[0]);
-
         if($post == false) return false;
 
         //ensure we have the leadpages page id
@@ -194,11 +193,21 @@ class LeadpageController
         // strip parameters
         $real   = explode( '?', $part );
         $tokens = explode( '/', $real[0] );
+        $permalinkStructure = $this->cleanPermalinkForLeadpage();
+        $tokens = array_diff($tokens, $permalinkStructure);
+
         foreach($tokens as $index => $token){
-            //decode url enteities such as %20 for space
-            $tokens[$index] = urldecode($token);
+            if(empty($token)){
+                unset($tokens[$index]);
+            }else {
+                //decode url enteities such as %20 for space
+                $tokens[$index] = urldecode($token);
+            }
         }
-        return $tokens;
+        $tokens = array_values($tokens);
+        $newTokens[0] = implode('/', $tokens);
+
+        return $newTokens;
     }
 
     public static function checkLeadpagePostExists($postId)
@@ -208,6 +217,17 @@ class LeadpageController
             return false;
         }
         return true;
+    }
+
+    public function cleanPermalinkForLeadpage()
+    {
+        $permalinkStructure = explode('/', get_option('permalink_structure'));
+        foreach($permalinkStructure as $key => $value){
+            if(empty($value) || strpos($value, '%') !== false ){
+                unset($permalinkStructure[$key]);
+            }
+        }
+        return $permalinkStructure;
     }
 
     /**
