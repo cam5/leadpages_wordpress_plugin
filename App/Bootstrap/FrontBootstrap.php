@@ -64,7 +64,7 @@ class FrontBootstrap
         }
 
         $this->setupLeadpages();
-        add_action( 'pre_get_posts', array($this, 'customParseRequest'));
+       // add_action( 'pre_get_posts', array($this, 'customParseRequest'));
         add_filter('post_type_link', array($this, 'leadpages_permalink'), 1, 2);
         add_filter('the_posts', array($this, 'displayLeadpage'), 1);
         add_filter('the_posts', array($this->leadpageController, 'displayWelcomeGate'));
