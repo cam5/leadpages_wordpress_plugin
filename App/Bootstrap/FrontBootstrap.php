@@ -64,7 +64,7 @@ class FrontBootstrap
         }
 
         $this->setupLeadpages();
-        add_action( 'pre_get_posts', array($this, 'custom_parse_request_tricksy'));
+        add_action( 'pre_get_posts', array($this, 'customParseRequest'));
         add_filter('post_type_link', array($this, 'leadpages_permalink'), 1, 2);
         add_filter('the_posts', array($this, 'displayLeadpage'), 1);
         add_filter('the_posts', array($this->leadpageController, 'displayWelcomeGate'));
@@ -89,10 +89,8 @@ class FrontBootstrap
      */
     public function displayLeadpage($posts)
     {
-        if(is_home() || is_404()) return $posts;
-        
         $result = $this->leadpageController->normalPage();
-        if ($result == false) {
+        if ($result == false || is_home() || is_404()) {
             return $posts;
         }
     }
@@ -126,8 +124,7 @@ class FrontBootstrap
         return $url;
     }
 
-    function custom_parse_request_tricksy( $query ) {
-        
+    function customParseRequest( $query ) {
         $query->set( 'post_type', array( 'leadpages_post','post','page') );
         return $query;
     }
