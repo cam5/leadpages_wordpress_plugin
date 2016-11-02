@@ -211,6 +211,13 @@ body {
       border-top-right-radius: 5px;
       border-bottom-right-radius: 5px;
       margin-left: -5px; }
+  .leadpages-edit-body .leadpage-slug-instructions {
+    margin-left: 30px;
+    margin-top: 0px;
+    list-style-type: disc; }
+    .leadpages-edit-body .leadpage-slug-instructions li ul {
+      margin-left: 10px;
+      list-style-type: circle; }
 
 @media screen and (max-width: 655px) {
   .leadpages-edit-body .select-a-leadpage:after {
