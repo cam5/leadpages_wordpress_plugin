@@ -111,6 +111,7 @@ class LeadpagesPostType extends CustomPostType
 
     private function populatePathColumn($column, $id){
         $path = LeadPagesPostTypeModel::getMetaPagePath($id);
+        $path = get_permalink($id);
         if ( $this->postTypeName.'_path' == $column ) {
 
             if ( LeadpageType::is_front_page($id) ) {
@@ -129,7 +130,7 @@ class LeadpagesPostType extends CustomPostType
                 if ( $path == '' ) {
                     echo '<strong style="color:#ff3300">Missing path!</strong> <i>Page is not active</i>';
                 } else {
-                    $url = site_url() . '/' . $path;
+                    $url = $path;
                     echo '<a href="' . $url . '" target="_blank">' . $url . '</a>';
                 }
             }

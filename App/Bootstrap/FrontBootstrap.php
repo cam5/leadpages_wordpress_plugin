@@ -123,11 +123,11 @@ class FrontBootstrap
         if ('leadpages_post' == get_post_type($post)) {
             $url = str_replace('/leadpages_post/', '/', $url);
         }
-
         return $url;
     }
 
     function custom_parse_request_tricksy( $query ) {
+        
         $query->set( 'post_type', array( 'leadpages_post','post','page') );
         return $query;
     }
