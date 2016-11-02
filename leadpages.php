@@ -27,6 +27,7 @@ use LeadpagesMetrics\ActivationEvent;
 use LeadpagesMetrics\DeactivationEvent;
 
 require_once('c3.php');
+require_once('App/Lib/plugables.php');
 require_once('vendor/autoload.php');
 require_once('App/Config/App.php');
 require_once($leadpagesConfig['basePath'] . 'Framework/ServiceContainer/ServiceContainer.php');
