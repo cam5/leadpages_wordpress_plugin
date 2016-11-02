@@ -65,8 +65,8 @@ class LeadpagesErrorEvent extends Events
             ]);
 
             //send email to blog owner
-            $message = $this->constructMessage($url, $currentUrl, $apiResponse);
-            $this->sendEmail($adminEmail, 'Leadpage Error on WordPress Site', $message);
+            //$message = $this->constructMessage($url, $currentUrl, $apiResponse);
+            //$this->sendEmail($adminEmail, 'Leadpage Error on WordPress Site', $message);
         }
     }
 
