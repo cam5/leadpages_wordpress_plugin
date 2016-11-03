@@ -56,7 +56,7 @@ class LeadpageController
     {
         global $leadpagesApp;
 
-        if (is_home() || is_front_page()) {
+        if (is_front_page()) {
 
             //see if a front page exists
             $post = LeadpageType::get_front_lead_page();
