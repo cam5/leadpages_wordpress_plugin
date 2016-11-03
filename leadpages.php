@@ -151,4 +151,23 @@ function checkPHPVersion($plugin_version)
     }
 }
 
+function updateLeadpagesToPublsihed()
+{
+    global $wpdb;
+    global $leadpages_connector_plugin_version;
+
+    if(version_compare( $leadpages_connector_plugin_version, '2.1.4', '<=' ) && get_option('leadpages_post_status_update') != true){
+
+        $query   = <<<BOQ
+        update {$wpdb->prefix}posts
+        set post_status = 'publish'
+        where post_type = 'leadpages_post'
+BOQ;
+        $wpdb->get_results($query);
+        update_option('leadpages_post_status_update', true);
+
+    }
+}
+add_action('admin_init', 'updateLeadpagesToPublsihed');
+
 
