@@ -274,7 +274,7 @@ class Update
 	        pm.meta_key,
 	        pm.meta_value
         FROM
-	        wp_postmeta as pm
+	        {$wpdb->prefix}postmeta as pm
         WHERE
 	        pm.meta_key = 'leadpages_split_test'
 BOQ;
