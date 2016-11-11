@@ -158,10 +158,10 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
                     <br />
                     Instructions:
                 </p>
-                <ul class="leadpage-slug-instructions">
+                <ul class="ui-list ui-list--bulleted">
                     <li>You may enter multi-part slugs such as parent/child/grand-child</li>
                     <li>Omit / at the start and end of slug(they will be trimed off upon saving)
-                        <ul>
+                        <ul class="ui-list ui-list--bulleted">
                             <li>Good: my-wonderful-page</li>
                             <li>Bad: /my-wonderful-page/</li>
                         </ul>
@@ -245,7 +245,7 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
         if($post->post_status !='publish'){
             $permalink = 'Publish to see full url';
         }else{
-            $permalink = get_permalink($post->ID);
+            $permalink = site_url() .'/';
         }
         $permalink = str_replace('/leadpages_post/', '', $permalink);
         $permalink = str_replace('/'.$post->post_name.'/', '/', $permalink);
