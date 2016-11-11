@@ -214,16 +214,16 @@
         },
         {
             "name": "leadpages/leadboxes",
-            "version": "1.0",
+            "version": "1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LeadPages/php_leadbox_component.git",
-                "reference": "26749391aee6c303d6a327bfdbd124e1b7f9a95c"
+                "reference": "2aa15f6b8ebd40f0986e143410f0a737ea8d7c0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/LeadPages/php_leadbox_component/zipball/26749391aee6c303d6a327bfdbd124e1b7f9a95c",
-                "reference": "26749391aee6c303d6a327bfdbd124e1b7f9a95c",
+                "url": "https://api.github.com/repos/LeadPages/php_leadbox_component/zipball/2aa15f6b8ebd40f0986e143410f0a737ea8d7c0f",
+                "reference": "2aa15f6b8ebd40f0986e143410f0a737ea8d7c0f",
                 "shasum": ""
             },
             "require": {
@@ -251,20 +251,20 @@
                 }
             ],
             "description": "A package to allow you to easily integrate Leadpages Leadboxes into your PHP project",
-            "time": "2016-09-09 21:10:41"
+            "time": "2016-11-11 19:15:14"
         },
         {
             "name": "leadpages/leadpages-auth",
-            "version": "1.1.3",
+            "version": "1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LeadPages/php_auth_package.git",
-                "reference": "03a5a5d19f8b81104b972e80d8b3cd9f44e2409c"
+                "reference": "deaea35a9d8b189d7586ee9630638aab6c58da76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/LeadPages/php_auth_package/zipball/03a5a5d19f8b81104b972e80d8b3cd9f44e2409c",
-                "reference": "03a5a5d19f8b81104b972e80d8b3cd9f44e2409c",
+                "url": "https://api.github.com/repos/LeadPages/php_auth_package/zipball/deaea35a9d8b189d7586ee9630638aab6c58da76",
+                "reference": "deaea35a9d8b189d7586ee9630638aab6c58da76",
                 "shasum": ""
             },
             "require": {
@@ -291,20 +291,20 @@
                 }
             ],
             "description": "Authentication package for interfacing with Leadpages API's",
-            "time": "2016-09-12 23:13:13"
+            "time": "2016-11-11 18:36:17"
         },
         {
             "name": "leadpages/pages",
-            "version": "1.0.1",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LeadPages/php_pages_component.git",
-                "reference": "18b23e2a464a90421e16c4cbc19fd6b217b6b288"
+                "reference": "ee21f80472a1b65817e404181edaf9bc606b3ef8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/LeadPages/php_pages_component/zipball/18b23e2a464a90421e16c4cbc19fd6b217b6b288",
-                "reference": "18b23e2a464a90421e16c4cbc19fd6b217b6b288",
+                "url": "https://api.github.com/repos/LeadPages/php_pages_component/zipball/ee21f80472a1b65817e404181edaf9bc606b3ef8",
+                "reference": "ee21f80472a1b65817e404181edaf9bc606b3ef8",
                 "shasum": ""
             },
             "require": {
@@ -332,7 +332,7 @@
                 }
             ],
             "description": "A package to allow you to easily integrate Leadpages pages into your PHP project",
-            "time": "2016-09-26 17:08:31"
+            "time": "2016-11-11 18:50:15"
         },
         {
             "name": "moontoast/math",
