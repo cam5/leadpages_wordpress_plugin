@@ -44,13 +44,13 @@ class LeadpagesPostType extends CustomPostType
           'public'               => true,
           'publicly_queryable'   => true,
           'show_ui'              => true,
-          'query_var'            => true,
+          'query_var'            => false,
           'menu_icon'            => '',
           'capability_type'      => 'page',
           'menu_position'        => 10000,
           'can_export'           => false,
           'hierarchical'         => true,
-          'has_archive'          => true,
+          'has_archive'          => false,
           'supports'             => array(),
         );
 
@@ -110,11 +110,12 @@ class LeadpagesPostType extends CustomPostType
     }
 
     private function populatePathColumn($column, $id){
-        $path = LeadPagesPostTypeModel::getMetaPagePath($id);
+        $path = site_url();
         if ( $this->postTypeName.'_path' == $column ) {
 
             if ( LeadpageType::is_front_page($id) ) {
-                $url = site_url() . '/';
+                $blogId = get_current_blog_id();
+                $url = get_home_url($blogId);
                 echo '<a href="' . $url . '" target="_blank">' . $url . '</a>';
             } elseif ( LeadpageType::is_nf_page($id) ) {
                 $characters   = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -129,7 +130,7 @@ class LeadpagesPostType extends CustomPostType
                 if ( $path == '' ) {
                     echo '<strong style="color:#ff3300">Missing path!</strong> <i>Page is not active</i>';
                 } else {
-                    $url = site_url() . '/' . $path;
+                    $url = $path .'/'.get_the_title($id);
                     echo '<a href="' . $url . '" target="_blank">' . $url . '</a>';
                 }
             }

@@ -155,10 +155,23 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
 
                 <p class="flex__item--xs-12">
                     Enter a custom slug for your Leadpage. This will be the url someone will go to to see your Leadpage.
+                    <br />
+                    Instructions:
                 </p>
+                <ul class="ui-list ui-list--bulleted">
+                    <li>You may enter multi-part slugs such as parent/child/grand-child</li>
+                    <li>Omit / at the start and end of slug(they will be trimed off upon saving)
+                        <ul class="ui-list ui-list--bulleted">
+                            <li>Good: my-wonderful-page</li>
+                            <li>Bad: /my-wonderful-page/</li>
+                        </ul>
+                    </li>
+
+                </ul>
+
 
                 <div class="flex__item--xs-12 leadpage_slug_container">
-                    <span class="lp_site_main_url"><?php echo get_site_url() . '/'; ?></span>
+                    <span class="lp_site_main_url"><?php echo $this->leadpages_permalink(); ?></span>
                     <input type="text" name="leadpages_slug" class="leadpages_slug_input" value="<?php echo $slug; ?>">
                 </div>
             </div>
@@ -223,6 +236,20 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
         $optionString .= '</select>';
         echo $optionString;
         die();
+    }
+
+    //replace with get_permalink
+    public function leadpages_permalink()
+    {
+        global $post;
+        if($post->post_status !='publish'){
+            $permalink = 'Publish to see full url';
+        }else{
+            $permalink = site_url() .'/';
+        }
+        $permalink = str_replace('/leadpages_post/', '', $permalink);
+        $permalink = str_replace('/'.$post->post_name.'/', '/', $permalink);
+        return $permalink;
     }
 
 

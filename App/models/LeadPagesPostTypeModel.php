@@ -46,6 +46,7 @@ class LeadPagesPostTypeModel
         //check to see if the status is draft if so force it to publish
         if ($_POST['post_status'] != "publish" && isset($_POST['post_status'])) {
             $_POST['post_status'] = "publish";
+            wp_update_post(array( 'ID' => $post_id, 'post_status' => 'publish'));
         }
 
         //setup all vars for inserting or deleting posts
@@ -70,10 +71,10 @@ class LeadPagesPostTypeModel
 
         }
 
-        update_post_meta($post_id, 'leadpages_slug', sanitize_text_field($_POST['leadpages_slug']));
+        update_post_meta($post_id, 'leadpages_slug', sanitize_text_field(trim($_POST['leadpages_slug'], '/')));
 
         //save post name in meta for backwards compatibility
-        update_post_meta($post_id, 'leadpages_name', sanitize_text_field($_POST['leadpages_name']));
+        update_post_meta($post_id, 'leadpages_name', sanitize_text_field(trim($_POST['leadpages_name'], '/')));
 
         update_post_meta($post_id, 'leadpages_page_id', $this->LeadPageId);
         update_post_meta($post_id, 'leadpages_my_selected_page', $this->LeadpageXORId);
