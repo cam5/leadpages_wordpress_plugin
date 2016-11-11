@@ -1,6 +1,5 @@
 <?php
 
-
 class LeadpageCreationCest
 {
     public function _before(AcceptanceTester $I)
@@ -53,6 +52,7 @@ class LeadpageCreationCest
         //$I->see('E2E Test Page Do Not Remove');
         $I->selectOption('#leadpage-home-page', 'fp');
         $I->click('#publish');
+        $I->wait(5);
         $I->seeInDatabase('wptests_options', ['option_name' => 'leadpages_front_page_id']);
         $frontPageId = $I->grabFromDatabase('wptests_options', 'option_value', ['option_name' => 'leadpages_front_page_id']);
         $I->seeInDatabase('wptests_postmeta', [
@@ -79,6 +79,7 @@ class LeadpageCreationCest
         //$I->see('E2E Test Page Do Not Remove');
         $I->selectOption('#leadpage-welcome-page', 'wg');
         $I->click('#publish');
+        $I->wait(5);
         $I->seeInDatabase('wptests_options', ['option_name' => 'leadpages_wg_page_id']);
         $wgId = $I->grabFromDatabase('wptests_options', 'option_value', ['option_name' => 'leadpages_wg_page_id']);
         $I->seeInDatabase('wptests_postmeta', [
@@ -105,6 +106,7 @@ class LeadpageCreationCest
         //$I->see('E2E Test Page Do Not Remove');
         $I->selectOption('#leadpage-404-page', 'nf');
         $I->click('#publish');
+        $I->wait(5);
         $I->seeInDatabase('wptests_options', ['option_name' => 'leadpages_404_page_id']);
         $wgId = $I->grabFromDatabase('wptests_options', 'option_value', ['option_name' => 'leadpages_404_page_id']);
         $I->seeInDatabase('wptests_postmeta', [

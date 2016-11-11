@@ -36,8 +36,5 @@ class LeadboxTestCest
         $I->see('Don\'t reshow for the next: 0 days');
 
         $I->click('#leadpages-save');
-
-        $I->cli('wp post create --post_title=Foo --post_content=Foo --post_excerpt=Foo --url='.getenv('wordpressUrl'));
-
     }
 }
