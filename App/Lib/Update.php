@@ -177,7 +177,6 @@ class Update
         $licence_key = 'upUbSkfvYbd74rYnAl5hWczFlGbnYLCp';
         $url         = $leadpagesConfig['update_url'] . '/service/leadpages/' . $service . '/';
         $current_ver = self::_plugin_get('Version');
-        $phpVersion  = PHP_VERSION;
         $response    = wp_remote_post(
           $url,
           array(
@@ -190,7 +189,7 @@ class Update
             'body'        => array(
               'version'     => $current_ver,
               'licence_key' => $licence_key,
-              'php_version' => $phpVersion
+              'php_version' => PHP_VERSION
             ),
             'cookies'     => array()
           )
