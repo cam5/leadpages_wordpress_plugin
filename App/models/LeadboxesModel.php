@@ -19,18 +19,25 @@ class LeadboxesModel
 
     public static function saveGlobalLeadboxes()
     {
-
         Security::checkAdminRefererStatic('save_leadbox_options');
         global $leadpagesApp;
 
-        $response = $leadpagesApp['leadboxesApi']->getSingleLeadboxEmbedCode($_POST['lp_select_field_0'], 'timed');
-        $jsTimed = json_decode($response['response']);
-        //$jsTimed = json_encode($jsTimed->embed_code);
-
-
-        $response = $leadpagesApp['leadboxesApi']->getSingleLeadboxEmbedCode($_POST['lp_select_field_2'], 'exit');
-        $jsExit = json_decode($response['response']);
-        //$jsExit = json_encode($jsExit->embed_code);
+        $b3TimedLeadbox = self::checkIfB3GlobalTimedLeadbox();
+        $b3ExitLeadbox = self::checkIfB3GlobalExitLeadbox();
+        if(!empty($b3TimedLeadbox)){
+            $jsTimed = new \stdClass();
+            $jsTimed->embed_code = str_replace(PHP_EOL, '', $b3TimedLeadbox);
+        }else {
+            $response = $leadpagesApp['leadboxesApi']->getSingleLeadboxEmbedCode($_POST['lp_select_field_0'], 'timed');
+            $jsTimed  = json_decode($response['response']);
+        }
+        if(!empty($b3ExitLeadbox)){
+            $jsExit = new \stdClass();
+            $jsExit->embed_code = $b3ExitLeadbox;
+        }else {
+            $response = $leadpagesApp['leadboxesApi']->getSingleLeadboxEmbedCode($_POST['lp_select_field_2'], 'exit');
+            $jsExit   = json_decode($response['response']);
+        }
 
         $globalLeadboxes = array(
           'lp_select_field_0'             => sanitize_text_field($_POST['lp_select_field_0']),
@@ -38,11 +45,24 @@ class LeadboxesModel
           'leadboxes_timed_js'            => $jsTimed,
           'lp_select_field_2'             => sanitize_text_field($_POST['lp_select_field_2']),
           'leadboxes_exit_display_radio'  => sanitize_text_field((!empty($_POST['leadboxes_exit_display_radio']) ? $_POST['leadboxes_exit_display_radio'] : '')),
-          'leadboxes_exit_js'            => $jsExit,
+          'leadboxes_exit_js'             => $jsExit,
         );
 
         static::updateLeadboxOption($globalLeadboxes);
         wp_redirect(admin_url() . '?page=Leadboxes');
+    }
+
+    public static function checkIfB3GlobalTimedLeadbox()
+    {
+        if(!empty($_POST['leadbox_timed_script']) && $_POST['lp_select_field_0'] == 'ddbox'){
+            return stripslashes($_POST['leadbox_timed_script']);
+        }
+    }
+    public static function checkIfB3GlobalExitLeadbox()
+    {
+        if(!empty($_POST['leadbox_timed_script']) && $_POST['lp_select_field_2'] == 'ddbox'){
+            return stripslashes($_POST['leadbox_exit_script']);
+        }
     }
 
     protected static function updateLeadboxOption($data)
@@ -56,6 +76,25 @@ class LeadboxesModel
         if (!is_wp_error($data)) {
             return $data;
         }
+    }
+    
+    public static function getB3Script($type){
+        $leadboxes = self::getLpSettings();
+        if($type == 'timed'){
+            if($leadboxes['lp_select_field_0'] == 'ddbox'){
+
+                return $leadboxes['leadboxes_timed_js']->embed_code;
+            }
+        }
+
+        if($type == 'exit'){
+            if($leadboxes['lp_select_field_2'] == 'ddbox'){
+
+                return $leadboxes['leadboxes_exit_js']->embed_code;
+            }
+        }
+
+
     }
 
     public static function getCurrentTimedLeadbox($leadboxes)
