@@ -119,7 +119,7 @@ add_action('current_screen', 'getScreen');
   |
   */
 
-if (!is_admin() && !is_network_admin()) {
+if (!is_admin() && !is_network_admin() && !isset($_GET['preview'])) {
     $frontBootstrap = $leadpagesApp['frontBootstrap'];
     //include('App/Helpers/ErrorHandlerAjax.php');
 }
