@@ -2,7 +2,7 @@
 
 /*
 Plugin Name: Leadpages Connector
-Plugin URI: http://wordpress.org/plugins/hello-dolly/
+Plugin URI: https://leadpages.net
 Description: Connect your Leadpages account to your WordPress site to import Leadpages and Leadboxes
 Author: Leadpages
 Version: 2.1.4
