@@ -5,7 +5,7 @@ Plugin Name: Leadpages Connector
 Plugin URI: https://leadpages.net
 Description: Connect your Leadpages account to your WordPress site to import Leadpages and Leadboxes
 Author: Leadpages
-Version: 2.1.4
+Version: 2.1.4.1
 Author URI: http://leadpages.net
 */
 
@@ -162,7 +162,7 @@ function updateLeadpagesToPublsihed()
         update {$wpdb->prefix}posts
         set post_status = 'publish'
         where post_type = 'leadpages_post' and
-        post_status != 'trash'
+        post_status = 'draft'
 BOQ;
     $wpdb->get_results($query);
 }
