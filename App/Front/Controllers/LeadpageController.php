@@ -87,7 +87,7 @@ class LeadpageController
                     //no cache download html
                     $apiResponse = $this->pagesApi->downloadPageHtml($pageId);
                     if(isset($apiResponse['error'])){
-                        $leadpagesApp['errorEventsHandler']->reportError($apiResponse, ['pageId' => $pageId]);
+                        //$leadpagesApp['errorEventsHandler']->reportError($apiResponse, ['pageId' => $pageId]);
                         //output error to screen
                         return $posts;
                     }
@@ -165,7 +165,7 @@ class LeadpageController
         }else {
             $apiResponse = $this->pagesApi->downloadPageHtml($pageId);
             if(isset($apiResponse['error'])){
-                $leadpagesApp['errorEventsHandler']->reportError($apiResponse, ['pageId' => $pageId]);
+                //$leadpagesApp['errorEventsHandler']->reportError($apiResponse, ['pageId' => $pageId]);
                 //output error to screen
                 return;
             }
