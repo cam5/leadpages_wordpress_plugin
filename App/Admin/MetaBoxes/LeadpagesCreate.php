@@ -245,7 +245,7 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
         if($post->post_status !='publish'){
             $permalink = 'Publish to see full url';
         }else{
-            $permalink = site_url() .'/';
+            $permalink = home_url() .'/';
         }
         $permalink = str_replace('/leadpages_post/', '', $permalink);
         $permalink = str_replace('/'.$post->post_name.'/', '/', $permalink);

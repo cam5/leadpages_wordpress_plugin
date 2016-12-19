@@ -110,7 +110,7 @@ class LeadpagesPostType extends CustomPostType
     }
 
     private function populatePathColumn($column, $id){
-        $path = site_url();
+        $path = home_url();
         if ( $this->postTypeName.'_path' == $column ) {
 
             if ( LeadpageType::is_front_page($id) ) {

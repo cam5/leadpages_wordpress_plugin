@@ -186,7 +186,7 @@ class LeadpageController
         // get current url
         $current = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
         // calculate the path
-        $part = substr( $current, strlen( site_url() ) );
+        $part = substr( $current, strlen( home_url() ) );
         if ( $part[0] == '/' ) {
             $part = substr( $part, 1 );
         }
