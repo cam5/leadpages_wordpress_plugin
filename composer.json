@@ -6,9 +6,7 @@
         "leadpages/leadpages-auth": "*",
         "leadpages/pages": "*",
         "leadpages/leadboxes": "*",
-        "icanboogie/inflector": "^1.4",
-        "ramsey/uuid": "^2.9",
-        "moontoast/math": "*"
+        "icanboogie/inflector": "^1.4"
     },
     "require-dev": {
         "codeception/codeception": "^2.2",
