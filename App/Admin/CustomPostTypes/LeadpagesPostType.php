@@ -130,7 +130,7 @@ class LeadpagesPostType extends CustomPostType
                 if ( $path == '' ) {
                     echo '<strong style="color:#ff3300">Missing path!</strong> <i>Page is not active</i>';
                 } else {
-                    $url = $path .'/'.get_the_title($id);
+                    $url = $path .'/'.trim(get_the_title($id), '/');
                     echo '<a href="' . $url . '" target="_blank">' . $url . '</a>';
                 }
             }
