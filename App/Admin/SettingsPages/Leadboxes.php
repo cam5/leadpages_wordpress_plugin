@@ -134,6 +134,7 @@ class Leadboxes implements SettingsPage
 
     public function leadboxScripts()
     {
+        global $leadpages_connector_plugin_version;
         global $leadpagesConfig;
         global $leadpagesApp;
 
@@ -165,7 +166,7 @@ class Leadboxes implements SettingsPage
         $leadboxes['_items'][] = $b3PlaceHolder;
 
 
-        wp_enqueue_script('Leadboxes', $leadpagesConfig['admin_assets'] . '/js/Leadboxes.js', array('jquery'));
+        wp_enqueue_script('Leadboxes', $leadpagesConfig['admin_assets'] . '/js/Leadboxes.js', array('jquery'), $leadpages_connector_plugin_version);
         wp_localize_script('Leadboxes', 'leadboxes_object', array(
           'ajax_url'                   => admin_url('admin-ajax.php'),
           'timedLeadboxes'             => $this->timedDropDown($leadboxes),
