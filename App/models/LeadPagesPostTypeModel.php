@@ -29,11 +29,29 @@ class LeadPagesPostTypeModel
 
     public function saveLeadPageMeta($post_id, $post)
     {
-
+        global $wpdb;
         // check autosave
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
             return $post_id;
         }
+
+        //check if post slug already exists
+        if ($post->post_status != "trash") {
+            $slug = trim($_POST['leadpages_slug'], '/');
+            $results = $wpdb->get_results("
+              SELECT * from {$wpdb->prefix}posts WHERE ID in(
+                SELECT post_id FROM {$wpdb->prefix}postmeta WHERE `meta_value` = '{$slug}')
+              AND post_status != 'trash'",
+             OBJECT);
+
+            //echo '<pre>'; print_r($results);die();
+
+            if (!empty($results)) {
+                wp_die("Leadpage with url {$slug} already exists.");
+            }
+        }
+
+
         //check if its a leadpage
         if($post->post_type != 'leadpages_post') return $post_id;
 
