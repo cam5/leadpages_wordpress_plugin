@@ -288,6 +288,17 @@ body {
       margin-bottom: 5px;
       font-size: 13px;
       line-height: 16px; }
+    #leadbox-configure .leadbox-container .timedLeadboxScript, #leadbox-configure .leadbox-container .exitLeadboxScript {
+      display: flex;
+      flex-direction: column;
+      margin-top: 16px; }
+      #leadbox-configure .leadbox-container .timedLeadboxScript label, #leadbox-configure .leadbox-container .exitLeadboxScript label {
+        margin-bottom: 8px; }
+      #leadbox-configure .leadbox-container .timedLeadboxScript textarea, #leadbox-configure .leadbox-container .exitLeadboxScript textarea {
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        resize: none;
+        font-size: 13px; }
 
 .logout-wrapper {
   height: 900px;

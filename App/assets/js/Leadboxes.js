@@ -6,6 +6,7 @@
         var $body = $('body');
 
         function init() {
+            hideScriptBoxes();
             timedLeadBoxes();
             exitLeadBoxes();
             setPostTypes();
@@ -20,9 +21,17 @@
 
 
         $body.on('change', '#leadboxesTime', function () {
+            console.log($(this).val());
             if($(this).val() == 'none'){
                 $('#selectedLeadboxSettings').hide();
             }
+
+            if($(this).val() == 'ddbox'){
+                showTimedScriptBox();
+            }else{
+                hideTimedScriptBox();
+            }
+
             populateTimedStats(this);
 
         });
@@ -37,6 +46,12 @@
         $body.on('change', '#leadboxesExit', function () {
             if($(this).val() == 'none'){
                 $('#selectedExitLeadboxSettings').hide();
+            }
+
+            if($(this).val() == 'ddbox'){
+                showExitScriptBox();
+            }else{
+                hideExitScriptBox();
             }
             populateExitStats(this);
 
@@ -76,6 +91,43 @@
 
         });
 
+        function hideScriptBoxes(){
+            $body.find('.timedLeadboxScript').css('display', 'none');
+            $body.find('.exitLeadboxScript').css('display', 'none');
+        }
+
+        function showTimedScriptBox(){
+            var timedDropdownValue = $body.find('#leadboxesTime').val();
+            if(timedDropdownValue == 'ddbox'){
+                $body.find('.timedLeadboxScript').css('display', 'flex');
+                $body.find('#selectedLeadboxSettings').css('display', 'none');
+            }
+        }
+
+        function hideTimedScriptBox(){
+            var exitDropdownValue = $body.find('#leadboxesTime').val();
+            if(exitDropdownValue != 'ddbox'){
+                $body.find('.timedLeadboxScript').css('display', 'none');
+                $body.find('#selectedLeadboxSettings').css('display', 'block');
+            }
+        }
+
+        function showExitScriptBox(){
+            var exitDropdownValue = $body.find('#leadboxesExit').val();
+            if(exitDropdownValue == 'ddbox'){
+                $body.find('.exitLeadboxScript').css('display', 'flex');
+                $body.find('#selectedExitLeadboxSettings').css('display', 'none');
+            }
+        }
+
+        function hideExitScriptBox(){
+            var timedDropdownValue = $body.find('#leadboxesExit').val();
+            if(timedDropdownValue != 'ddbox'){
+                $body.find('.exitLeadboxScript').css('display', 'none');
+                $body.find('#selectedExitLeadboxSettings').css('display', 'block');
+            }
+        }
+
         function populateTimedStats($this) {
             var timeTillAppear = $($this).find(':selected').data('timeappear');
             var pageView = $($this).find(':selected').data('pageview');
@@ -104,10 +156,12 @@
 
         function timedLeadBoxes() {
             $('.timeLeadBoxes').html(leadboxes_object.timedLeadboxes);
+            showTimedScriptBox();
         }
 
         function exitLeadBoxes() {
             $('.exitLeadBoxes').html(leadboxes_object.exitLeadboxes);
+            showExitScriptBox();
         }
 
         function setPostTypes() {

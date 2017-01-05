@@ -78,5 +78,19 @@
         line-height:16px;
       }
     }
+    .timedLeadboxScript, .exitLeadboxScript{
+      display: flex;
+      flex-direction: column;
+      margin-top:16px;
+      label{
+        margin-bottom: 8px;
+      }
+      textarea{
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        resize: none;
+        font-size: 13px;
+      }
+    }
   }
 }
