@@ -135,7 +135,7 @@ class LeadpageController
         }
         //get post from database including meta data
         $post = LeadPagesPostTypeModel::get_all_posts($requestedPage[0]);
-        if($post == false || $post['leadpages_post_type'] == 'nf') return false;
+        if($post == false || isset($post['leadpages_post_type']) && $post['leadpages_post_type'] == 'nf') return false;
 
         //ensure we have the leadpages page id
         if(isset($post['leadpages_page_id'])){
