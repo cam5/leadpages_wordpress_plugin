@@ -35,6 +35,9 @@ class LeadPagesPostTypeModel
             return $post_id;
         }
 
+        //check if its a leadpage
+        if($post->post_type != 'leadpages_post') return $post_id;
+
         //check if post slug already exists
         if ($post->post_status != "trash") {
             $slug = trim($_POST['leadpages_slug'], '/');
@@ -52,8 +55,7 @@ class LeadPagesPostTypeModel
         }
 
 
-        //check if its a leadpage
-        if($post->post_type != 'leadpages_post') return $post_id;
+
 
         //check to see if the status is trash if so delete it and return post_id
         if ($post->post_status = "trash" && !isset($_POST['post_status'])) {
