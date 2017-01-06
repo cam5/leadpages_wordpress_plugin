@@ -7,31 +7,33 @@ use TheLoop\Contracts\SettingsPage;
 
 class LeadpagesLoginPage implements SettingsPage
 {
-    public static function getName(){
+    public static function getName()
+    {
         return get_called_class();
     }
 
-    public function definePage() {
+    public function definePage()
+    {
         global $leadpagesConfig;
-        add_menu_page('leadpages', 'Leadpages', 'manage_options', 'Leadpages', array($this, 'displayCallback'), 'none' );
+        add_menu_page('leadpages', 'Leadpages', 'manage_options', 'Leadpages', array($this, 'displayCallback'), 'none');
     }
 
 
-    public function displayCallback(){
-        if(isset($_GET['code'])){
+    public function displayCallback()
+    {
+        if (isset($_GET['code'])) {
             $code = sanitize_text_field($_GET['code']);
-            echo '<div class="notice notice-error is-dismissible"><p>Login Failed Error Code: '. esc_html($code) .'</p></div>';
+            echo '<div class="notice notice-error is-dismissible"><p>Login Failed Error Code: ' . esc_html($code) . '</p></div>';
         }
-        $html = file_get_contents('https://leadbrite.appspot.com/plugin_login_page');
-        if(empty($html)){
-            global $leadpagesConfig;
-            $html = file_get_contents($leadpagesConfig['admin_assets'] . '/pages/loginpage.html');
-        }
+        global $leadpagesConfig;
+        $html = $this->loginPageHtml();
+
         echo $html;
     }
 
-    public function registerPage(){
-        add_action( 'admin_menu', array($this, 'definePage') );
+    public function registerPage()
+    {
+        add_action('admin_menu', array($this, 'definePage'));
     }
 
     public function loginPageHtml()
