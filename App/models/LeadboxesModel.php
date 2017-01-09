@@ -82,15 +82,17 @@ class LeadboxesModel
         $leadboxes = self::getLpSettings();
         if($type == 'timed'){
             if($leadboxes['lp_select_field_0'] == 'ddbox'){
-
-                return $leadboxes['leadboxes_timed_js']->embed_code;
+                if($leadboxes['leadboxes_timed_js']) {
+                    return $leadboxes['leadboxes_timed_js']->embed_code;
+                }
             }
         }
 
         if($type == 'exit'){
             if($leadboxes['lp_select_field_2'] == 'ddbox'){
-
-                return $leadboxes['leadboxes_exit_js']->embed_code;
+                if($leadboxes['leadboxes_exit_js']) {
+                    return $leadboxes['leadboxes_exit_js']->embed_code;
+                }
             }
         }
 
