@@ -39,7 +39,10 @@ class LeadPagesPostTypeModel
         if($post->post_type != 'leadpages_post') return $post_id;
 
         //check if post slug already exists
-        if ($post->post_status != "trash") {
+        //404 and homepage are always blank so we need to not check those
+        $lpPostType = trim($_POST['leadpages-post-type'], '/');
+
+        if ($post->post_status != "trash" && $lpPostType !== 'fp' && $lpPostType != 'nf') {
             $slug = trim($_POST['leadpages_slug'], '/');
             $results = $wpdb->get_results("
               SELECT * from {$wpdb->prefix}posts WHERE ID in(
