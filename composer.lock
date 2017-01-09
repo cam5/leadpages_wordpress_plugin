@@ -295,16 +295,16 @@
         },
         {
             "name": "leadpages/pages",
-            "version": "1.1.0",
+            "version": "1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LeadPages/php_pages_component.git",
-                "reference": "ee21f80472a1b65817e404181edaf9bc606b3ef8"
+                "reference": "b8d163c3b8dc9a94c6119695621d7569a124ebfc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/LeadPages/php_pages_component/zipball/ee21f80472a1b65817e404181edaf9bc606b3ef8",
-                "reference": "ee21f80472a1b65817e404181edaf9bc606b3ef8",
+                "url": "https://api.github.com/repos/LeadPages/php_pages_component/zipball/b8d163c3b8dc9a94c6119695621d7569a124ebfc",
+                "reference": "b8d163c3b8dc9a94c6119695621d7569a124ebfc",
                 "shasum": ""
             },
             "require": {
@@ -332,7 +332,7 @@
                 }
             ],
             "description": "A package to allow you to easily integrate Leadpages pages into your PHP project",
-            "time": "2016-11-11 18:50:15"
+            "time": "2017-01-06 15:56:07"
         },
         {
             "name": "pimple/pimple",
