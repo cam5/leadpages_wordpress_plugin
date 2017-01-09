@@ -6,7 +6,10 @@ var shell = require('gulp-shell');
 var args   = require('yargs').argv;
 var composer = require('gulp-composer');
 var runSequence = require('run-sequence');
-
+var os = require('os');
+var homeDir = os.homedir();
+var releaseBase = homeDir + '/projects/releases/leadpages-wordpress-v2/';
+var releaseFolder = releaseBase+'leadpages';
 /********
  sass
  *******/
@@ -21,25 +24,9 @@ gulp.task('sass:watch', function () {
     gulp.watch('./App/assets/sass/*.scss', ['sass']);
 });
 
-gulp.task('setupTestEnv', shell.task([
-    "bash bin/install-wp-tests.sh wordpress2 root root 127.0.0.1 latest"
-]));
-
-var releaseBase = '/Users/brandonbraner/projects/releases/leadpages-wordpress-v2/'
-var releaseFolder = releaseBase+'leadpages';
-var zipsFolder = '/Users/brandonbraner/projects/releases/leadpages-wordpress-v2/archive/';
-
+//remove files form release dir so all new files can be rebuilt
 gulp.task('removeallfiles',function(){
     return del([releaseFolder+'/**/*'], {force: true});
-});
-
-//compress whole folder and move it for a full backup
-
-gulp.task('compressandmove', function(){
-    var date = new Date();
-    return gulp.src('.')
-        .pipe(zip('archive '+date+'.zip'))
-        .pipe(gulp.dest(zipsFolder));
 });
 
 gulp.task('runcomposer', function(){
@@ -47,7 +34,7 @@ gulp.task('runcomposer', function(){
 });
 
 gulp.task('run_composer_release', function(){
-    return composer("update --no-dev --working-dir /Users/brandonbraner/projects/releases/leadpages-wordpress-v2/beta2/leadpages");
+    return composer("update --no-dev --working-dir " + releaseFolder);
 });
 
 gulp.task('movetoreleases', function(){
@@ -57,7 +44,13 @@ gulp.task('movetoreleases', function(){
 });
 
 gulp.task('removeUnneedFiles',function(){
-    return del([releaseFolder+'/node_modules', releaseFolder+'/tests', releaseFolder+'/bin'], {force: true});
+    return del([
+        releaseFolder+'/node_modules',
+        releaseFolder+'/tests',
+        releaseFolder+'/bin',
+        releaseFolder+'/vendor/bin/phantomjs',
+        releaseFolder+'/vendor/jakoch',
+    ], {force: true});
 });
 
 gulp.task('runcomposer2', function(){
