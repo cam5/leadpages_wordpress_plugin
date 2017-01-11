@@ -105,6 +105,9 @@ class LeadpageController
      */
     public function displayWelcomeGate($posts)
     {
+        if(is_feed()){
+            return $posts;
+        }
         return $this->welcomeGate->displayWelcomeGate($posts);
     }
 
