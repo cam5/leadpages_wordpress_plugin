@@ -7,6 +7,8 @@ A WordPress plugin to easily use your Leadpages pages and Leadboxes inside your 
 * 2.1.4.5
     * Fixed issue where WelcomeGate pages would not allow a feed to be viewed
     * Fixed issue where a search page would return a Homepage Leadpage if it was setup.
+    * Fix for Auto Draft showing up as url in Leadpage listing in admin
+    * Fix for trying to resave an existing page shows a slug already exists error
 * 2.1.4.4 
     * Drag and Drop Leadboxes in the Global Leadbox section.
     * Split Tested pages cookies have been added to track properly
