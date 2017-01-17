@@ -173,6 +173,15 @@ class LeadpageController
                 return;
             }
             $html = $apiResponse['response'];
+
+            if(isset($apiResponse['splitTestCookie'])){
+                $cookie = $apiResponse['splitTestCookie'];
+                setcookie(
+                    $cookie['Name'],
+                    $cookie['Value'],
+                    $cookie['Expires']
+                );
+            }
         }
 
         if(ob_get_length() > 0){
