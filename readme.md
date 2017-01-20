@@ -4,6 +4,10 @@
 A WordPress plugin to easily use your Leadpages pages and Leadboxes inside your WordPress site.
 
 ***Change Log***
+* 2.1.4.6
+    * Fix for page load slowness. Had to store the new page api id for pages created with old plugin
+    * Allow pages with customer permalinks of something like /blog/pagename to load a leadpages with just pagename
+    
 * 2.1.4.5
     * Fixed issue where WelcomeGate pages would not allow a feed to be viewed
     * Fixed issue where a search page would return a Homepage Leadpage if it was setup.
