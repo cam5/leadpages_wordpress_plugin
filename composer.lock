@@ -580,16 +580,16 @@
         },
         {
             "name": "codeception/codeception",
-            "version": "2.2.7",
+            "version": "2.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/Codeception.git",
-                "reference": "86770e89d266557c20dd0b1de5390e706f4770c1"
+                "reference": "0a87d4b19070a24636125993450a9d3f698a6663"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/86770e89d266557c20dd0b1de5390e706f4770c1",
-                "reference": "86770e89d266557c20dd0b1de5390e706f4770c1",
+                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/0a87d4b19070a24636125993450a9d3f698a6663",
+                "reference": "0a87d4b19070a24636125993450a9d3f698a6663",
                 "shasum": ""
             },
             "require": {
@@ -668,7 +668,7 @@
                 "functional testing",
                 "unit testing"
             ],
-            "time": "2016-12-05 04:12:24"
+            "time": "2017-01-20 00:54:15"
         },
         {
             "name": "composer/ca-bundle",
