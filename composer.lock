@@ -214,16 +214,16 @@
         },
         {
             "name": "leadpages/leadboxes",
-            "version": "1.1.4",
+            "version": "1.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LeadPages/php_leadbox_component.git",
-                "reference": "2aa15f6b8ebd40f0986e143410f0a737ea8d7c0f"
+                "reference": "cfe9240eceae965d43a58917da205a6505d92663"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/LeadPages/php_leadbox_component/zipball/2aa15f6b8ebd40f0986e143410f0a737ea8d7c0f",
-                "reference": "2aa15f6b8ebd40f0986e143410f0a737ea8d7c0f",
+                "url": "https://api.github.com/repos/LeadPages/php_leadbox_component/zipball/cfe9240eceae965d43a58917da205a6505d92663",
+                "reference": "cfe9240eceae965d43a58917da205a6505d92663",
                 "shasum": ""
             },
             "require": {
@@ -251,33 +251,34 @@
                 }
             ],
             "description": "A package to allow you to easily integrate Leadpages Leadboxes into your PHP project",
-            "time": "2016-11-11 19:15:14"
+            "time": "2017-01-20 20:15:13"
         },
         {
             "name": "leadpages/leadpages-auth",
-            "version": "1.1.4",
+            "version": "1.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LeadPages/php_auth_package.git",
-                "reference": "deaea35a9d8b189d7586ee9630638aab6c58da76"
+                "reference": "e5e53ff1fbd3fd4a06362e8e6d792b368038b1ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/LeadPages/php_auth_package/zipball/deaea35a9d8b189d7586ee9630638aab6c58da76",
-                "reference": "deaea35a9d8b189d7586ee9630638aab6c58da76",
+                "url": "https://api.github.com/repos/LeadPages/php_auth_package/zipball/e5e53ff1fbd3fd4a06362e8e6d792b368038b1ee",
+                "reference": "e5e53ff1fbd3fd4a06362e8e6d792b368038b1ee",
                 "shasum": ""
             },
             "require": {
                 "guzzlehttp/guzzle": "~5 < 6",
+                "leadpages/leadpages-auth": "*",
                 "php": ">=5.4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "*"
+                "phpunit/phpunit": "4.8"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Leadpages\\": "src/"
+                    "Leadpages\\Leadboxes\\": "src/Leadboxes/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -290,8 +291,8 @@
                     "email": "brandon.braner@ave81.com"
                 }
             ],
-            "description": "Authentication package for interfacing with Leadpages API's",
-            "time": "2016-11-11 18:36:17"
+            "description": "A package to allow you to easily integrate Leadpages Leadboxes into your PHP project",
+            "time": "2016-11-11 19:02:12"
         },
         {
             "name": "leadpages/pages",

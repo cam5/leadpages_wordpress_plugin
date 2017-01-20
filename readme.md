@@ -4,6 +4,8 @@
 A WordPress plugin to easily use your Leadpages pages and Leadboxes inside your WordPress site.
 
 ***Change Log***
+* 2.1.5
+    * Turned on ignore veirfy peer for all curl calls to avoid curl 60 errors...
 * 2.1.4.6
     * Fix for page load slowness. Had to store the new page api id for pages created with old plugin
     * Allow pages with customer permalinks of something like /blog/pagename to load a leadpages with just pagename
