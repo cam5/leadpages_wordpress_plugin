@@ -324,7 +324,9 @@ class LeadPagesPostTypeModel
         $pages = $this->PagesApi->getAllUserPages();
         foreach ($pages['_items'] as $page) {
             if ($page['_meta']['xor_hex_id'] == $xorId) {
-                return $page['_meta']['id'];
+                $leadpagesPageId = $page['_meta']['id'];
+                update_post_meta($pageId, 'leadpages_page_id', $leadpagesPageId);
+                return $leadpagesPageId;
             }
         }
         //return false if page doesn't exist
