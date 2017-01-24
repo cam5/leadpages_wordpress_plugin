@@ -96,7 +96,7 @@ class LeadboxController
      * @param $leadboxes
      */
     public function getTimedLeadboxCode($leadboxes){
-        if($leadboxes['timed'][1] == $this->postType || $leadboxes['timed'][1] == 'all'){
+        if($leadboxes['timed'][1] == $this->postType && !is_front_page() || $leadboxes['timed'][1] == 'all'){
             $apiResponse = $this->leadboxApi->getSingleLeadboxEmbedCode($leadboxes['timed'][0], 'timed');
             $timed_embed_code = json_decode($apiResponse['response'], true);
         }
@@ -112,7 +112,7 @@ class LeadboxController
     public function getExitLeadboxCode($leadboxes){
 
 
-        if($leadboxes['exit'][1] == $this->postType || $leadboxes['exit'][1] == 'all'){
+        if($leadboxes['exit'][1] == $this->postType && !is_front_page() || $leadboxes['exit'][1] == 'all'){
             $apiResponse = $this->leadboxApi->getSingleLeadboxEmbedCode($leadboxes['exit'][0], 'exit');
             $exit_embed_code = json_decode($apiResponse['response'], true);
         }
