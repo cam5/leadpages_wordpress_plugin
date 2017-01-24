@@ -107,23 +107,6 @@ class LeadboxController
     }
 
     /**
-     * return js code directly from database if it is there, if not make a call for it
-     * hopefully improve page load speeds
-     * @param $leadboxes
-     */
-    public function getGlobalTimedLeadboxJs($leadboxes)
-    {
-        if(isset($this->globalLeadboxes['timed'][2])) {
-            $globalTimedLeadboxJs = $this->globalLeadboxes['timed'][2];
-        }
-        if(empty($globalTimedLeadboxJs)){
-            //include for backward compatibility
-            return $this->getTimedLeadboxCode($leadboxes);
-        }
-        return $globalTimedLeadboxJs;
-    }
-
-    /**
      * @param $leadboxes
      */
     public function getExitLeadboxCode($leadboxes){
@@ -139,31 +122,13 @@ class LeadboxController
         return $exit_embed_code['embed_code'];
     }
 
-
-    /**
-     * return js code directly from database if it is there, if not make a call for it
-     * hopefully improve page load speeds
-     * @param $leadboxes
-     */
-    public function getGlobalExitLeadboxJs($leadboxes)
-    {
-        if(isset($this->globalLeadboxes['exit'][2])) {
-            $globalExitLeadboxJs = $this->globalLeadboxes['exit'][2];
-        }
-        if(empty($globalExitLeadboxJs)){
-            //include for backward compatibility
-            return $this->getExitLeadboxCode($leadboxes);
-        }
-        return $globalExitLeadboxJs;
-    }
-
     /**
      * @param $content
      *
      * @return string
      */
     public function addTimedLeadboxesGlobal(){
-        return $this->getGlobalTimedLeadboxJs($this->globalLeadboxes);
+        return $this->getTimedLeadboxCode($this->globalLeadboxes);
     }
 
     /**
@@ -172,7 +137,7 @@ class LeadboxController
      * @return string
      */
     public function addExitLeadboxesGlobal(){
-        return $this->getGlobalExitLeadboxJs($this->globalLeadboxes);
+        return $this->getExitLeadboxCode($this->globalLeadboxes);
 
     }
 
