@@ -155,7 +155,7 @@ trait LeadboxDisplay
         $disallowedPostTypes = $this->disallowedPostTypes();
         $options = '<br />';
 
-        $options .= '<input type="radio" id="timed_radio_all" name="leadboxes_timed_display_radio" value="all" '.$this->currentExitLeadboxDisplayPostType('all').'> <label for="timed_radio_all">Every WordPress page, including homepage, 404 and posts</label>';
+        $options .= '<input type="radio" id="timed_radio_all" name="leadboxes_timed_display_radio" value="all" '.$this->currentTimedLeadboxDisplayPostType('all').'> <label for="timed_radio_all">Every WordPress page, including homepage, 404 and posts</label>';
 
         foreach($this->postTypesForLeadboxes as $postType){
             if(in_array($postType, $disallowedPostTypes)){
