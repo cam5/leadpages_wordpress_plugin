@@ -60,7 +60,7 @@ class LeadboxesModel
     }
     public static function checkIfB3GlobalExitLeadbox()
     {
-        if(!empty($_POST['leadbox_timed_script']) && $_POST['lp_select_field_2'] == 'ddbox'){
+        if(!empty($_POST['leadbox_exit_script']) && $_POST['lp_select_field_2'] == 'ddbox'){
             return stripslashes($_POST['leadbox_exit_script']);
         }
     }

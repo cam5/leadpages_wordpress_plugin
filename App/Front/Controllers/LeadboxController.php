@@ -128,6 +128,10 @@ class LeadboxController
      * @return string
      */
     public function addTimedLeadboxesGlobal(){
+        //get leadbox code if its in the database. needed for b3 leadboxes do not remove
+        if(isset($this->globalLeadboxes['timed'][2])){
+            return $this->globalLeadboxes['timed'][2];
+        }
         return $this->getTimedLeadboxCode($this->globalLeadboxes);
     }
 
@@ -137,6 +141,10 @@ class LeadboxController
      * @return string
      */
     public function addExitLeadboxesGlobal(){
+        //get leadbox code if its in the database. needed for b3 leadboxes do not remove
+        if(isset($this->globalLeadboxes['exit'][2])){
+            return $this->globalLeadboxes['exit'][2];
+        }
         return $this->getExitLeadboxCode($this->globalLeadboxes);
 
     }
