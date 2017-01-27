@@ -24,7 +24,7 @@
             });
 
             ed.addButton('add_leadbox', {
-                title: 'Leadboxe\'s',
+                title: 'Leadboxes',
                 type: 'menubutton',
                 cmd: 'addLeadboxShortCode',
                 icon: 'leadbox_shortcode_icon',
