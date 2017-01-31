@@ -4,6 +4,11 @@
 A WordPress plugin to easily use your Leadpages pages and Leadboxes inside your WordPress site.
 
 ***Change Log***
+
+
+*2.1.5.4
+    * Changed WelcomeGate to only display on home and front pages
+
 * 2.1.5.3
     * Fixed issue where a exit drag and drop leadbox would not save if a timed 
     drag and drop box did not exist.
