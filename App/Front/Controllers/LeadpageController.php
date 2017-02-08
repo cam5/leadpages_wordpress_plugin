@@ -105,7 +105,7 @@ class LeadpageController
      */
     public function displayWelcomeGate($posts)
     {
-        if(is_home() || is_front_page()){
+        if(is_home() || @is_front_page()){
             return $this->welcomeGate->displayWelcomeGate($posts);
         }
         return $posts;

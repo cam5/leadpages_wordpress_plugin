@@ -89,7 +89,7 @@ class FrontBootstrap
      */
     public function displayLeadpage($posts)
     {
-        if(is_home() || is_front_page() || is_search() || is_feed()){
+        if(is_home() || @is_front_page() || is_search() || is_feed()){
             return $posts;
         }
 

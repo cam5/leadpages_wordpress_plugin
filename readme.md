@@ -4,8 +4,12 @@
 A WordPress plugin to easily use your Leadpages pages and Leadboxes inside your WordPress site.
 
 ***Change Log***
-
-
+*2.1.5.6
+    * is_front_page returning errors with some sites static front page setups. Silenced errors with @is_front_page
+    
+*2.1.5.5
+    * Changed update command for updating from version 1 to version 2 to ensure it runs properly
+    
 *2.1.5.4
     * Changed WelcomeGate to only display on home and front pages
 
