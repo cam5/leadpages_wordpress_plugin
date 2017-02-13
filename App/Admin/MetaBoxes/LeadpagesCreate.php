@@ -26,6 +26,7 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
 
         $this->pagesApi      = $leadpagesApp['pagesApi'];
         $this->postTypeModel = $leadpagesApp['lpPostTypeModel'];
+        $this->splitTestApi  = $leadpagesApp['splitTestApi'];
         add_action('wp_ajax_get_pages_dropdown', array($this, 'generateSelectList'));
         add_action('wp_ajax_nopriv_get_pages_dropdown', array($this, 'generateSelectList'));
     }
@@ -225,7 +226,11 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
             $currentPage = $leadpagesApp['lpPostTypeModel']->getPageByXORId($id);
         }
 
-        $items        = $leadpagesApp['pagesApi']->getAllUserPages();
+        $pages = $leadpagesApp['pagesApi']->getAllUserPages();
+
+        $splitTest    = $leadpagesApp['splitTestApi']->getActiveSplitTests();
+        $items['_items'] = array_merge($pages['_items'], $splitTest);
+        $items = $leadpagesApp['pagesApi']->sortPages($items);
         $size         = sizeof($items['_items']);
         $optionString = '';
         $optionString .= '<select id="select_leadpages" class="leadpage_select_dropdown" name="leadpages_my_selected_page">';

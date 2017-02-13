@@ -12,6 +12,7 @@ use LeadpagesWP\Bootstrap\FrontBootstrap;
 use LeadpagesWP\Helpers\PasswordProtected;
 use LeadpagesWP\Admin\TinyMCE\LeadboxTinyMCE;
 use LeadpagesWP\ServiceProviders\LeadboxesApi;
+use LeadpagesWP\ServiceProviders\SplitTestApi;
 use TheLoop\ServiceContainer\ServiceContainer;
 use LeadpagesWP\models\LeadPagesPostTypeModel;
 use LeadpagesWP\Front\Controllers\LeadboxController;
@@ -169,6 +170,10 @@ $leadpagesApp['pagesApi'] = function ($leadpagesApp) {
  */
 $leadpagesApp['leadboxesApi'] = function ($leadpagesApp) {
     return new LeadboxesApi($leadpagesApp['httpClient'], $leadpagesApp['leadpagesLogin']);
+};
+
+$leadpagesApp['splitTestApi'] = function ($leadpagesApp){
+    return new SplitTestApi($leadpagesApp['leadpagesLogin']);
 };
 
 
