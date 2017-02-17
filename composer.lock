@@ -1448,16 +1448,16 @@
         },
         {
             "name": "lucatume/wp-browser",
-            "version": "1.19.9",
+            "version": "1.19.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lucatume/wp-browser.git",
-                "reference": "6abdd3ffa14d6520e6eb39fe7981ba3790ca7a20"
+                "reference": "83e3845e51a7966d355ca17fe9739c53ac31883c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lucatume/wp-browser/zipball/6abdd3ffa14d6520e6eb39fe7981ba3790ca7a20",
-                "reference": "6abdd3ffa14d6520e6eb39fe7981ba3790ca7a20",
+                "url": "https://api.github.com/repos/lucatume/wp-browser/zipball/83e3845e51a7966d355ca17fe9739c53ac31883c",
+                "reference": "83e3845e51a7966d355ca17fe9739c53ac31883c",
                 "shasum": ""
             },
             "require": {
@@ -1504,7 +1504,7 @@
                 "codeception",
                 "wordpress"
             ],
-            "time": "2017-02-14 14:48:01"
+            "time": "2017-02-14 17:29:31"
         },
         {
             "name": "lucatume/wp-browser-commons",
@@ -3073,7 +3073,7 @@
         },
         {
             "name": "symfony/browser-kit",
-            "version": "v3.2.3",
+            "version": "v3.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/browser-kit.git",
@@ -3247,7 +3247,7 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v3.2.3",
+            "version": "v3.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
@@ -3420,7 +3420,7 @@
         },
         {
             "name": "symfony/dom-crawler",
-            "version": "v3.2.3",
+            "version": "v3.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
@@ -3905,16 +3905,16 @@
         },
         {
             "name": "wp-cli/php-cli-tools",
-            "version": "v0.11.1",
+            "version": "v0.11.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/php-cli-tools.git",
-                "reference": "5311a4b99103c0505db015a334be4952654d6e21"
+                "reference": "6d231e5538b2c0db909b2cb49d30a45faf20069a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/php-cli-tools/zipball/5311a4b99103c0505db015a334be4952654d6e21",
-                "reference": "5311a4b99103c0505db015a334be4952654d6e21",
+                "url": "https://api.github.com/repos/wp-cli/php-cli-tools/zipball/6d231e5538b2c0db909b2cb49d30a45faf20069a",
+                "reference": "6d231e5538b2c0db909b2cb49d30a45faf20069a",
                 "shasum": ""
             },
             "require": {
@@ -3951,7 +3951,7 @@
                 "cli",
                 "console"
             ],
-            "time": "2016-02-08 14:34:01"
+            "time": "2017-02-15 12:17:55"
         },
         {
             "name": "wp-cli/wp-cli",

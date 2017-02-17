@@ -4,6 +4,9 @@
 A WordPress plugin to easily use your Leadpages pages and Leadboxes inside your WordPress site.
 
 ***Change Log***
+*2.1.6
+    * Added split tests as a page object in the Add Leadpage dropdown
+
 *2.1.5.6
     * is_front_page returning errors with some sites static front page setups. Silenced errors with @is_front_page
     
