@@ -4,6 +4,12 @@
 A WordPress plugin to easily use your Leadpages pages and Leadboxes inside your WordPress site.
 
 ***Change Log***
+
+*2.1.6.1
+    * Updated cron job to check status of users account to ensure that the response code is 200
+    
+   and the profiles is a valid index of response
+
 *2.1.6
     * Added split tests as a page object in the Add Leadpage dropdown
 
