@@ -3,7 +3,7 @@
     "description": "Leadpages WordPress connector",
     "require": {
         "pimple/pimple": "^3.0",
-        "leadpages/leadpages-auth": "1.1.4",
+        "leadpages/leadpages-auth": "*",
         "leadpages/pages": "*",
         "leadpages/leadboxes": "*",
         "icanboogie/inflector": "^1.4"
