@@ -64,11 +64,12 @@ class LeadpagesCronJobs
         global $leadpagesApp;
         $loginService = $leadpagesApp['leadpagesLogin'];
 
-        //get the token to makesure it is set
+        //get the token to make sure it is set
         $loginService->getToken();
         if($loginService->token !='') {
             $response = $leadpagesApp['leadpagesLogin']->checkCurrentUserSession();
-            if(!array_key_exists('LEADPAGES_20160216' ,$response['profiles'])){
+            if($response['_status']['code'] != 200){return false;}
+            if(!array_key_exists('LEADPAGES_20160216' ,$response['profiles']) && $response['profiles']){
                 $loginService->deleteToken();
             }
         }
@@ -78,6 +79,7 @@ class LeadpagesCronJobs
     {
         global $leadpagesApp;
         $loginService = $leadpagesApp['leadpagesLogin'];
+        error_log("lp-key ". $loginService->token);
 
         if($loginService->token !='') {
             $response = $leadpagesApp['leadpagesLogin']->refreshUserToken();
