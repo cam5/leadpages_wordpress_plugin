@@ -51,6 +51,9 @@ checkPHPVersion($leadpages_connector_plugin_version);
   |--------------------------------------------------------------------------
   */
 register_activation_hook(__FILE__, function () {
+    //changed to 5 days vs 25 days, need to clear out old 25
+    //day so new 5 day can register
+    wp_clear_scheduled_hook('refresh_leadpages_token');
     $activationEvent = new ActivationEvent();
     $activationEvent->storeEvent();
 });

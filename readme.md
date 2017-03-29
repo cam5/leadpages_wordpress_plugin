@@ -5,10 +5,11 @@ A WordPress plugin to easily use your Leadpages pages and Leadboxes inside your 
 
 ***Change Log***
 
-*2.1.6.1
-    * Updated cron job to check status of users account to ensure that the response code is 200
+* 2.1.6.1
+   * Updated cron job to check status of users account to ensure that the response code is 200
     
    and the profiles is a valid index of response
+   * Added WordPress cert to all https calls to help mitigate ssl erros
 
 *2.1.6
     * Added split tests as a page object in the Add Leadpage dropdown
