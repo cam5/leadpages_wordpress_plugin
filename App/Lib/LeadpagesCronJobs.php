@@ -46,7 +46,7 @@ class LeadpagesCronJobs
             wp_schedule_event(time(), '5days', 'refresh_leadpages_token');
         }
 
-        add_action('check_user_leadpages_account', array(get_called_class(), 'checkUsersAccountStatus'));
+       // add_action('check_user_leadpages_account', array(get_called_class(), 'checkUsersAccountStatus'));
         add_action('refresh_leadpages_token', array(get_called_class(), 'updateUsersSecurityToken'));
 
     }
