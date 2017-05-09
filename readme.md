@@ -4,7 +4,8 @@
 A WordPress plugin to easily use your Leadpages pages and Leadboxes inside your WordPress site.
 
 ***Change Log***
-
+* 2.1.6.3
+    * Removed hourly check for lp token
 * 2.1.6.2
     * Updated auth urls to account vs auth
     * Changed cron job to check token to 5 days vs 25 days to allow time to recheck before user is logged out
