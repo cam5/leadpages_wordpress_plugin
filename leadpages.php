@@ -24,17 +24,17 @@ use LeadpagesMetrics\DeactivationEvent;
 use LeadpagesWP\Lib\LeadpagesCronJobs;
 use LeadpagesWP\Lib\Update;
 
-require_once('c3.php');
-require_once('App/Lib/plugables.php');
-require_once('vendor/autoload.php');
-require_once('App/Config/App.php');
-require_once($leadpagesConfig['basePath'] . 'Framework/ServiceContainer/ServiceContainer.php');
-require_once($leadpagesConfig['basePath'] . 'App/Config/RegisterProviders.php');
+require_once __DIR__ . '/c3.php';
+require_once __DIR__ . '/App/Lib/plugables.php';
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/App/Config/App.php';
 
+require_once $leadpagesConfig['basePath'] . 'Framework/ServiceContainer/ServiceContainer.php';
+require_once $leadpagesConfig['basePath'] . 'App/Config/RegisterProviders.php';
 
 $leadpages_connector_plugin_version = '2.1.6.4';
-define('REQUIRED_PHP_VERSION', 5.4);
 
+define('REQUIRED_PHP_VERSION', 5.4);
 
 /*
   |--------------------------------------------------------------------------
@@ -51,9 +51,7 @@ checkPHPVersion($leadpages_connector_plugin_version);
   |--------------------------------------------------------------------------
   */
 register_activation_hook(__FILE__, function () {
-    //changed to 5 days vs 25 days, need to clear out old 25
-    //day so new 5 day can register
-    wp_clear_scheduled_hook('refresh_leadpages_token');
+    LeadpagesCronJobs::clear_cronjobs();
     $activationEvent = new ActivationEvent();
     $activationEvent->storeEvent();
 });
@@ -63,26 +61,40 @@ register_deactivation_hook(__FILE__, function () {
     $deactivationEvent->storeEvent();
 });
 
-/*
-  |--------------------------------------------------------------------------
-  | Cron Jobs for account maintance
-  |--------------------------------------------------------------------------
-  */
-LeadpagesCronJobs::addCronScheduleTimes();
-LeadpagesCronJobs::registerCronJobs();
+/**
+ * Remove cronjobs from previous plugin versions <2.1.6.4
+ *
+ * @see https://codex.wordpress.org/Plugin_API/Action_Reference/upgrader_process_complete
+ */
+add_action('upgrader_process_complete', 'upgrade_plugin_handler', 10, 2);
+
+function upgrade_plugin_handler($upgrader_object, $options) {
+    $current_plugin_path_name = plugin_basename(__FILE__);
+
+    if ($options['action'] == 'update' && $options['type'] == 'plugin' ) {
+        foreach ($options['packages'] as $each_plugin) {
+            if ($each_plugin == $current_plugin_path_name) {
+
+                LeadpagesCronJobs::clear_cronjobs();
+
+            }
+        }
+    }
+}
+
 
 /*
   |--------------------------------------------------------------------------
   | Fix Database items from plugin version 2.0 and 2.0.1
   |--------------------------------------------------------------------------
   */
-require_once($leadpagesConfig['basePath'] . 'App/Lib/RevertChanges.php');
+require_once $leadpagesConfig['basePath'] . 'App/Lib/RevertChanges.php';
 /*
   |--------------------------------------------------------------------------
   | Register Auto Update
   |--------------------------------------------------------------------------
   */
-require_once($leadpagesConfig['basePath'] . 'App/Lib/Update.php');
+require_once $leadpagesConfig['basePath'] . 'App/Lib/Update.php';
 $update = new Update();
 $update->register_auto_update();
 $update->scheduleCacheUpdates();
@@ -149,14 +161,14 @@ function version24Update()
 {
     global $leadpages_connector_plugin_version;
     if (get_option('leadpages_24_update') != true) {
-        updateLeadpagesToPublsihed();
+        updateLeadpagesToPublished();
         updatePostNamesToTitle();
         update_option('leadpages_24_update', true);
 
     }
 }
 
-function updateLeadpagesToPublsihed()
+function updateLeadpagesToPublished()
 {
     global $wpdb;
 
