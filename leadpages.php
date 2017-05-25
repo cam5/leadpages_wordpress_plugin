@@ -52,8 +52,7 @@ checkPHPVersion($leadpages_connector_plugin_version);
   |--------------------------------------------------------------------------
   */
 register_activation_hook(__FILE__, function () {
-    //changed to 5 days vs 25 days, need to clear out old 25
-    //day so new 5 day can register
+    wp_clear_scheduled_hook('check_user_leadpages_account');
     wp_clear_scheduled_hook('refresh_leadpages_token');
     $activationEvent = new ActivationEvent();
     $activationEvent->storeEvent();
@@ -64,13 +63,22 @@ register_deactivation_hook(__FILE__, function () {
     $deactivationEvent->storeEvent();
 });
 
-/*
-  |--------------------------------------------------------------------------
-  | Cron Jobs for account maintance
-  |--------------------------------------------------------------------------
-  */
-LeadpagesCronJobs::addCronScheduleTimes();
-LeadpagesCronJobs::registerCronJobs();
+/**
+ * Remove cronjobs from previous plugin versions <2.1.6.4
+ */
+add_action('upgrader_process_complete', 'clear_cronjobs', 10, 2);
+
+function clear_cronjobs($upgrader_object, $options) {
+    $current_plugin_path_name = plugin_basename(__FILE__);
+
+    if ($options['action'] == 'update' && $options['type'] == 'plugin' ) {
+        foreach ($options['packages'] as $each_plugin) {
+            if ($each_plugin == $current_plugin_path_name) {
+                LeadpagesCronJobs::clear_cronjobs();        
+            }
+        }
+    }
+}
 
 /*
   |--------------------------------------------------------------------------

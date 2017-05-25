@@ -1,6 +1,5 @@
 <?php
 
-
 namespace LeadpagesWP\Lib;
 
 class LeadpagesCronJobs
@@ -35,20 +34,6 @@ class LeadpagesCronJobs
      */
     public static function registerCronJobs()
     {
-
-        //check users account to ensure its active
-        if (! wp_next_scheduled ( 'check_user_leadpages_account' )) {
-            wp_schedule_event(time(), 'hourly', 'check_user_leadpages_account');
-        }
-
-        //check users account to ensure its active
-        if (! wp_next_scheduled ( 'refresh_leadpages_token' )) {
-            wp_schedule_event(time(), '5days', 'refresh_leadpages_token');
-        }
-
-       // add_action('check_user_leadpages_account', array(get_called_class(), 'checkUsersAccountStatus'));
-        add_action('refresh_leadpages_token', array(get_called_class(), 'updateUsersSecurityToken'));
-
     }
 
     /**
