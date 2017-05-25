@@ -66,19 +66,22 @@ register_deactivation_hook(__FILE__, function () {
  *
  * @see https://codex.wordpress.org/Plugin_API/Action_Reference/upgrader_process_complete
  */
-add_action('upgrader_process_complete', 'clear_cronjobs', 10, 2);
+add_action('upgrader_process_complete', 'upgrade_plugin_handler', 10, 2);
 
-function clear_cronjobs($upgrader_object, $options) {
+function upgrade_plugin_handler($upgrader_object, $options) {
     $current_plugin_path_name = plugin_basename(__FILE__);
 
     if ($options['action'] == 'update' && $options['type'] == 'plugin' ) {
         foreach ($options['packages'] as $each_plugin) {
             if ($each_plugin == $current_plugin_path_name) {
+
                 LeadpagesCronJobs::clear_cronjobs();
+
             }
         }
     }
 }
+
 
 /*
   |--------------------------------------------------------------------------
