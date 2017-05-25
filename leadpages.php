@@ -24,10 +24,11 @@ use LeadpagesMetrics\DeactivationEvent;
 use LeadpagesWP\Lib\LeadpagesCronJobs;
 use LeadpagesWP\Lib\Update;
 
-require_once('c3.php');
-require_once('App/Lib/plugables.php');
-require_once('vendor/autoload.php');
-require_once('App/Config/App.php');
+require_once __DIR__ . '/c3.php';
+require_once __DIR__ . '/App/Lib/plugables.php';
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/App/Config/App.php';
+
 require_once($leadpagesConfig['basePath'] . 'Framework/ServiceContainer/ServiceContainer.php');
 require_once($leadpagesConfig['basePath'] . 'App/Config/RegisterProviders.php');
 
