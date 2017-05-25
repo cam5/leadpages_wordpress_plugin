@@ -133,7 +133,6 @@ class LeadpageController
         global $leadpagesApp;
         //get page uri
         $requestedPage = $this->parse_request();
-
         if ( false == $requestedPage ) {
             return false;
         }
@@ -169,6 +168,7 @@ class LeadpageController
             }
         }else {
             $apiResponse = $this->pagesApi->downloadPageHtml($pageId);
+
             if(isset($apiResponse['error'])){
                 //$leadpagesApp['errorEventsHandler']->reportError($apiResponse, ['pageId' => $pageId]);
                 //output error to screen

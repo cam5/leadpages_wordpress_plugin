@@ -70,9 +70,8 @@ add_action('upgrader_process_complete', 'upgrade_plugin_handler', 10, 2);
 
 function upgrade_plugin_handler($upgrader_object, $options) {
     $current_plugin_path_name = plugin_basename(__FILE__);
-
     if ($options['action'] == 'update' && $options['type'] == 'plugin' ) {
-        foreach ($options['packages'] as $each_plugin) {
+        foreach ($options['plugins'] as $each_plugin) {
             if ($each_plugin == $current_plugin_path_name) {
 
                 LeadpagesCronJobs::clear_cronjobs();
@@ -81,7 +80,6 @@ function upgrade_plugin_handler($upgrader_object, $options) {
         }
     }
 }
-
 
 /*
   |--------------------------------------------------------------------------

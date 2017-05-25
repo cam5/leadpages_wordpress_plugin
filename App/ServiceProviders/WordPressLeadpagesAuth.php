@@ -166,7 +166,7 @@ class WordPressLeadpagesAuth extends LeadpagesLogin
     }
 
     /**
-     * Create Apikey if it does not exist
+     * Create Api key if it does not exist
      */
     public function checkAndCreateApiKey()
     {
