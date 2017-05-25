@@ -158,14 +158,14 @@ function version24Update()
 {
     global $leadpages_connector_plugin_version;
     if (get_option('leadpages_24_update') != true) {
-        updateLeadpagesToPublsihed();
+        updateLeadpagesToPublished();
         updatePostNamesToTitle();
         update_option('leadpages_24_update', true);
 
     }
 }
 
-function updateLeadpagesToPublsihed()
+function updateLeadpagesToPublished()
 {
     global $wpdb;
 
