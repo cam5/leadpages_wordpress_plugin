@@ -29,13 +29,12 @@ require_once __DIR__ . '/App/Lib/plugables.php';
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/App/Config/App.php';
 
-require_once($leadpagesConfig['basePath'] . 'Framework/ServiceContainer/ServiceContainer.php');
-require_once($leadpagesConfig['basePath'] . 'App/Config/RegisterProviders.php');
-
+require_once $leadpagesConfig['basePath'] . 'Framework/ServiceContainer/ServiceContainer.php';
+require_once $leadpagesConfig['basePath'] . 'App/Config/RegisterProviders.php';
 
 $leadpages_connector_plugin_version = '2.1.6.4';
-define('REQUIRED_PHP_VERSION', 5.4);
 
+define('REQUIRED_PHP_VERSION', 5.4);
 
 /*
   |--------------------------------------------------------------------------
@@ -85,13 +84,13 @@ function clear_cronjobs($upgrader_object, $options) {
   | Fix Database items from plugin version 2.0 and 2.0.1
   |--------------------------------------------------------------------------
   */
-require_once($leadpagesConfig['basePath'] . 'App/Lib/RevertChanges.php');
+require_once $leadpagesConfig['basePath'] . 'App/Lib/RevertChanges.php';
 /*
   |--------------------------------------------------------------------------
   | Register Auto Update
   |--------------------------------------------------------------------------
   */
-require_once($leadpagesConfig['basePath'] . 'App/Lib/Update.php');
+require_once $leadpagesConfig['basePath'] . 'App/Lib/Update.php';
 $update = new Update();
 $update->register_auto_update();
 $update->scheduleCacheUpdates();
