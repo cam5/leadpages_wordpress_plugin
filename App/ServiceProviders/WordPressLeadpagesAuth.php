@@ -166,6 +166,20 @@ class WordPressLeadpagesAuth extends LeadpagesLogin
     }
 
     /**
+     * Create Apikey if it does not exist
+     */
+    public function checkAndCreateApiKey()
+    {
+        //make sure token is set
+        $this->getToken();
+        $apiKey = $this->getApiKey();
+        if(!$apiKey){
+            $this->apiKey = $this->createApiKey();
+            $this->storeApiKey();
+        }
+    }
+
+    /**
      * Set logged in cookie if it is not already set
      */
     public function setLoggedInCookie()

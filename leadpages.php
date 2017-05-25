@@ -76,7 +76,7 @@ function upgrade_plugin_handler($upgrader_object, $options) {
             if ($each_plugin == $current_plugin_path_name) {
 
                 LeadpagesCronJobs::clear_cronjobs();
-
+                $leadpagesApp['leadpagesLogin']->checkAndCreateApiKey();
             }
         }
     }
