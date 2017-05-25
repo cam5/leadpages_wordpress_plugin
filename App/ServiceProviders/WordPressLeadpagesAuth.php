@@ -23,18 +23,40 @@ class WordPressLeadpagesAuth extends LeadpagesLogin
         update_option($this->tokenLabel, $this->token);
     }
 
+	/**
+	 * Store api key in datastore
+	 */
+    public function storeApiKey()
+    {
+        update_option($this->apiKeyLabel, $this->apiKey);
+    }
+
     /**
      * method to implement on extending class to get token from datastore
      * should return token not set property of $this->token
+	 *
      * @return mixed
      */
     public function getToken()
     {
-        $this->token = get_option('leadpages_security_token');
+		$this->token = get_option('leadpages_security_token');
+		return $this->token;
+    }
+
+	/**
+	 * Fetch api key from datastore
+	 *
+	 * @return string
+	 */
+    public function getApiKey()
+    {
+        $this->apiKey = get_option($this->apiKeyLabel);
+        return $this->apiKey;
     }
 
     /**
      * method to implement on extending class to remove token from database
+	 *
      * @return mixed
      */
     public function deleteToken()
@@ -42,15 +64,30 @@ class WordPressLeadpagesAuth extends LeadpagesLogin
         delete_option($this->tokenLabel);
     }
 
-
-    public function login()
+    /**
+     * Clear api key from datastore
+     */
+	public function deleteApiKey()
     {
+        delete_option($this->apiKeyLabel); 
+    }
+
+	/**
+	 * Login using POST superglobal
+	 *
+	 * @return boolean|mixed 
+	 */
+    public function login()
+	{
+		$response = false;
         if (isset($_POST['username']) && isset($_POST['password'])) {
             $username = $_POST['username'];
             $password = stripslashes($_POST['password']); //wordpress automaticlly escapes ' so if the password has one login fails
             $response = $this->getUser($username, $password)->parseResponse();
-            return $response;
+            $this->apiKey = $this->createApiKey(); 
         }
+
+		return $response;
     }
 
     public function redirectOnLogin()
@@ -58,20 +95,23 @@ class WordPressLeadpagesAuth extends LeadpagesLogin
         $response = $this->login();
         if ($response == 'success') {
             $this->storeToken();
+            $this->storeApiKey();
             $this->setLoggedInCookie();
+
             $eventArray = array(
               'email_address' => $_POST['username']
             );
+
             (new LeadpagesSignInEvent())->storeEvent($eventArray);
             wp_redirect(admin_url('edit.php?post_type=leadpages_post'));
             exit;
-        } else {
-            //redirect with error code to display error message
-            $response = json_decode($response, true);
-            $code = sanitize_text_field($response['code']);
-            wp_redirect(admin_url('admin.php?page=Leadpages&code='.$code.''));
-            exit;
         }
+
+		//redirect with error code to display error message
+		$response = json_decode($response, true);
+		$code = sanitize_text_field($response['code']);
+		wp_redirect(admin_url('admin.php?page=Leadpages&code='.$code.''));
+		exit;
     }
 
 
@@ -111,7 +151,6 @@ class WordPressLeadpagesAuth extends LeadpagesLogin
      */
     public function isLoggedIn()
     {
-
         //if cookie is set and is true don't bother with http call
         //if($this->getLoggedInCookie()) return true;
 
@@ -142,10 +181,6 @@ class WordPressLeadpagesAuth extends LeadpagesLogin
      */
     public function getLoggedInCookie()
     {
-        if(isset($_COOKIE['LeadpagesWordPress']) && $_COOKIE['LeadpagesWordPress'] == true){
-            return true;
-        }else{
-            return false;
-        }
+        return (isset($_COOKIE['LeadpagesWordPress']) && $_COOKIE['LeadpagesWordPress'] == true);
     }
 }
