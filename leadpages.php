@@ -64,6 +64,8 @@ register_deactivation_hook(__FILE__, function () {
 
 /**
  * Remove cronjobs from previous plugin versions <2.1.6.4
+ *
+ * @see https://codex.wordpress.org/Plugin_API/Action_Reference/upgrader_process_complete
  */
 add_action('upgrader_process_complete', 'clear_cronjobs', 10, 2);
 
@@ -73,7 +75,7 @@ function clear_cronjobs($upgrader_object, $options) {
     if ($options['action'] == 'update' && $options['type'] == 'plugin' ) {
         foreach ($options['packages'] as $each_plugin) {
             if ($each_plugin == $current_plugin_path_name) {
-                LeadpagesCronJobs::clear_cronjobs();        
+                LeadpagesCronJobs::clear_cronjobs();
             }
         }
     }
