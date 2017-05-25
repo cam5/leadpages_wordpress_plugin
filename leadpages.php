@@ -51,8 +51,7 @@ checkPHPVersion($leadpages_connector_plugin_version);
   |--------------------------------------------------------------------------
   */
 register_activation_hook(__FILE__, function () {
-    wp_clear_scheduled_hook('check_user_leadpages_account');
-    wp_clear_scheduled_hook('refresh_leadpages_token');
+    LeadpagesCronJobs::clear_cronjobs();
     $activationEvent = new ActivationEvent();
     $activationEvent->storeEvent();
 });
