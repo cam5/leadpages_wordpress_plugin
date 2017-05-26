@@ -5,7 +5,7 @@ Plugin Name: Leadpages Connector
 Plugin URI: https://leadpages.net
 Description: Connect your Leadpages account to your WordPress site to import Leadpages and Leadboxes
 Author: Leadpages
-Version: 2.1.6.4
+Version: 2.1.6.5
 Author URI: http://leadpages.net
 */
 
@@ -32,7 +32,7 @@ require_once __DIR__ . '/App/Config/App.php';
 require_once $leadpagesConfig['basePath'] . 'Framework/ServiceContainer/ServiceContainer.php';
 require_once $leadpagesConfig['basePath'] . 'App/Config/RegisterProviders.php';
 
-$leadpages_connector_plugin_version = '2.1.6.4';
+$leadpages_connector_plugin_version = '2.1.6.5';
 
 define('REQUIRED_PHP_VERSION', 5.4);
 
@@ -51,7 +51,7 @@ checkPHPVersion($leadpages_connector_plugin_version);
   |--------------------------------------------------------------------------
   */
 register_activation_hook(__FILE__, function () {
-    LeadpagesCronJobs::clear_cronjobs();
+    LeadpagesCronJobs::unregisterCronJobs();
     $activationEvent = new ActivationEvent();
     $activationEvent->storeEvent();
 });
@@ -74,7 +74,7 @@ function upgrade_plugin_handler($upgrader_object, $options) {
         foreach ($options['plugins'] as $each_plugin) {
             if ($each_plugin == $current_plugin_path_name) {
 
-                LeadpagesCronJobs::clear_cronjobs();
+                LeadpagesCronJobs::unregisterCronJobs();
                 $leadpagesApp['leadpagesLogin']->checkAndCreateApiKey();
             }
         }
