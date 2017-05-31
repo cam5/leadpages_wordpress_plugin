@@ -209,5 +209,5 @@ function updatePostNamesToTitle()
 
 add_action('admin_init', 'version24Update');
 
-isApiKeyCreated();
+add_action('wp_loaded', 'isApiKeyCreated');
 
