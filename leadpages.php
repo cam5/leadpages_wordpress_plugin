@@ -69,6 +69,8 @@ register_deactivation_hook(__FILE__, function () {
 add_action('upgrader_process_complete', 'upgrade_plugin_handler', 10, 2);
 
 function upgrade_plugin_handler($upgrader_object, $options) {
+    global $leadpagesApp;
+
     $current_plugin_path_name = plugin_basename(__FILE__);
     if ($options['action'] == 'update' && $options['type'] == 'plugin' ) {
         foreach ($options['plugins'] as $each_plugin) {
@@ -155,6 +157,15 @@ function checkPHPVersion($plugin_version)
     }
 }
 
+function isApiKeyCreated()
+{
+    global $leadpagesApp;
+
+    if (! get_option('leadpages_api_key')) {
+        $leadpagesApp['leadpagesLogin']->checkAndCreateApiKey();
+    }
+}
+
 function version24Update()
 {
     global $leadpages_connector_plugin_version;
@@ -198,4 +209,5 @@ function updatePostNamesToTitle()
 
 add_action('admin_init', 'version24Update');
 
+isApiKeyCreated();
 
