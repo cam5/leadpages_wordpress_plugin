@@ -5,6 +5,9 @@ A WordPress plugin to easily use your Leadpages pages and Leadboxes inside your 
 
 ***Change Log***
 
+* 2.1.6.5
+    * Updated Leadpage packages to use Api Key instead of access id or lp token.  WP-7
+
 * 2.1.6.4
     * Updated Leadpage packages to use access id to fix logout issue. WP-7
 
@@ -21,16 +24,16 @@ A WordPress plugin to easily use your Leadpages pages and Leadboxes inside your 
    and the profiles is a valid index of response
    * Added WordPress cert to all https calls to help mitigate ssl erros
 
-*2.1.6
+* 2.1.6
     * Added split tests as a page object in the Add Leadpage dropdown
 
-*2.1.5.6
+* 2.1.5.6
     * is_front_page returning errors with some sites static front page setups. Silenced errors with @is_front_page
     
-*2.1.5.5
+* 2.1.5.5
     * Changed update command for updating from version 1 to version 2 to ensure it runs properly
-    
-*2.1.5.4
+     
+* 2.1.5.4
     * Changed WelcomeGate to only display on home and front pages
 
 * 2.1.5.3
