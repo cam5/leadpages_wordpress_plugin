@@ -80,6 +80,7 @@ class AdminBootstrap
             //$this->login->setLoggedInCookie();
             $this->isLoggedIn = true;
             $this->login->getToken();
+            $this->login->getApiKey();
 
         }
     }

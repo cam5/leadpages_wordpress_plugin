@@ -5,7 +5,7 @@ Plugin Name: Leadpages Connector
 Plugin URI: https://leadpages.net
 Description: Connect your Leadpages account to your WordPress site to import Leadpages and Leadboxes
 Author: Leadpages
-Version: 2.1.6.4
+Version: 2.1.6.5
 Author URI: http://leadpages.net
 */
 
@@ -32,7 +32,7 @@ require_once __DIR__ . '/App/Config/App.php';
 require_once $leadpagesConfig['basePath'] . 'Framework/ServiceContainer/ServiceContainer.php';
 require_once $leadpagesConfig['basePath'] . 'App/Config/RegisterProviders.php';
 
-$leadpages_connector_plugin_version = '2.1.6.4';
+$leadpages_connector_plugin_version = '2.1.6.5';
 
 define('REQUIRED_PHP_VERSION', 5.4);
 
@@ -51,7 +51,7 @@ checkPHPVersion($leadpages_connector_plugin_version);
   |--------------------------------------------------------------------------
   */
 register_activation_hook(__FILE__, function () {
-    LeadpagesCronJobs::clear_cronjobs();
+    LeadpagesCronJobs::unregisterCronJobs();
     $activationEvent = new ActivationEvent();
     $activationEvent->storeEvent();
 });
@@ -69,19 +69,19 @@ register_deactivation_hook(__FILE__, function () {
 add_action('upgrader_process_complete', 'upgrade_plugin_handler', 10, 2);
 
 function upgrade_plugin_handler($upgrader_object, $options) {
-    $current_plugin_path_name = plugin_basename(__FILE__);
+    global $leadpagesApp;
 
+    $current_plugin_path_name = plugin_basename(__FILE__);
     if ($options['action'] == 'update' && $options['type'] == 'plugin' ) {
-        foreach ($options['packages'] as $each_plugin) {
+        foreach ($options['plugins'] as $each_plugin) {
             if ($each_plugin == $current_plugin_path_name) {
 
-                LeadpagesCronJobs::clear_cronjobs();
-
+                LeadpagesCronJobs::unregisterCronJobs();
+                $leadpagesApp['leadpagesLogin']->checkAndCreateApiKey();
             }
         }
     }
 }
-
 
 /*
   |--------------------------------------------------------------------------
@@ -157,6 +157,15 @@ function checkPHPVersion($plugin_version)
     }
 }
 
+function isApiKeyCreated()
+{
+    global $leadpagesApp;
+
+    if (! get_option('leadpages_api_key')) {
+        $leadpagesApp['leadpagesLogin']->checkAndCreateApiKey();
+    }
+}
+
 function version24Update()
 {
     global $leadpages_connector_plugin_version;
@@ -200,4 +209,5 @@ function updatePostNamesToTitle()
 
 add_action('admin_init', 'version24Update');
 
+isApiKeyCreated();
 
