@@ -5,6 +5,9 @@ A WordPress plugin to easily use your Leadpages pages and Leadboxes inside your 
 
 ***Change Log***
 
+* 2.1.6.7
+    * Moved API key check to the wp_loaded hook to avoid race condition of running before loading vendor directory.
+
 * 2.1.6.5
     * Updated Leadpage packages to use Api Key instead of access id or lp token.  WP-7
 
