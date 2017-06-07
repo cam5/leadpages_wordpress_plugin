@@ -62,9 +62,12 @@ class LeadpageType
      */
     public static function modifyMetaServedBy($html, $new_value = 'wordpress')
     {
+        libxml_use_internal_errors(true);
         $dom = new \DOMDocument;
+        $dom->strictErrorChecking = false; 
         $dom->loadHTML($html);
-        
+        libxml_clear_errors(); 
+
         $xpath = new \DOMXPath($dom);
         $elem = $xpath->query("//meta[@name='leadpages-served-by']")->item(0);
         if ($elem) {
