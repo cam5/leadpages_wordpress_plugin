@@ -53,6 +53,9 @@ class LeadpageType
      *
      * ex. <meta name="leadpages-served-by" content=""/>
      * 
+     * @param string $html      HTML for leadpage to modify
+     * @param string $new_value content value of meta served-by tag
+     * 
      * @todo generalize the dom selector for reuse on other tags.
      *
      * @return string html
@@ -85,8 +88,7 @@ class LeadpageType
     public static function lookupMetaByName(\DOMDocument $dom, $name)
     {
         $xpath = new \DOMXPath($dom);
-        $meta = $xpath->query("//meta[@name='{$name}']")
-            ->item(0);
+        $meta = $xpath->query("//meta[@name='{$name}']")->item(0);
 
         return $meta ? $meta->getAttribute('content') : null;
     }
@@ -129,6 +131,8 @@ class LeadpageType
      * Hide the implementation details and allow for 
      * a single point to make global changes to html 
      * from the plugin.
+     * 
+     * @param string $html
      *
      */
     public static function renderHtml($html)
