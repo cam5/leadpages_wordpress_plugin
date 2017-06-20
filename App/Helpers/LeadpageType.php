@@ -1,6 +1,5 @@
 <?php
 
-
 namespace LeadpagesWP\Helpers;
 
 
@@ -49,4 +48,98 @@ class LeadpageType
         return ( $id == $nf && $nf !== false );
     }
 
+    /**
+     * Modify meta 'leadpages-served-by' before caching/output html from WP
+     *
+     * ex. <meta name="leadpages-served-by" content=""/>
+     * 
+     * @param string $html      HTML for leadpage to modify
+     * @param string $new_value content value of meta served-by tag
+     * 
+     * @todo generalize the dom selector for reuse on other tags.
+     *
+     * @return string html
+     */
+    public static function modifyMetaServedBy($html, $new_value = 'wordpress')
+    {
+        libxml_use_internal_errors(true);
+        $dom = new \DOMDocument;
+        $dom->strictErrorChecking = false; 
+        $dom->loadHTML($html);
+        libxml_clear_errors(); 
+
+        $xpath = new \DOMXPath($dom);
+        $elem = $xpath->query("//meta[@name='leadpages-served-by']")->item(0);
+        if ($elem) {
+            $elem->setAttribute('content', $new_value);
+        } else {
+            $elem = static::createMetaTag('leadpages-served-by', $new_value);
+            $dom = static::appendElementToHeadTag($dom, $elem);
+        }
+
+        return $dom->saveHTML();    
+    }
+
+    /**
+     * Helper to fetch value of a meta tag in the dom
+     *
+     * @param DOMDocument $dom 
+     * @param string      $name meta tag name attribute
+     *
+     * @return string content of <meta> tag
+     */
+    public static function lookupMetaByName(\DOMDocument $dom, $name)
+    {
+        $xpath = new \DOMXPath($dom);
+        $meta = $xpath->query("//meta[@name='{$name}']")->item(0);
+
+        return $meta ? $meta->getAttribute('content') : null;
+    }
+
+    /**
+     * Helper to create a meta tag DOMElement
+     *
+     * @todo Move to separate library
+     *
+     * @return DOMElement
+     */
+    public static function createMetaTag($name, $content)
+    {
+        $dom = new \DOMDocument();
+        $element = $dom->createElement('meta');
+        $element->setAttribute('name', $name);
+        $element->setAttribute('content', $content);
+        return $element;
+    }
+
+    /**
+     * Helper to append element to <head> in dom
+     *
+     * @param DOMDocument $dom
+     * @param DOMElement  $element
+     *
+     * @return DOMDocument
+     */
+    public static function appendElementToHeadTag(\DOMDocument $dom, \DOMElement $element)
+    {
+        $node = $dom->importNode($element);
+        $head = $dom->getElementsByTagName('head')->item(0);
+        $head->appendChild($node);
+        return $dom;
+    }
+
+    /**
+     * Render html procedure 
+     *
+     * Hide the implementation details and allow for 
+     * a single point to make global changes to html 
+     * from the plugin.
+     * 
+     * @param string $html
+     *
+     */
+    public static function renderHtml($html)
+    {
+        echo $html;
+    }
 }

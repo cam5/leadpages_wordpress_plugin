@@ -9,11 +9,15 @@ use LeadpagesWP\Admin\CustomPostTypes\LeadpagesPostType;
 
 class LeadPagesPostTypeModel
 {
+    /**
+     * @var currently unused
+     */
     protected $html;
     /**
      * @var
      */
     private $PagesApi;
+
     public $LeadPageId;
     public $LeadpageXORId;
     /**

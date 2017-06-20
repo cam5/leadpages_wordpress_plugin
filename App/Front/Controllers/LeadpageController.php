@@ -189,9 +189,14 @@ class LeadpageController
         if(ob_get_length() > 0){
             ob_clean();
         }
-        ob_start();//start output buffer
-        status_header( '200' );
-        print $html;
+
+        // start output buffer
+        ob_start();
+        status_header('200');
+
+        $html = LeadpageType::modifyMetaServedBy($html, 'wordpress');
+        LeadpageType::renderHtml($html);
+
         ob_end_flush();
         die();
     }
