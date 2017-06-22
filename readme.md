@@ -5,6 +5,10 @@ A WordPress plugin to easily use your Leadpages pages and Leadboxes inside your 
 
 ***Change Log***
 
+* 2.1.6.8
+    * Fix for Leadbox shortcode 
+    * Replace <meta> served-by attribute for v2 plugin usage to report correctly in WP usage metrics
+
 * 2.1.6.7
     * Moved API key check to the wp_loaded hook to avoid race condition of running before loading vendor directory.
 
