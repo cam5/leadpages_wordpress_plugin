@@ -63,9 +63,9 @@ class LeadpageType
     public static function modifyMetaServedBy($html, $new_value = 'wordpress')
     {
         libxml_use_internal_errors(true);
-        $dom = new \DOMDocument;
+        $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->strictErrorChecking = false; 
-        $dom->loadHTML($html);
+        $dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
         libxml_clear_errors(); 
 
         $xpath = new \DOMXPath($dom);
@@ -77,7 +77,7 @@ class LeadpageType
             $dom = static::appendElementToHeadTag($dom, $elem);
         }
 
-        return $dom->saveHTML();    
+        return $dom->saveHTML($dom->documentElement) . PHP_EOL . PHP_EOL;    
     }
 
     /**
