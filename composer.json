@@ -6,7 +6,8 @@
         "leadpages/leadpages-auth": "^1.2",
         "leadpages/pages": "^1.5",
         "leadpages/leadboxes": "^1.2",
-        "icanboogie/inflector": "^1.4"
+        "icanboogie/inflector": "^1.4",
+        "twig/twig": "~1.0"
     },
     "require-dev": {
         "codeception/codeception": "^2.2",
