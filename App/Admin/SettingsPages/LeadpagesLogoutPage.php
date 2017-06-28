@@ -42,17 +42,18 @@ class LeadpagesLogoutPage implements SettingsPage
 
                 <form method="POST" action="admin-post.php">
                     <p><input type="checkbox" name="agree_to_pages_deactive" id="agree_to_pages_deactivation" class="logout_checkbox">
-                        All Leadpages will be inaccessible.</p>
+                        <label for="agree_to_pages_deactivation">All Leadpages will be inaccessible.</label></p>
 
                     <p>
                         <input type="checkbox" name="agree_to_leadboxes_deactive" id="agree_to_leadboxes_deactivation" class="logout_checkbox">
-                        All Leadboxes will no longer function.
+                        <label for="agree_to_leadboxes_deactivation">All Leadboxes will no longer function.</label>
                     </p>
 
                     <p>
                         <input type="checkbox" name="agree_to_not_remove_items" id="agree_to_not_remove_items" class="logout_checkbox">
-                        Logging out will not remove my Leadpages and Leadboxes I have setup. <br/>
-                        If I log back in with the same account all my pages and boxes will continue to work.
+						<label for="agree_to_not_remove_items">
+						Logging out will not remove my Leadpages and Leadboxes I have setup. <br/>
+                        If I log back in with the same account all my pages and boxes will continue to work.</label>
                     </p>
                     <input type="hidden" name="action" value="leadpages_login_form_support_logout"/>
 
@@ -62,19 +63,19 @@ class LeadpagesLogoutPage implements SettingsPage
                     </div>
                 </form>
                 <script>
-                    var numberChecked = 0;
-                    jQuery('.logout_checkbox').change(function(e){
+					var numberChecked = 0,
+						isBtnDisabled = true;
+
+                    jQuery('.logout_checkbox').change(function(e) {
                         var isChecked = jQuery(this).attr('checked');
-                        if(isChecked == 'checked'){
+                        if (isChecked == 'checked') {
                             numberChecked++;
-                        }else{
+                        } else {
                             numberChecked--;
                         }
-                        if(numberChecked == 3){
-                            jQuery('.logout_button').prop('disabled', false);
-                        }else{
-                            jQuery('.logout_button').prop('disabled', true);
-                        }
+
+						isBtnDisabled = numberChecked != 3; 
+						jQuery('.logout_button').prop('disabled', isBtnDisabled);
                     });
 
                 </script>
@@ -90,15 +91,16 @@ class LeadpagesLogoutPage implements SettingsPage
         add_action('admin_post_leadpages_login_form_support_logout', array($this, 'leadpages_support_log_user_out'));
     }
 
-    function leadpages_support_log_user_out()
-    {
-        if(isset($_POST['submit_button'])) {
+    public function leadpages_support_log_user_out()
+	{
+		$url = admin_url() . 'edit.php?post_type=leadpages_post';
+        if (isset($_POST['submit_button'])) {
             setcookie('leadpagesLoginCookieGood', '', time() - 3600);
             delete_option('leadpages_security_token');
-            wp_redirect(admin_url().'admin.php?page=Leadpages');
-        }else {
-            wp_redirect(admin_url() . 'edit.php?post_type=leadpages_post');
-        }
+            $url = admin_url().'admin.php?page=Leadpages';
+        } 
+
+		wp_redirect($url);
     }
 
 }

@@ -39,7 +39,7 @@ class WordPressLeadpagesAuth extends LeadpagesLogin
      */
     public function getToken()
     {
-		$this->token = get_option('leadpages_security_token');
+		$this->token = get_option('leadpages_security_token', null);
 		return $this->token;
     }
 
@@ -82,7 +82,8 @@ class WordPressLeadpagesAuth extends LeadpagesLogin
 		$response = false;
         if (isset($_POST['username']) && isset($_POST['password'])) {
             $username = $_POST['username'];
-            $password = stripslashes($_POST['password']); //wordpress automaticlly escapes ' so if the password has one login fails
+			// wordpress automaticlly escapes ' so if the password has one login fails
+			$password = stripslashes($_POST['password']); 
             $response = $this->getUser($username, $password)->parseResponse();
             $this->apiKey = $this->createApiKey(); 
         }
@@ -98,16 +99,16 @@ class WordPressLeadpagesAuth extends LeadpagesLogin
             $this->storeApiKey();
             $this->setLoggedInCookie();
 
-            $eventArray = array(
+            $eventArray = [
               'email_address' => $_POST['username']
-            );
+            ];
 
             (new LeadpagesSignInEvent())->storeEvent($eventArray);
             wp_redirect(admin_url('edit.php?post_type=leadpages_post'));
             exit;
         }
 
-		//redirect with error code to display error message
+		// redirect with error code to display error message
 		$response = json_decode($response, true);
 		$code = sanitize_text_field($response['code']);
 		wp_redirect(admin_url('admin.php?page=Leadpages&code='.$code.''));
@@ -117,7 +118,7 @@ class WordPressLeadpagesAuth extends LeadpagesLogin
 
     public function loginHook()
     {
-        add_action('admin_post_leadpages_login_form', array($this, 'redirectOnLogin'));
+        add_action('admin_post_leadpages_login_form', [$this, 'redirectOnLogin']);
     }
 
     /**
@@ -129,37 +130,38 @@ class WordPressLeadpagesAuth extends LeadpagesLogin
     {
         $this->getToken();
 
-        if(empty($this->token)){
+        if (empty($this->token)) {
             return [
               'code'     => '500',
               'response' => 'token not set in database',
-              'error'    => (bool)true
+              'error'    => true
             ];
         }
-        else{
-            return [
-              'code'     => '200',
-              'response' => '',
-              'error'    => (bool)false
-            ];
-        }
+
+		return [
+			'code'     => '200',
+			'response' => '',
+			'error'    => false
+		];
     }
 
     /**
      * Check if user is logged in
+	 *
      * @return bool
      */
     public function isLoggedIn()
     {
-        //if cookie is set and is true don't bother with http call
-        //if($this->getLoggedInCookie()) return true;
+        // if cookie is set and is true don't bother with http call
+        // if($this->getLoggedInCookie()) return true;
 
         $isTokenEmpty = $this->checkIfTokenIsEmpty();
-        //verify that token in database was not empty, and ensure that token gets a response from Leadpages
+		// verify that token in database was not empty, 
+		// and ensure that token gets a response from Leadpages
         if ($isTokenEmpty['error']) {
             return false;
         }
-        //set cookie if they are logged in
+        // set cookie if they are logged in
         //$this->setLoggedInCookie();
 
         return true;
@@ -170,10 +172,10 @@ class WordPressLeadpagesAuth extends LeadpagesLogin
      */
     public function checkAndCreateApiKey()
     {
-        //make sure token is set
+        // make sure token is set
         $this->getToken();
         $apiKey = $this->getApiKey();
-        if(!$apiKey){
+        if (!$apiKey) {
             $this->apiKey = $this->createApiKey();
             $this->storeApiKey();
         }
@@ -184,13 +186,14 @@ class WordPressLeadpagesAuth extends LeadpagesLogin
      */
     public function setLoggedInCookie()
     {
-        if(!$this->getLoggedInCookie()) {
+        if (!$this->getLoggedInCookie()) {
             setcookie('LeadpagesWordPress', true, time() + 3600);
         }
     }
 
     /**
      * Attempt to fetch login cookie for Leadpages
+	 *
      * @return bool
      */
     public function getLoggedInCookie()

@@ -43,7 +43,7 @@ class LeadpagesLoginPage implements SettingsPage
 
     public function registerPage()
     {
-        add_action('admin_menu', array($this, 'definePage'));
+        add_action('admin_menu', [$this, 'definePage']);
     }
 
     public function loginPageHtml()
