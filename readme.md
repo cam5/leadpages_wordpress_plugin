@@ -5,6 +5,10 @@ A WordPress plugin to easily use your Leadpages pages and Leadboxes inside your 
 
 ***Change Log***
 
+* 2.1.6.9
+    * Fixed UTF-8 character encoding issue with DOMDocument
+    * Updated plugin login screen 
+
 * 2.1.6.8
     * Fix for Leadbox shortcode 
     * Replace <meta> served-by attribute for v2 plugin usage to report correctly in WP usage metrics
