@@ -235,6 +235,10 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
         $optionString = '';
         $optionString .= '<select id="select_leadpages" class="leadpage_select_dropdown" name="leadpages_my_selected_page">';
         foreach ($items['_items'] as $page) {
+            if (isset($page['splitTestId'])) {
+                continue;
+            }
+
             $pageId = number_format($page['id'], 0, '.', '');
             $optionString .= "<option value=\"{$page['_meta']['xor_hex_id']}:{$pageId}\" " . ($currentPage == $pageId ? 'selected="selected"' : '') . " >{$page['name']}</option>";
         }
