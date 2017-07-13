@@ -134,7 +134,9 @@ add_action('current_screen', 'getScreen');
   */
 
 if (!is_admin() && !is_network_admin() && !isset($_GET['preview'])) {
-    $frontBootstrap = $leadpagesApp['frontBootstrap'];
+   if (!preg_match('/sitemap(-+([a-zA-Z0-9_-]+))?\.xml$/', $_SERVER['REQUEST_URI'])) {
+        $frontBootstrap = $leadpagesApp['frontBootstrap'];
+    }
     //include('App/Helpers/ErrorHandlerAjax.php');
 }
 
