@@ -93,7 +93,9 @@ class LeadpageController
                     }
                     $html = $apiResponse['response'];
                 }
-                echo $html;
+
+                $html = LeadpageType::modifyMetaServedBy($html, 'wordpress');
+                LeadpageType::renderHtml($html);
                 die();
             }
         }

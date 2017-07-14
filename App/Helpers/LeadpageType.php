@@ -77,7 +77,7 @@ class LeadpageType
             $dom = static::appendElementToHeadTag($dom, $elem);
         }
 
-        return $dom->saveHTML($dom->documentElement) . PHP_EOL . PHP_EOL;    
+        return '<!DOCTYPE html>' . PHP_EOL . $dom->saveHTML($dom->documentElement) . PHP_EOL . PHP_EOL;    
     }
 
     /**
