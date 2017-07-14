@@ -5,6 +5,9 @@ A WordPress plugin to easily use your Leadpages pages and Leadboxes inside your 
 
 ***Change Log***
 
+* 2.1.6.11
+    * Fix for <doctype> getting stripped off by DOMDocument
+
 * 2.1.6.10
     * Fix Split Test listing. Display the parent split test instead of control and variations separately.
 
