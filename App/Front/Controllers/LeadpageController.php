@@ -47,6 +47,8 @@ class LeadpageController
     /**
      * check to see if current page is front page and if so see if a front
      * leadpage exists to display it
+     * 
+     * @todo Separate the functionality isFront : boolean, displayFront : void
      *
      * @param $posts
      *
@@ -96,7 +98,6 @@ class LeadpageController
 
                 $html = LeadpageType::modifyMetaServedBy($html, 'wordpress');
                 LeadpageType::renderHtml($html);
-                die();
             }
         }
         return $posts;
@@ -188,19 +189,8 @@ class LeadpageController
             }
         }
 
-        if(ob_get_length() > 0){
-            ob_clean();
-        }
-
-        // start output buffer
-        ob_start();
-        status_header('200');
-
         $html = LeadpageType::modifyMetaServedBy($html, 'wordpress');
         LeadpageType::renderHtml($html);
-
-        ob_end_flush();
-        die();
     }
 
     function parse_request() {

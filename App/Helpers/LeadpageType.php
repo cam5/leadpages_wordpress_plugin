@@ -140,6 +140,23 @@ class LeadpageType
      */
     public static function renderHtml($html)
     {
+        if (ob_get_length() > 0) {
+            ob_clean();
+        }
+
+        // start output buffer
+        // with a fix for rogue newlines from domdocument
+        ob_start(function ($buf) {
+            return str_replace(["<li>\n"], '<li>', $buf);
+        });
+
+        status_header('200');
+
         echo $html;
+
+        ob_end_flush();
+
+        // @todo something cleaner than die()
+        die();
     }
 }
