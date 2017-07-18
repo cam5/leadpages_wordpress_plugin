@@ -195,11 +195,9 @@ class LeadboxController
      * @param $post
      */
     protected function getPageSpecificTimedLeadbox($post){
-        if(!is_front_page()) {
-            $this->pageSpecificTimedLeadboxId = get_post_meta($post->ID, 'pageTimedLeadbox', true);
-            if (!empty($this->pageSpecificTimedLeadboxId)) {
-                $this->hasSpecificTimed = true;
-            }
+        $this->pageSpecificTimedLeadboxId = get_post_meta($post->ID, 'pageTimedLeadbox', true);
+        if (!empty($this->pageSpecificTimedLeadboxId)) {
+            $this->hasSpecificTimed = true;
         }
     }
 
@@ -225,11 +223,9 @@ class LeadboxController
      * @param $post
      */
     protected function getExitSpecifiExitLeadbox($post){
-        if(!is_front_page()) {
-            $this->pageSpecificExitdLeadboxId = get_post_meta($post->ID, 'pageExitLeadbox', true);
-            if (!empty($this->pageSpecificExitdLeadboxId)) {
-                $this->hasSpecificExit = true;
-            }
+        $this->pageSpecificExitdLeadboxId = get_post_meta($post->ID, 'pageExitLeadbox', true);
+        if (!empty($this->pageSpecificExitdLeadboxId)) {
+            $this->hasSpecificExit = true;
         }
     }
 
