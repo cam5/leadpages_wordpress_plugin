@@ -7,6 +7,7 @@ A WordPress plugin to easily use your Leadpages pages and Leadboxes inside your 
 
 * 2.1.6.12
     * Fix for list elements with bold text, new lines from DOMDocument
+    * Fix for specific Leadbox set on static homepage not displayed 
 
 * 2.1.6.11
     * Fix for `<doctype>` getting stripped off by DOMDocument
