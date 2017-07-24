@@ -5,6 +5,10 @@ A WordPress plugin to easily use your Leadpages pages and Leadboxes inside your 
 
 ***Change Log***
 
+* 2.1.6.13
+    * Fix for plugin css overrides Admin font - CJ-478
+    * Retry fetching public html https fails - CJ-479
+
 * 2.1.6.12
     * Fix for list elements with bold text, new lines from DOMDocument
     * Fix for specific Leadbox set on static homepage not displayed 
