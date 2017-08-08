@@ -136,9 +136,10 @@ class LeadpageType
      * from the plugin.
      * 
      * @param string $html
+     * @param int    $status_code 200 | 404
      *
      */
-    public static function renderHtml($html)
+    public static function renderHtml($html, $status_code = 200)
     {
         if (ob_get_length() > 0) {
             ob_clean();
@@ -150,7 +151,7 @@ class LeadpageType
             return str_replace(["<li>\n"], '<li>', $buf);
         });
 
-        status_header('200');
+        status_header($status_code);
 
         echo $html;
 
