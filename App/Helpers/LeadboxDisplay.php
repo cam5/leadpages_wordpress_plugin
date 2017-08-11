@@ -55,6 +55,7 @@ trait LeadboxDisplay
      */
     public function timedDropDown($leadboxArray)
     {
+        $leadboxArray = $this->loadItems($leadboxArray);
         $select = "<select name='lp_select_field_0' id='leadboxesTime'>";
         $select .= "<option name='none' value='none'". $this->currentTimedLeadbox('none') ." >None</option>";
 
@@ -94,6 +95,7 @@ trait LeadboxDisplay
      */
     public function exitDropDown($leadboxArray)
     {
+        $leadboxArray = $this->loadItems($leadboxArray);
         $select = "<select name='lp_select_field_2' id='leadboxesExit'>";
         $select .= "<option name='none' value='none' ". $this->currentExitLeadbox('none') .">None</option>";
         foreach($leadboxArray['_items'] as $leadbox){
@@ -205,6 +207,7 @@ trait LeadboxDisplay
 */
     public function timedDropDownPageSpecific($leadboxArray, $post)
     {
+        $leadboxArray = $this->loadItems($leadboxArray);
         $select = "<select name='pageTimedLeadbox' id='leadboxesTime'>";
         $select .= "<option name='select' value='select'". $this->currentTimedLeadboxPageSpecific('select', $post->ID) ." >Use Global Leadbox</option>";
         $select .= "<option name='none' value='none'". $this->currentTimedLeadboxPageSpecific('none', $post->ID) ." >None</option>";
@@ -234,6 +237,7 @@ trait LeadboxDisplay
 
     public function exitDropDownPageSpecific($leadboxArray, $post)
     {
+        $leadboxArray = $this->loadItems($leadboxArray);
         $select = "<select name='pageExitLeadbox' id='leadboxesExit'>";
         $select .= "<option name='select' value='select'". $this->currentTimedLeadboxPageSpecific('select', $post->ID) ." >Use Global Leadbox</option>";
         $select .= "<option name='none' value='none' ". $this->currentExitLeadboxPageSpecific('none', $post->ID) .">None</option>";
@@ -264,4 +268,46 @@ trait LeadboxDisplay
         }
     }
 
+    /**
+     * Loop over leadboxes using array filter and only return leadboxes
+     * that actually have embed code
+     *
+     * @param $leadboxes
+     * @param $body
+     */
+    public function filterLeadpageGeneratedLeadboxes($leadbox)
+    {
+        //if embed is not set it is not published so it must be removed
+        if (!empty($leadbox['publish_settings']['embed'])) {
+            return $leadbox;
+        }
+    }
+
+    public function loadItems($data)
+    {
+        $leadboxes['_items'] = array_filter($data['_items'], [$this, 'filterLeadpageGeneratedLeadboxes']);
+
+        $b3PlaceHolder = [
+          'public_url'       => '',
+          'publish_settings' => [
+            'link'   => [],
+            'embed'  => '',
+            'legacy' => '',
+            'exit'   => [
+              'days' => 2
+            ],
+            'time'   => [
+              'seconds' => '1',
+              'days'    => '0',
+              'views'   => ''
+            ]
+
+          ],
+          'name' => 'Paste Drag & Drop Leadbox',
+          'xor_hex_id' => 'ddbox'
+        ];
+
+        $leadboxes['_items'][] = $b3PlaceHolder;
+        return $leadboxes;
+    }
 }

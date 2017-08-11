@@ -138,33 +138,9 @@ class Leadboxes implements SettingsPage
         global $leadpagesConfig;
         global $leadpagesApp;
 
-        $apiResponse         = $leadpagesApp['leadboxesApi']->getAllLeadboxes();
-        $allLeadboxes        = json_decode($apiResponse['response'], true);
-        $leadboxes['_items'] = array_filter($allLeadboxes['_items'], array($this, 'filterLeadpageGeneratedLeadboxes'));
-
-        $b3PlaceHolder = [
-          'public_url'       => '',
-          'publish_settings' => [
-            'link'   => [],
-            'embed'  => '',
-            'legacy' => '',
-            'exit'   => [
-              'days' => 2
-            ],
-            'time'   => [
-              'seconds' => '1',
-              'days'    => '0',
-              'views'   => ''
-            ]
-
-          ],
-          'name'             => 'Paste Drag & Drop Leadbox',
-          'xor_hex_id'       => 'ddbox'
-        ];
-
-
-        $leadboxes['_items'][] = $b3PlaceHolder;
-
+        $apiResponse = $leadpagesApp['leadboxesApi']->getAllLeadboxes();
+        $allLeadboxes = json_decode($apiResponse['response'], true);
+        $leadboxes = $this->loadItems($allLeadboxes);
 
         wp_enqueue_script('Leadboxes', $leadpagesConfig['admin_assets'] . '/js/Leadboxes.js', array('jquery'), $leadpages_connector_plugin_version);
         wp_localize_script('Leadboxes', 'leadboxes_object', array(
@@ -175,23 +151,5 @@ class Leadboxes implements SettingsPage
           'exitLeadboxes'              => $this->exitDropDown($leadboxes),
         ));
     }
-
-    /**
-     * Loop over leadboxes using array filter and only return leadboxes
-     * that actually have embed code
-     *
-     * @param $leadboxes
-     * @param $body
-     */
-    public function filterLeadpageGeneratedLeadboxes($leadbox)
-    {
-        //if embed is not set it is not published so it must be removed
-        if (!empty($leadbox['publish_settings']['embed'])) {
-            return $leadbox;
-        }
-    }
-
-
-
 
 }
