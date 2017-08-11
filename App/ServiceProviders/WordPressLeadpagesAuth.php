@@ -81,7 +81,7 @@ class WordPressLeadpagesAuth extends LeadpagesLogin
 	{
 		$response = false;
         if (isset($_POST['username']) && isset($_POST['password'])) {
-            $username = $_POST['username'];
+            $username = strtolower($_POST['username']);
 			// wordpress automaticlly escapes ' so if the password has one login fails
 			$password = stripslashes($_POST['password']); 
             $response = $this->getUser($username, $password)->parseResponse();
