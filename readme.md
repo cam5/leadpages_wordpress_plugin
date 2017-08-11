@@ -5,6 +5,12 @@ A WordPress plugin to easily use your Leadpages pages and Leadboxes inside your 
 
 ***Change Log***
 
+* 2.1.6.14
+    * Fix for mixed case email address login failure - CJ-508
+    * Fix for 404 pages returning 200 ok - CJ-504
+    * Fix for refreshing Leadbox dropdown not including copy/paste B3 embed code - CJ-505
+    * Polyfill for mbstring library from symfony framework
+
 * 2.1.6.13
     * Fix for plugin css overrides Admin font - CJ-478
     * Retry fetching public html https fails - CJ-479
@@ -102,6 +108,6 @@ A WordPress plugin to easily use your Leadpages pages and Leadboxes inside your 
     * Updated to latest version of Leadpages Auth, Pages, and Leadboxes to handle ConnectExpcetion in Guzzle for curl errors
 
 * 2.1.2 
- 	* Added support for 32 bit systems for UUID generation
+     * Added support for 32 bit systems for UUID generation
 
 
