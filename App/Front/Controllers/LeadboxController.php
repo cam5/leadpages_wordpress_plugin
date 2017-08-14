@@ -84,6 +84,7 @@ class LeadboxController
      */
     protected function getGlobalLeadBoxes(){
         $leadboxes = LeadboxesModel::getLpSettings();
+
         $currentTimedLeadbox = LeadboxesModel::getCurrentTimedLeadbox($leadboxes);
         $currentExitLeadbox  = LeadboxesModel::getCurrentExitLeadbox($leadboxes);
         return array(
@@ -92,34 +93,22 @@ class LeadboxController
         );
     }
 
-    /**
-     * @param $leadboxes
-     */
-    public function getTimedLeadboxCode($leadboxes){
-        if($leadboxes['timed'][1] == $this->postType && !is_front_page() || $leadboxes['timed'][1] == 'all'){
-            $apiResponse = $this->leadboxApi->getSingleLeadboxEmbedCode($leadboxes['timed'][0], 'timed');
-            $timed_embed_code = json_decode($apiResponse['response'], true);
+    public function getLeadboxCode($leadboxes, $type){
+
+        if($leadboxes[$type][1] == $this->postType && !is_front_page() || $leadboxes[$type][1] == 'all'){
+
+            //return code entered into admin
+            if($leadboxes[$type][0] == 'ddbox'){
+                return $leadboxes[$type][2];
+            }
+
+            $apiResponse = $this->leadboxApi->getSingleLeadboxEmbedCode($leadboxes[$type][0], 'exit');
+            $embed_code = json_decode($apiResponse['response'], true);
         }
-        if(empty($timed_embed_code)){
+        if(empty($embed_code)){
             return;
         }
-        return $timed_embed_code['embed_code'];
-    }
-
-    /**
-     * @param $leadboxes
-     */
-    public function getExitLeadboxCode($leadboxes){
-
-
-        if($leadboxes['exit'][1] == $this->postType && !is_front_page() || $leadboxes['exit'][1] == 'all'){
-            $apiResponse = $this->leadboxApi->getSingleLeadboxEmbedCode($leadboxes['exit'][0], 'exit');
-            $exit_embed_code = json_decode($apiResponse['response'], true);
-        }
-        if(empty($exit_embed_code)){
-            return;
-        }
-        return $exit_embed_code['embed_code'];
+        return $embed_code['embed_code'];
     }
 
     /**
@@ -128,11 +117,7 @@ class LeadboxController
      * @return string
      */
     public function addTimedLeadboxesGlobal(){
-        //get leadbox code if its in the database. needed for b3 leadboxes do not remove
-        if(isset($this->globalLeadboxes['timed'][2])){
-            return $this->globalLeadboxes['timed'][2];
-        }
-        return $this->getTimedLeadboxCode($this->globalLeadboxes);
+        return $this->getLeadboxCode($this->globalLeadboxes, 'timed');
     }
 
     /**
@@ -141,12 +126,7 @@ class LeadboxController
      * @return string
      */
     public function addExitLeadboxesGlobal(){
-        //get leadbox code if its in the database. needed for b3 leadboxes do not remove
-        if(isset($this->globalLeadboxes['exit'][2])){
-            return $this->globalLeadboxes['exit'][2];
-        }
-        return $this->getExitLeadboxCode($this->globalLeadboxes);
-
+        return $this->getLeadboxCode($this->globalLeadboxes, 'exit');
     }
 
     /**
@@ -158,21 +138,17 @@ class LeadboxController
         if($this->hasSpecificTimed){
             $messageTimed = $messageTimed . $this->displayPageSpecificTimedLeadbox();
             $messageTimed = $messageTimed . $this->woocommerce_specific_hook('displayPageSpecificTimedLeadbox');
-            //add_filter('the_content', array($this, 'displayPageSpecificTimedLeadbox'));
         }else {
             $messageTimed = $messageTimed . $this->addTimedLeadboxesGlobal();
             $messageTimed = $messageTimed . $this->woocommerce_specific_hook('addTimedLeadboxesGlobal');
-           // add_filter('the_content', array($this, 'addTimedLeadboxesGlobal'));
         }
 
         if($this->hasSpecificExit) {
             $messageExit = $messageExit . $this->displayPageSpecificExitLeadbox();
             $messageExit = $messageExit . $this->woocommerce_specific_hook('displayPageSpecificExitLeadbox');
-            //add_filter('the_content', array($this, 'displayPageSpecificExitLeadbox'));
         }else{
             $messageExit = $messageExit . $this->addExitLeadboxesGlobal();
             $messageExit = $messageExit . $this->woocommerce_specific_hook('addExitLeadboxesGlobal');
-            //add_filter('the_content', array($this, 'addExitLeadboxesGlobal'));
         }
         echo $messageTimed;
         echo $messageExit;
