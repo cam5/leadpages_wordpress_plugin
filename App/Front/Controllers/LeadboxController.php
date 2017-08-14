@@ -102,7 +102,7 @@ class LeadboxController
                 return $leadboxes[$type][2];
             }
 
-            $apiResponse = $this->leadboxApi->getSingleLeadboxEmbedCode($leadboxes[$type][0], 'exit');
+            $apiResponse = $this->leadboxApi->getSingleLeadboxEmbedCode($leadboxes[$type][0], $type);
             $embed_code = json_decode($apiResponse['response'], true);
         }
         if(empty($embed_code)){

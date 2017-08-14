@@ -5,6 +5,9 @@ A WordPress plugin to easily use your Leadpages pages and Leadboxes inside your 
 
 ***Change Log***
 
+* 2.1.6.15
+    * Fix for global leadboxes not respecting the post type they were selected to show up on
+
 * 2.1.6.14
     * Fix for mixed case email address login failure - CJ-508
     * Fix for 404 pages returning 200 ok - CJ-504
