@@ -2,14 +2,16 @@
 
     $( document ).ready( function() {
 
-        function getLeadPages(){
+        function getLeadPages(clear_cache = false){
 
             var start = new Date().getTime();
+            var action = 'get_pages_dropdown' + (clear_cache ? '_nocache' : '');
+
             $.ajax({
                 type: 'POST',
                 url: ajax_object.ajax_url,
                 data: {
-                    action: 'get_pages_dropdown',
+                    action: action,
                     id: ajax_object.id
                 },
                 beforeSend: function (data) {
@@ -85,7 +87,7 @@
           //remove all old data
           $('#leadpages_my_selected_page').empty();
           //get new leadpages and recreate dropdown
-          getLeadPages();
+          getLeadPages(true);
 
           $('.sync-leadpages i').show();
 

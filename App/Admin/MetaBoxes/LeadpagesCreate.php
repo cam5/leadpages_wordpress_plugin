@@ -28,6 +28,7 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
         $this->postTypeModel = $leadpagesApp['lpPostTypeModel'];
         $this->splitTestApi  = $leadpagesApp['splitTestApi'];
         add_action('wp_ajax_get_pages_dropdown', array($this, 'generateSelectList'));
+        add_action('wp_ajax_get_pages_dropdown_nocache', array($this, 'generateSelectListNoCache'));
         add_action('wp_ajax_nopriv_get_pages_dropdown', array($this, 'generateSelectList'));
     }
 
@@ -58,7 +59,7 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
                     <i class="lp-icon lp-icon--alpha">leadpages_mark</i>
                 </div>
                 <div class="ui-title-nav__content">
-                    <?= $action; ?> Leadpage
+                    <?php echo $action; ?> Leadpage
                 </div>
             </div>
 
@@ -215,25 +216,32 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
         add_action('add_meta_boxes', array($this, 'defineMetaBox'));
     }
 
-    public function generateSelectList()
+	/**
+	 * Helper for wp ajax action to refresh pages w/o using cache
+	 */
+	public function generateSelectListNoCache()
+	{
+		$this->generateSelectList(true);
+	}
+
+    public function generateSelectList($refresh_cache = false)
     {
         global $leadpagesApp;
 
-        $id          = sanitize_text_field($_POST['id']);
+        $id = sanitize_text_field($_POST['id']);
         $currentPage = LeadPagesPostTypeModel::getMetaPageId($id);
 
         if (!$currentPage) {
             $currentPage = $leadpagesApp['lpPostTypeModel']->getPageByXORId($id);
         }
 
-        $pages = $leadpagesApp['pagesApi']->getAllUserPages();
+        $pages = $this->fetchPages($refresh_cache);
 
-        $splitTest    = $leadpagesApp['splitTestApi']->getActiveSplitTests();
+        $splitTest = $leadpagesApp['splitTestApi']->getActiveSplitTests();
         $items['_items'] = array_merge($pages['_items'], $splitTest);
         $items = $leadpagesApp['pagesApi']->sortPages($items);
-        $size         = sizeof($items['_items']);
-        $optionString = '';
-        $optionString .= '<select id="select_leadpages" class="leadpage_select_dropdown" name="leadpages_my_selected_page">';
+        $size = count($items['_items']);
+        $optionString = '<select id="select_leadpages" class="leadpage_select_dropdown" name="leadpages_my_selected_page">';
         foreach ($items['_items'] as $page) {
             if (isset($page['splitTestId'])) {
                 continue;
@@ -247,14 +255,35 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
         die();
     }
 
+	protected function fetchPages($refresh_cache = false)
+	{
+		if ($refresh_cache) {
+			$this->clearPagesCache();
+		}
+
+		if (false === ($pages = get_transient('user_leadpages'))) {
+			global $leadpagesApp;
+			$pages = $leadpagesApp['pagesApi']->getAllUserPages();
+			$pages['from_cache'] = true;
+			set_transient('user_leadpages', $pages, 900);
+		}
+
+		return $pages;
+	}
+
+	protected function clearPagesCache()
+	{
+		delete_transient('user_leadpages');
+		return $this;
+	}
+
     //replace with get_permalink
     public function leadpages_permalink()
     {
         global $post;
-        if($post->post_status !='publish'){
+		$permalink = home_url() .'/';
+        if ($post->post_status != 'publish') {
             $permalink = 'Publish to see full url';
-        }else{
-            $permalink = home_url() .'/';
         }
         $permalink = str_replace('/leadpages_post/', '', $permalink);
         $permalink = str_replace('/'.$post->post_name.'/', '/', $permalink);
