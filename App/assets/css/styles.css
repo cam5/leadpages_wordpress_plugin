@@ -94,8 +94,18 @@ body {
 .select2-selection__rendered, .select2-results__option {
   font-weight: 400;
   font-size: 14px;
-  line-height: 24px;
+  line-height: 28px;
   font-family: "Roboto", Arial, san-serif; }
+
+.select2-results__option {
+  padding: 2px 12px !important;
+  line-height: 21px;
+  margin: 0;
+}
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  color: #fff;
+  background-color: #5897fb;
+}
 
 #leadpages-header-wrapper {
   margin-left: 0px !important;
@@ -192,7 +202,7 @@ body {
     margin-top: 30px; }
     .leadpages-edit-body .leadbox_slug .lp_site_main_url {
       display: inline-block;
-      height: 36px;
+      height: 38px;
       font-size: 14px;
       font-weight: 200;
       line-height: 16px;
@@ -205,9 +215,9 @@ body {
       margin-left: 12px; }
     .leadpages-edit-body .leadbox_slug .leadpages_slug_input {
       border: 1px solid #B1BACC;
-      font-size: 14px;
+      font-size: 15px;
       line-height: 36px;
-      height: 37px;
+      height: 38px;
       max-width: 500px;
       width: 100%;
       border-top-right-radius: 5px;
