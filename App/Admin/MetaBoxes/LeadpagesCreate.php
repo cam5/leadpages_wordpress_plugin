@@ -216,13 +216,13 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
         add_action('add_meta_boxes', array($this, 'defineMetaBox'));
     }
 
-	/**
-	 * Helper for wp ajax action to refresh pages w/o using cache
-	 */
-	public function generateSelectListNoCache()
-	{
-		$this->generateSelectList(true);
-	}
+    /**
+     * Helper for wp ajax action to refresh pages w/o using cache
+     */
+    public function generateSelectListNoCache()
+    {
+        $this->generateSelectList(true);
+    }
 
     public function generateSelectList($refresh_cache = false)
     {
@@ -255,33 +255,33 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
         die();
     }
 
-	protected function fetchPages($refresh_cache = false)
-	{
-		if ($refresh_cache) {
-			$this->clearPagesCache();
-		}
+    protected function fetchPages($refresh_cache = false)
+    {
+        if ($refresh_cache) {
+            $this->clearPagesCache();
+        }
 
-		if (false === ($pages = get_transient('user_leadpages'))) {
-			global $leadpagesApp;
-			$pages = $leadpagesApp['pagesApi']->getAllUserPages();
-			$pages['from_cache'] = true;
-			set_transient('user_leadpages', $pages, 900);
-		}
+        if (false === ($pages = get_transient('user_leadpages'))) {
+            global $leadpagesApp;
+            $pages = $leadpagesApp['pagesApi']->getAllUserPages();
+            $pages['from_cache'] = true;
+            set_transient('user_leadpages', $pages, 900);
+        }
 
-		return $pages;
-	}
+        return $pages;
+    }
 
-	protected function clearPagesCache()
-	{
-		delete_transient('user_leadpages');
-		return $this;
-	}
+    protected function clearPagesCache()
+    {
+        delete_transient('user_leadpages');
+        return $this;
+    }
 
     //replace with get_permalink
     public function leadpages_permalink()
     {
         global $post;
-		$permalink = home_url() .'/';
+        $permalink = home_url() .'/';
         if ($post->post_status != 'publish') {
             $permalink = 'Publish to see full url';
         }
