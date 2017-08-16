@@ -30,6 +30,7 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
         add_action('wp_ajax_get_pages_dropdown', array($this, 'generateSelectList'));
         add_action('wp_ajax_get_pages_dropdown_nocache', array($this, 'generateSelectListNoCache'));
         add_action('wp_ajax_nopriv_get_pages_dropdown', array($this, 'generateSelectList'));
+        add_action('wp_ajax_nopriv_get_pages_dropdown_nocache', array($this, 'generateSelectListNoCache'));
     }
 
 
