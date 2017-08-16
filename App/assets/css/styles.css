@@ -102,6 +102,15 @@ body {
   line-height: 21px;
   margin: 0;
 }
+
+.listing-item small {
+    color: #bbb;
+}
+
+.select2-results__option--highlighted .listing-item small {
+	color: #fff;
+}
+
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
   color: #fff;
   background-color: #5897fb;
