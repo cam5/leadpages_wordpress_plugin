@@ -173,21 +173,9 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
                 <h3 class="flex__item--xs-12">Set a Custom Slug</h3>
 
                 <p class="flex__item--xs-12">
-                    Enter a custom slug for your Leadpage. <small>This will be the url someone will go to to see your Leadpage.</small>
+                    Enter a custom slug for your Leadpage. <small>This will be the url to view your Leadpage on your site.</small>
                     <br />
-                    Instructions:
                 </p>
-                <ul class="ui-list ui-list--bulleted">
-                    <li>You may enter multi-part slugs such as parent/child/grand-child</li>
-                    <li>Omit / at the start and end of slug(they will be trimmed off upon saving)
-                        <ul class="ui-list ui-list--bulleted">
-                            <li>Good: my-wonderful-page</li>
-                            <li>Bad: /my-wonderful-page/</li>
-                        </ul>
-                    </li>
-
-                </ul>
-
 
                 <div class="flex__item--xs-12 leadpage_slug_container">
                     <span class="lp_site_main_url"><?php echo $this->leadpages_permalink(); ?></span>
