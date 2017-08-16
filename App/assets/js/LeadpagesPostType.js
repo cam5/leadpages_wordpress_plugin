@@ -34,7 +34,10 @@
 
                 complete: function(data){
                     $("#leadpages_my_selected_page").trigger('change');
-
+                    if (data.time_since) {
+                        $(".diff-message").text(data.time_since);
+                        $(".human-diff").show();
+                    }
                     //setup select 2 on the leadpages dropdown(sets up searchbox etc)
                     $(".leadpage_select_dropdown").select2({
                       templateResult: function (item) {

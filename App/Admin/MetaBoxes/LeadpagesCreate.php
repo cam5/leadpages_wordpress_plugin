@@ -5,7 +5,7 @@ namespace LeadpagesWP\Admin\MetaBoxes;
 use LeadpagesWP\Admin\CustomPostTypes\LeadpagesPostType;
 use LeadpagesWP\models\LeadPagesPostTypeModel;
 use TheLoop\Contracts\MetaBox;
-
+use Carbon\Carbon;
 
 class LeadpagesCreate extends LeadpagesPostType implements MetaBox
 {
@@ -100,6 +100,14 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
                 <div class="flex__item--xs-1">
                     <i class="sync-leadpages lp-icon lp-icon--xsm lp-icon-sync"></i>
                 </div>
+            </div>
+
+            <div class="flex__item--xs-4" >
+            <p class="flex" style="align-items: center; color: #888; margin-left: -4px;">
+                <i class="sync-leadpages lp-icon lp-icon--xsm lp-icon-sync" style="display: inline;"></i>
+
+                <small class="human-diff" style="padding-top: 4px;padding-left: 4px;">Page listing synced: <span class="diff-message"></span>. </small>
+            </p>
             </div>
 
             <div class="flex">
@@ -294,8 +302,13 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
         if (false === ($pages = get_transient('user_leadpages'))) {
             global $leadpagesApp;
             $pages = $leadpagesApp['pagesApi']->getAllUserPages();
-            $pages['from_cache'] = true;
+            $pages['timestamp'] = Carbon::now();
             set_transient('user_leadpages', $pages, 900);
+        }
+
+        $pages['time_since'] = 'just now';
+        if (isset($pages['timestamp'])) {
+            $pages['time_since'] = Carbon::parse($pages['timestamp'])->diffForHumans();
         }
 
         return $pages;
