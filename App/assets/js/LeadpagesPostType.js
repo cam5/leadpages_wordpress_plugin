@@ -32,10 +32,12 @@
                     $("#leadpages_my_selected_page").append(response);
                 },
 
-                complete: function(data){
+                complete: function(response) {
+                    var elem = $(response.responseText);
                     $("#leadpages_my_selected_page").trigger('change');
-                    if (data.time_since) {
-                        $(".diff-message").text(data.time_since);
+
+                    if (elem.data('human-diff').length) {
+                        $(".diff-message").text(elem.data('human-diff'));
                         $(".human-diff").show();
                     }
                     //setup select 2 on the leadpages dropdown(sets up searchbox etc)
@@ -44,15 +46,22 @@
                         if (!item.element) return;
 
                         var data = $(item.element).data();
+                        var stats = data.published + ' &bull; ';
+
+                        if (data.issplit) {
+                            stats += 'Split Test &bull; '
+                                  + data.variations + ' variations';
+
+                        } else {
+                            stats += data.views + ' views &bull; '
+                                   + data.optins + ' optins</small>';
+                        }
 
                         return $(
                             '<div>'
                             + '<div>' + item.text + '</div>'
                             + '<small style="color: #bbb">'
-                            + data.published + ' &bull; '
-                            + data.views + ' views &bull; '
-                            + data.optins + ' optins</small>'+
-                            '</div>');
+                            + stats + '</div>');
                         },
                         placeholder: "Select a Leadpage",
                         allowClear: true

@@ -54,16 +54,24 @@ class SplitTestApi
         **/
 
         $testObject = $this->getTestsObject();
-        //echo '<pre>'; print_r($testObject);die();
+        // echo '<pre>'; print_r($testObject);die();
         
         $i = 0;
         foreach($testObject as $test){
             if($test->status == 'active'){
                 $returnArray[$i]['name'] = $test->name . ' (Split Test)';
-                $returnArray[$i]['_meta']['xor_hex_id'] = 0;
+                $returnArray[$i]['_meta'] = [
+                    'xor_hex_id' => 0,
+                    'updated' => $test->_meta->updated,
+                    'url' => $test->_meta->uri,
+                    'variationsCount' => count($test->variations),
+                    'id' => $test->_meta->id,
+                ];
+
                 foreach($test->variations as $variation){
                     if($variation->control == 'true'){
                         $returnArray[$i]['id'] = $variation->assetId;
+                        $returnArray[$i]['_meta']['controlUrl'] = $variation->uri;
                     }
                 }
             }

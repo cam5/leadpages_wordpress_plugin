@@ -97,18 +97,14 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
                 <div class="leadpages_search_container flex__item--xs-7">
                     <div id="leadpages_my_selected_page"></div>
                 </div>
+                <div class="flex__item--xs-4" >
+                <p class="flex" style="align-items: center; color: #888; margin-left: -4px;">
+                    <i class="sync-leadpages lp-icon lp-icon--xsm lp-icon-sync" style="display: inline;"></i>
                 <div class="flex__item--xs-1">
                     <i class="sync-leadpages lp-icon lp-icon--xsm lp-icon-sync"></i>
                 </div>
             </div>
 
-            <div class="flex__item--xs-4" >
-            <p class="flex" style="align-items: center; color: #888; margin-left: -4px;">
-                <i class="sync-leadpages lp-icon lp-icon--xsm lp-icon-sync" style="display: inline;"></i>
-
-                <small class="human-diff" style="padding-top: 4px;padding-left: 4px;">Page listing synced: <span class="diff-message"></span>. </small>
-            </p>
-            </div>
 
             <div class="flex">
             <div class="flex__item-xs-12">
@@ -240,21 +236,33 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
         }
 
         $pages = $this->fetchPages($refresh_cache);
-
+        $cached_at = $pages['timestamp'];
+        $human_diff = $pages['time_since'];
         $splitTest = $leadpagesApp['splitTestApi']->getActiveSplitTests();
         $items['_items'] = array_merge($pages['_items'], $splitTest);
         $items = $leadpagesApp['pagesApi']->sortPages($items);
         $size = count($items['_items']);
-        $optionString = '<select id="select_leadpages" class="leadpage_select_dropdown" name="leadpages_my_selected_page">';
+        $optionString = '<select data-human-diff="' . $human_diff . '" data-timestamp="'. $cached_at . '" id="select_leadpages" class="leadpage_select_dropdown" name="leadpages_my_selected_page">';
         foreach ($items['_items'] as $page) {
             if (isset($page['splitTestId'])) {
                 continue;
             }
 
             $pageId = number_format($page['id'], 0, '.', '');
-            $is_split = $page['isSplit'] ? 'true' : 'false';
-            $slug = $page['slug'];
-            $last_published = $page['_meta']['lastUpdated'];
+            $is_split = 'false';
+            $variations = 1;
+            if (isset($page['_meta']['lastUpdated'])) {
+                $last_published = date('Y-m-d', $page['updated']);
+                $slug = $page['slug'];
+            } else {
+                $is_split = 'true';
+                $last_published_at = $page['_meta']['updated'];
+                $last_published = date('Y-m-d', strtotime($last_published_at));
+                $url_parts = parse_url($page['_meta']['controlUrl']);
+                $slug = str_replace('/', '', $url_parts['path']);
+                $variations = $page['_meta']['variationsCount'];
+            }
+
             $xor_hex_id = $page['xor_hex_id'];
             $edit_url = $page['editUrl'];
             $preview_url = $page['previewUrl'];
@@ -265,6 +273,7 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
             $optionString .= "
                 <option data-slug='{$slug}'
                         data-issplit='{$is_split}'
+                        data-variations='{$variations}'
                         data-published='{$last_published}'
                         data-optins='{$optins}'
                         data-views='{$views}'
