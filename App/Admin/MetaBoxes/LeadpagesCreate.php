@@ -100,8 +100,8 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
                 <div class="flex__item--xs-4" >
                 <p class="flex" style="align-items: center; color: #888; margin-left: -4px;">
                     <i class="sync-leadpages lp-icon lp-icon--xsm lp-icon-sync" style="display: inline;"></i>
-                <div class="flex__item--xs-1">
-                    <i class="sync-leadpages lp-icon lp-icon--xsm lp-icon-sync"></i>
+                    <small class="human-diff" style="padding-top: 6px; padding-bottom: 4px; padding-left: 4px; display: none;">Page listing synced: <span class="diff-message"></span>. </small>
+                </p>
                 </div>
             </div>
 
