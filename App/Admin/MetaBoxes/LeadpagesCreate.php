@@ -1,12 +1,11 @@
 <?php
 
-
 namespace LeadpagesWP\Admin\MetaBoxes;
 
 use LeadpagesWP\Admin\CustomPostTypes\LeadpagesPostType;
 use LeadpagesWP\models\LeadPagesPostTypeModel;
 use TheLoop\Contracts\MetaBox;
-
+use Carbon\Carbon;
 
 class LeadpagesCreate extends LeadpagesPostType implements MetaBox
 {
@@ -27,12 +26,11 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
         $this->pagesApi      = $leadpagesApp['pagesApi'];
         $this->postTypeModel = $leadpagesApp['lpPostTypeModel'];
         $this->splitTestApi  = $leadpagesApp['splitTestApi'];
-        add_action('wp_ajax_get_pages_dropdown', array($this, 'generateSelectList'));
-        add_action('wp_ajax_get_pages_dropdown_nocache', array($this, 'generateSelectListNoCache'));
-        add_action('wp_ajax_nopriv_get_pages_dropdown', array($this, 'generateSelectList'));
-        add_action('wp_ajax_nopriv_get_pages_dropdown_nocache', array($this, 'generateSelectListNoCache'));
+        add_action('wp_ajax_get_pages_dropdown', [$this, 'generateSelectList']);
+        add_action('wp_ajax_get_pages_dropdown_nocache', [$this, 'generateSelectListNoCache']);
+        add_action('wp_ajax_nopriv_get_pages_dropdown', [$this, 'generateSelectList']);
+        add_action('wp_ajax_nopriv_get_pages_dropdown_nocache', [$this, 'generateSelectListNoCache']);
     }
-
 
     public static function getName()
     {
@@ -41,7 +39,7 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
 
     public function defineMetaBox()
     {
-        add_meta_box("leadpage-create", "Leadpages Create", array($this, 'callback'), $this->postTypeName, "normal",
+        add_meta_box("leadpage-create", "Leadpages Create", [$this, 'callback'], $this->postTypeName, "normal",
           "high", null);
     }
 
@@ -53,7 +51,8 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
         $action      = (isset($_GET['action']) && $_GET['action'] == 'edit') ? 'Edit' : 'Add New';
 
         ?>
-        <div class="leadpages-edit-wrapper">
+    <style>.select2-container--default .select2-results>.select2-results__options { max-height: 400px !important;  } </style>
+    <div class="leadpages-edit-wrapper">
         <div id="leadpages-header-wrapper" class="flex flex--xs-between flex--xs-middle">
             <div class="ui-title-nav" aria-controls="navigation">
                 <div class="ui-title-nav__img">
@@ -88,31 +87,39 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
             <div class="flex">
                 <div class="flex__item--xs-12">
                     <p class="header_text">
-                        Welcome to the Leadpages admin. Select your Leadpage below, which page type you would like it
-                        to be, and give it a slug below.
+                        Welcome to the Leadpages admin.  Publish a Leadpage to your site in a few easy steps below: 
                     </p>
                 </div>
+                <h3 class="flex__item--xs-12">Select a Leadpage</h3>
             </div>
             <div class="select_a_leadpage flex">
-                <h3>Select a Leadpage</h3>
-
-                <p>Please select your desired Leadpage below. Have a lot of Leadpages? Feel free to use the
-                search box to quickly find your Leadpage by name.</p>
 
                 <div class="leadpages_search_container flex__item--xs-7">
                     <div id="leadpages_my_selected_page"></div>
                 </div>
-                <div class="flex__item--xs-1">
-                    <i class="sync-leadpages lp-icon lp-icon--xsm lp-icon-sync"></i>
+                <div class="flex__item--xs-4" >
+                <p class="flex" style="align-items: center; color: #888; margin-left: -4px;">
+                    <i class="sync-leadpages lp-icon lp-icon--xsm lp-icon-sync" style="display: inline;"></i>
+                    <small class="human-diff" style="padding-top: 6px; padding-bottom: 4px; padding-left: 4px; display: none;">Page listing synced: <span class="diff-message"></span>. </small>
+                </p>
                 </div>
             </div>
+
+
+            <div class="flex">
+            <div class="flex__item-xs-12">
+                <p><small>Have a lot of Leadpages? Use the
+                search box to quickly find your Leadpage by name.</small></p>
+            </div>
+            </div>
+
             <div class="select_a_leadpage_type flex">
                 <h3 class="flex__item--xs-12">Select a Page Type</h3>
 
                 <p class="flex__item--xs-12"> Please select a Leadpage display type below.</p>
 
                 <div class="leadpage_type_container flex">
-                    <div class="leadpage_type_box">
+                    <label id="leadpage-normal-page" class="leadpage_type_box">
                         <h3 class="header">Normal Page</h3>
 
                         <p class="section_description">
@@ -121,8 +128,9 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
                         </p>
                         <input id="leadpage-normal-page" type="radio" name="leadpages-post-type" class="leadpages-post-type leadpage-normal-page"
                                value="lp" <?php echo $currentType == "lp" ? 'checked=checked"' : ""; ?> >
-                    </div>
-                    <div class="leadpage_type_box">
+                    </label>
+
+                    <label for="leadpage-home-page" class="leadpage_type_box">
                         <h3 class="header">Home Page</h3>
 
                         <p>
@@ -131,8 +139,9 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
                         </p>
                         <input id="leadpage-home-page" type="radio" name="leadpages-post-type" class="leadpages-post-type leadpage-home-page"
                                value="fp" <?php echo $currentType == "fp" ? 'checked=checked"' : ""; ?> >
-                    </div>
-                    <div class="leadpage_type_box">
+                    </label>
+
+                    <label for="leadpage-welcome-page" class="leadpage_type_box">
                         <h3 class="header">Welcome Gate &trade;</h3>
 
                         <p>
@@ -140,38 +149,29 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
                         </p>
                         <input id="leadpage-welcome-page" type="radio" name="leadpages-post-type" class="leadpages-post-type leadpage-welcomegate-page"
                                value="wg" <?php echo $currentType == "wg" ? 'checked=checked"' : ""; ?> >
-                    </div>
-                    <div class="leadpage_type_box">
+                    </label>
+
+                    <label for="leadpage-404-page" class="leadpage_type_box">
                         <h3 class="header">404 Page</h3>
 
                         <p>
-                            This will allow you to put a Leadpage as your 404
+                            Set a Leadpage as your 404
                             page to ensure you are not missing out on any conversions.
                         </p>
                         <input id="leadpage-404-page" type="radio" name="leadpages-post-type" class="leadpages-post-type leadpage-404-page"
                                value="nf" <?php echo $currentType == "nf" ? 'checked=checked"' : ""; ?> >
-                    </div>
+                    </label>
+
                 </div>
             </div>
+
             <div id="leadpage-slug" class="leadbox_slug flex">
                 <h3 class="flex__item--xs-12">Set a Custom Slug</h3>
 
                 <p class="flex__item--xs-12">
-                    Enter a custom slug for your Leadpage. This will be the url someone will go to to see your Leadpage.
+                    Enter a custom slug for your Leadpage. <small>This will be the url to view your Leadpage on your site.</small>
                     <br />
-                    Instructions:
                 </p>
-                <ul class="ui-list ui-list--bulleted">
-                    <li>You may enter multi-part slugs such as parent/child/grand-child</li>
-                    <li>Omit / at the start and end of slug(they will be trimed off upon saving)
-                        <ul class="ui-list ui-list--bulleted">
-                            <li>Good: my-wonderful-page</li>
-                            <li>Bad: /my-wonderful-page/</li>
-                        </ul>
-                    </li>
-
-                </ul>
-
 
                 <div class="flex__item--xs-12 leadpage_slug_container">
                     <span class="lp_site_main_url"><?php echo $this->leadpages_permalink(); ?></span>
@@ -211,10 +211,9 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
         <?php
     }
 
-
     public function registerMetaBox()
     {
-        add_action('add_meta_boxes', array($this, 'defineMetaBox'));
+        add_action('add_meta_boxes', [$this, 'defineMetaBox']);
     }
 
     /**
@@ -237,20 +236,55 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
         }
 
         $pages = $this->fetchPages($refresh_cache);
-
+        $cached_at = $pages['timestamp'];
+        $human_diff = $pages['time_since'];
         $splitTest = $leadpagesApp['splitTestApi']->getActiveSplitTests();
         $items['_items'] = array_merge($pages['_items'], $splitTest);
         $items = $leadpagesApp['pagesApi']->sortPages($items);
         $size = count($items['_items']);
-        $optionString = '<select id="select_leadpages" class="leadpage_select_dropdown" name="leadpages_my_selected_page">';
+        $optionString = '<select data-human-diff="' . $human_diff . '" data-timestamp="'. $cached_at . '" id="select_leadpages" class="leadpage_select_dropdown" name="leadpages_my_selected_page">';
         foreach ($items['_items'] as $page) {
             if (isset($page['splitTestId'])) {
                 continue;
             }
 
             $pageId = number_format($page['id'], 0, '.', '');
-            $optionString .= "<option value=\"{$page['_meta']['xor_hex_id']}:{$pageId}\" " . ($currentPage == $pageId ? 'selected="selected"' : '') . " >{$page['name']}</option>";
+            $is_split = 'false';
+            $variations = 1;
+            if (isset($page['_meta']['lastUpdated'])) {
+                $last_published = date('Y-m-d', $page['updated']);
+                $slug = $page['slug'];
+            } else {
+                $is_split = 'true';
+                $last_published_at = $page['_meta']['updated'];
+                $last_published = date('Y-m-d', strtotime($last_published_at));
+                $url_parts = parse_url($page['_meta']['controlUrl']);
+                $slug = str_replace('/', '', $url_parts['path']);
+                $variations = $page['_meta']['variationsCount'];
+            }
+
+            $xor_hex_id = $page['xor_hex_id'];
+            $edit_url = $page['editUrl'];
+            $preview_url = $page['previewUrl'];
+            $publish_url = $page['publishUrl'];
+            $optins = $page['optins'];
+            $views = $page['views'];
+
+            $optionString .= "
+                <option data-slug='{$slug}'
+                        data-issplit='{$is_split}'
+                        data-variations='{$variations}'
+                        data-published='{$last_published}'
+                        data-optins='{$optins}'
+                        data-views='{$views}'
+                        data-preview-url='{$preview_url}'
+                        data-publish-url='{$publish_url}'
+                        data-edit-url='{$edit_url}'
+                        value='{$xor_hex_id}:{$pageId}'"
+                . ($currentPage == $pageId ? ' selected="selected"' : '')
+                .">{$page['name']}</option>";
         }
+
         $optionString .= '</select>';
         echo $optionString;
         die();
@@ -265,8 +299,13 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
         if (false === ($pages = get_transient('user_leadpages'))) {
             global $leadpagesApp;
             $pages = $leadpagesApp['pagesApi']->getAllUserPages();
-            $pages['from_cache'] = true;
+            $pages['timestamp'] = Carbon::now();
             set_transient('user_leadpages', $pages, 900);
+        }
+
+        $pages['time_since'] = 'just now';
+        if (isset($pages['timestamp'])) {
+            $pages['time_since'] = Carbon::parse($pages['timestamp'])->diffForHumans();
         }
 
         return $pages;
@@ -290,6 +329,5 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
         $permalink = str_replace('/'.$post->post_name.'/', '/', $permalink);
         return $permalink;
     }
-
 
 }

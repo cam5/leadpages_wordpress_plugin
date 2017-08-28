@@ -1,9 +1,8 @@
 (function ($) {
 
-    $( document ).ready( function() {
+    $(document).ready(function() {
 
         function getLeadPages(clear_cache = false){
-
             var start = new Date().getTime();
             var action = 'get_pages_dropdown' + (clear_cache ? '_nocache' : '');
 
@@ -21,33 +20,59 @@
                     var end = new Date().getTime();
                     console.log('milliseconds passed', end - start);
                     var pageType = $('input[name=leadpages-post-type]:checked').val();
-                    if(pageType == 'nf' || pageType == 'fp'){
-
+                    if(pageType === 'nf' || pageType === 'fp'){
                         $("#leadpage-slug").hide();
                     }else{
                         $("#leadpage-slug").show();
                     }
 
-                    //$(".leadpagesSlug").show();
                     $(".ui-loading").hide();
-                    $(".leadpageType").show();
+                    $("#leadpageType").show();
                     $(".leadpagesSelect").show();
                     $("#leadpages_my_selected_page").append(response);
-                },complete: function(data){
+                },
+
+                complete: function(response) {
+                    var elem = $(response.responseText);
                     $("#leadpages_my_selected_page").trigger('change');
+
+                    if (elem.data('human-diff').length) {
+                        $(".diff-message").text(elem.data('human-diff'));
+                        $(".human-diff").show();
+                    }
                     //setup select 2 on the leadpages dropdown(sets up searchbox etc)
                     $(".leadpage_select_dropdown").select2({
-                      placeholder: "Select a Leadpage",
-                      allowClear: true
-                    });
-                    $('.sync-leadpages').show();
+                      templateResult: function (item) {
+                        if (!item.element) return;
 
-              }
+                        var data = $(item.element).data();
+                        var stats = data.published + ' &bull; ';
+
+                        if (data.issplit) {
+                            stats += 'Split Test &bull; '
+                                  + data.variations + ' variations';
+
+                        } else {
+                            stats += data.views + ' views &bull; '
+                                   + data.optins + ' optins</small>';
+                        }
+
+                        return $(
+                            '<div>'
+                            + '<div>' + item.text + '</div>'
+                            + '<small style="color: #bbb">'
+                            + stats + '</div>');
+                        },
+                        placeholder: "Select a Leadpage",
+                        allowClear: true
+                    });
+
+                    $('.sync-leadpages').show();
+                }
             });
         }
 
         getLeadPages();
-
 
         $("#leadpages_my_selected_page").on("select2:open", function() {
           $(".select2-search__field").attr("placeholder", "Search Your Leadpages");
@@ -57,7 +82,7 @@
 
         function hideSlugFor404andHome(){
             var pageType = $('input[name=leadpages-post-type]:checked').val()
-            if(pageType == 'nf' || pageType == 'fp'){
+            if(pageType === 'nf' || pageType === 'fp'){
                 $("#leadpage-slug").hide();
             }else{
                 $("#leadpage-slug").show();
@@ -65,14 +90,16 @@
         }
 
         $body.on('change', '#leadpages_my_selected_page', function(){
-            var selected_page_name = ($("option:selected", this).text());
+            var item = $("option:selected", this);
+            var selected_page_name = item.text();
             $("#leadpages_name").val(selected_page_name);
+            $('.leadpages_slug_input').val(item.data('slug'));
         });
 
         $body.on('change', 'input[name=leadpages-post-type]', function(){
             var pageType = $("#leadpageType").val();
             hideSlugFor404andHome();
-            if(pageType == 'fp' || $leadpageType == 'nf'){
+            if(pageType === 'fp' || pageType === 'nf'){
                 $(".leadpage_slug_error").remove();
             }
         });
@@ -84,14 +111,16 @@
         $body.on('click', '.sync-leadpages', function (e) {
           //show loading icons
           $('.sync-leadpages i').hide();
+
           //remove all old data
           $('#leadpages_my_selected_page').empty();
+
           //get new leadpages and recreate dropdown
           getLeadPages(true);
 
           $('.sync-leadpages i').show();
+        });
 
-        })
         $body.on('click', '#publish', function (e) {
 
             $("#publishing-action .spinner").removeClass('is-active');
@@ -102,7 +131,7 @@
             $('#leadpageType').css('border-color', '#ddd');
             $leadpageType = $("#leadpageType").val();
             $selectedPage = $("#leadpages_my_selected_page").val();
-            $leadpageSlug = $('#leadpages_slug_input').val();
+            $leadpageSlug = $('.leadpages_slug_input').val();
 
             if($leadpageType == 'none'){
                 e.preventDefault();
@@ -117,21 +146,22 @@
                 $('#leadpages_my_selected_page').css('border-color', 'red');
                 error = true;
             }
-            if($leadpageType != 'fp' && $leadpageType != 'nf'){
-                console.log($leadpageType);
-                if($leadpageSlug.length == 0){
+
+            if($leadpageType !== 'fp' && $leadpageType !== 'nf'){
+
+                if($leadpageSlug.length === 0){
                     e.preventDefault();
-                    $( ".wrap h1" ).after( "<div class='error notice leadpages_error leadpage_slug_error'><p>Slug appears to be empty. Please add a slug.</p></div>" );
-                    $('#leadpages_slug_input').css('border-color', 'red');
+                    $(".wrap h1").after("<div class='error notice leadpages_error leadpage_slug_error'><p>Slug appears to be empty. Please add a slug.</p></div>");
+                    $('.leadpages_slug_input').css('border-color', 'red');
                     error = true;
                 }
             }
 
-            if($leadpageType == 'fp' || $leadpageType == 'nf'){
+            if($leadpageType === 'fp' || $leadpageType === 'nf'){
                 $(".leadpage_slug_error").remove();
             }
 
-            if(error == true){
+            if(error){
                 return;
             }
         });

@@ -5,6 +5,14 @@ A WordPress plugin to easily use your Leadpages pages and Leadboxes inside your 
 
 ***Change Log***
 
+* 2.1.6.16
+    * Fix Welcome gate page will not show up if a static page is set for the front page - CJ-518
+    * Caching page list from API for 15 minutes with wp transients - CJ-514
+    * Added updated date to page listing dropdown
+    * Added views and optin counts to page listing dropdown
+    * Slug defaults to Leadpages' slug when selected from dropdown
+    * Admin UI cleanup
+
 * 2.1.6.15
     * Fix for global leadboxes not respecting the post type they were selected to show up on
 
