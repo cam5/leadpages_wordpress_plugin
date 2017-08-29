@@ -33,13 +33,22 @@
                 },
 
                 complete: function(response) {
-                    var elem = $(response.responseText);
-                    $("#leadpages_my_selected_page").trigger('change');
+                    var elem = $(response.responseText),
+                        diffMessage = '';
 
-                    if (elem.data('human-diff').length) {
-                        $(".diff-message").text(elem.data('human-diff'));
-                        $(".human-diff").show();
+					var isEdit = $(".leadpages-edit-wrapper").data('isEdit');
+                    if (isEdit != undefined && isEdit != true) {
+                        $("#leadpages_my_selected_page").trigger('change');
                     }
+
+                    if (elem && elem.data('human-diff')) {
+                        diffMessage = elem.data('human-diff');
+                        if (diffMessage.length) {
+                            $(".diff-message").text(diffMessage);
+                            $(".human-diff").show();
+                        }
+                    }
+
                     //setup select 2 on the leadpages dropdown(sets up searchbox etc)
                     $(".leadpage_select_dropdown").select2({
                       templateResult: function (item) {

@@ -49,10 +49,10 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
         $currentType = LeadPagesPostTypeModel::getMetaPageType($post->ID);
         $slug        = LeadPagesPostTypeModel::getMetaPagePath($post->ID);
         $action      = (isset($_GET['action']) && $_GET['action'] == 'edit') ? 'Edit' : 'Add New';
-
+        $is_edit     = $_GET['action'] == 'edit' ? 'true' : 'false';
         ?>
     <style>.select2-container--default .select2-results>.select2-results__options { max-height: 400px !important;  } </style>
-    <div class="leadpages-edit-wrapper">
+    <div class="leadpages-edit-wrapper" data-is-edit="<?php echo $is_edit; ?>">
         <div id="leadpages-header-wrapper" class="flex flex--xs-between flex--xs-middle">
             <div class="ui-title-nav" aria-controls="navigation">
                 <div class="ui-title-nav__img">
@@ -269,7 +269,6 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
             $publish_url = $page['publishUrl'];
             $optins = $page['optins'];
             $views = $page['views'];
-
             $optionString .= "
                 <option data-slug='{$slug}'
                         data-issplit='{$is_split}'
