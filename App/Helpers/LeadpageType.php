@@ -2,6 +2,7 @@
 
 namespace LeadpagesWP\Helpers;
 
+use Symfony\Polyfill\Mbstring\Mbstring;
 
 class LeadpageType
 {
