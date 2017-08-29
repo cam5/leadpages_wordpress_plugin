@@ -5,6 +5,10 @@ A WordPress plugin to easily use your Leadpages pages and Leadboxes inside your 
 
 ***Change Log***
 
+* 2.1.6.17
+    * Fix problem with auto-slugs on edit page populating the default slug
+    * Fix missing use for mbstring polyfill from helpers
+
 * 2.1.6.16
     * Fix Welcome gate page will not show up if a static page is set for the front page - CJ-518
     * Caching page list from API for 15 minutes with wp transients - CJ-514
