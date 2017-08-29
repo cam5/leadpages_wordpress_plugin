@@ -36,10 +36,7 @@
                     var elem = $(response.responseText),
                         diffMessage = '';
 
-					var isEdit = $(".leadpages-edit-wrapper").data('isEdit');
-                    if (isEdit != undefined && isEdit != true) {
-                        $("#leadpages_my_selected_page").trigger('change');
-                    }
+                    $("#leadpages_my_selected_page").trigger('change');
 
                     if (elem && elem.data('human-diff')) {
                         diffMessage = elem.data('human-diff');
@@ -101,8 +98,11 @@
         $body.on('change', '#leadpages_my_selected_page', function(){
             var item = $("option:selected", this);
             var selected_page_name = item.text();
+            var isEdit = $(".leadpages-edit-wrapper").data('isEdit');
             $("#leadpages_name").val(selected_page_name);
-            $('.leadpages_slug_input').val(item.data('slug'));
+            if (isEdit != undefined && isEdit != true) {
+                $('.leadpages_slug_input').val(item.data('slug'));
+            }
         });
 
         $body.on('change', 'input[name=leadpages-post-type]', function(){
