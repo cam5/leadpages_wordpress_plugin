@@ -45,11 +45,11 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
 
     public function callBack($post, $box)
     {
-        $useCache    = LeadPagesPostTypeModel::getMetaCache($post->ID);
+        $useCache = LeadPagesPostTypeModel::getMetaCache($post->ID);
         $currentType = LeadPagesPostTypeModel::getMetaPageType($post->ID);
-        $slug        = LeadPagesPostTypeModel::getMetaPagePath($post->ID);
-        $action      = (isset($_GET['action']) && $_GET['action'] == 'edit') ? 'Edit' : 'Add New';
-        $is_edit     = $_GET['action'] == 'edit' ? 'true' : 'false';
+        $slug = LeadPagesPostTypeModel::getMetaPagePath($post->ID);
+        $is_edit = isset($_GET['action']) && $_GET['action'] == 'edit';
+        $action = $is_edit ? 'Edit' : 'Add New';
         ?>
     <style>.select2-container--default .select2-results>.select2-results__options { max-height: 400px !important;  } </style>
     <div class="leadpages-edit-wrapper" data-is-edit="<?php echo $is_edit; ?>">
@@ -87,7 +87,7 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
             <div class="flex">
                 <div class="flex__item--xs-12">
                     <p class="header_text">
-                        Welcome to the Leadpages admin.  Publish a Leadpage to your site in a few easy steps below: 
+                        Welcome to the Leadpages admin.  Publish a Leadpage to your site in a few easy steps below:
                     </p>
                 </div>
                 <h3 class="flex__item--xs-12">Select a Leadpage</h3>
