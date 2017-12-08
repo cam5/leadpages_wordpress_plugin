@@ -242,13 +242,17 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
         $items['_items'] = array_merge($pages['_items'], $splitTest);
         $items = $leadpagesApp['pagesApi']->sortPages($items);
         $size = count($items['_items']);
-        $optionString = '<select data-human-diff="' . $human_diff . '" data-timestamp="'. $cached_at . '" id="select_leadpages" class="leadpage_select_dropdown" name="leadpages_my_selected_page">';
+        $optionString = '<select data-human-diff="' . $human_diff . '"'
+                            . ' data-timestamp="'. $cached_at. '"'
+                            . ' id="select_leadpages" '
+                            . 'class="leadpage_select_dropdown" name="leadpages_my_selected_page">';
+
         foreach ($items['_items'] as $page) {
             if (isset($page['splitTestId'])) {
                 continue;
             }
 
-            $pageId = number_format($page['id'], 0, '.', '');
+            $pageId = $page['id'];
             $is_split = 'false';
             $variations = 1;
             if (isset($page['_meta']['lastUpdated'])) {
