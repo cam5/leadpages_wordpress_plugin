@@ -14,6 +14,7 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
      * @var \LeadpagesWP\models\LeadPagesPostTypeModel
      */
     private $postTypeModel;
+
     /**
      * @var \Leadpages\Pages\LeadpagesPages
      */
@@ -39,8 +40,15 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
 
     public function defineMetaBox()
     {
-        add_meta_box("leadpage-create", "Leadpages Create", [$this, 'callback'], $this->postTypeName, "normal",
-          "high", null);
+        add_meta_box(
+            "leadpage-create",
+            "Leadpages Create",
+            [$this, 'callback'],
+            $this->postTypeName,
+            "normal",
+            "high",
+            null
+        );
     }
 
     public function callBack($post, $box)
@@ -51,7 +59,11 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
         $is_edit = isset($_GET['action']) && $_GET['action'] == 'edit';
         $action = $is_edit ? 'Edit' : 'Add New';
         ?>
-    <style>.select2-container--default .select2-results>.select2-results__options { max-height: 400px !important;  } </style>
+    <style>
+    .select2-container--default .select2-results>.select2-results__options {
+        max-height: 400px !important;
+    }
+    </style>
     <div class="leadpages-edit-wrapper" data-is-edit="<?php echo $is_edit; ?>">
         <div id="leadpages-header-wrapper" class="flex flex--xs-between flex--xs-middle">
             <div class="ui-title-nav" aria-controls="navigation">
@@ -65,17 +77,14 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
 
             <button id="publish" name="publish" class="ui-btn">
                 Publish
-                <!-- Loading icons-->
                 <div class="ui-loading ui-loading--sm ui-loading--inverted">
                     <div class="ui-loading__dots ui-loading__dots--1"></div>
                     <div class="ui-loading__dots ui-loading__dots--2"></div>
                     <div class="ui-loading__dots ui-loading__dots--3"></div>
                 </div>
-                <!-- End Loading Icons-->
             </button>
         </div>
 
-        <!-- Body Start -->
         <div class="leadpages-edit-body">
             <div class="flex leadpages-loading">
                 <div class="ui-loading">
@@ -87,7 +96,8 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
             <div class="flex">
                 <div class="flex__item--xs-12">
                     <p class="header_text">
-                        Welcome to the Leadpages admin.  Publish a Leadpage to your site in a few easy steps below:
+                        Welcome to the Leadpages admin.
+                        Publish a Leadpage to your site in a few easy steps below:
                     </p>
                 </div>
                 <h3 class="flex__item--xs-12">Select a Leadpage</h3>
@@ -104,7 +114,6 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
                 </p>
                 </div>
             </div>
-
 
             <div class="flex">
             <div class="flex__item-xs-12">
@@ -134,8 +143,9 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
                         <h3 class="header">Home Page</h3>
 
                         <p>
-                            This will take over your home page on your blog. Anytime someone goes to
-                            your home page it will show this page.
+                            This will take over your home page on your blog.
+                            Anytime someone goes to your home page it will show
+                            this page.
                         </p>
                         <input id="leadpage-home-page" type="radio" name="leadpages-post-type" class="leadpages-post-type leadpage-home-page"
                                value="fp" <?php echo $currentType == "fp" ? 'checked=checked"' : ""; ?> >
@@ -169,7 +179,8 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
                 <h3 class="flex__item--xs-12">Set a Custom Slug</h3>
 
                 <p class="flex__item--xs-12">
-                    Enter a custom slug for your Leadpage. <small>This will be the url to view your Leadpage on your site.</small>
+                    Enter a custom slug for your Leadpage.
+                    <small>This will be the url to view your Leadpage on your site.</small>
                     <br />
                 </p>
 
@@ -199,13 +210,11 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
 
             <button id="publish" name="publish" class="ui-btn">
                 Publish
-                <!-- Loading icons-->
                 <div class="ui-loading ui-loading--sm ui-loading--inverted">
                     <div class="ui-loading__dots ui-loading__dots--1"></div>
                     <div class="ui-loading__dots ui-loading__dots--2"></div>
                     <div class="ui-loading__dots ui-loading__dots--3"></div>
                 </div>
-                <!-- End Loading Icons-->
             </button>
         </div>
         <?php
