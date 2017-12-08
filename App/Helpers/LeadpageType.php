@@ -63,6 +63,10 @@ class LeadpageType
      */
     public static function modifyMetaServedBy($html, $new_value = 'wordpress')
     {
+        if (!class_exists('\DOMDocument')) {
+            return $html;
+        }
+
         libxml_use_internal_errors(true);
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->strictErrorChecking = false;
