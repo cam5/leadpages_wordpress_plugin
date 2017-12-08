@@ -255,24 +255,27 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
             $pageId = $page['id'];
             $is_split = 'false';
             $variations = 1;
-            if (isset($page['_meta']['lastUpdated'])) {
-                $last_published = date('Y-m-d', $page['updated']);
-                $slug = $page['slug'];
-            } else {
+            if ($this->isSplit($page)) {
                 $is_split = 'true';
                 $last_published_at = $page['_meta']['updated'];
                 $last_published = date('Y-m-d', strtotime($last_published_at));
                 $url_parts = parse_url($page['_meta']['controlUrl']);
                 $slug = str_replace('/', '', $url_parts['path']);
                 $variations = $page['_meta']['variationsCount'];
+                $page['xor_hex_id'] = $page['_meta']['id'];
+            } else {
+                $last_published = date('Y-m-d', $page['updated']);
+                $slug = $page['slug'];
             }
 
-            $xor_hex_id = $page['xor_hex_id'];
+            $composite_id = $this->makeCompositeId($page);
+
             $edit_url = $page['editUrl'];
             $preview_url = $page['previewUrl'];
             $publish_url = $page['publishUrl'];
-            $optins = $page['optins'];
-            $views = $page['views'];
+            $optins = $page['optins'] ?: 0;
+            $views = $page['views'] ?: 0;
+
             $optionString .= "
                 <option data-slug='{$slug}'
                         data-issplit='{$is_split}'
@@ -283,7 +286,7 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
                         data-preview-url='{$preview_url}'
                         data-publish-url='{$publish_url}'
                         data-edit-url='{$edit_url}'
-                        value='{$xor_hex_id}:{$pageId}'"
+                        value='{$composite_id}'"
                 . ($currentPage == $pageId ? ' selected="selected"' : '')
                 .">{$page['name']}</option>";
         }
@@ -291,6 +294,60 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
         $optionString .= '</select>';
         echo $optionString;
         die();
+    }
+
+    /**
+     * Helper to determine if data structure is for split test
+     *
+     * @param mixed $page From pages api
+     *
+     * @return bool
+     */
+    private function isSplit($page)
+    {
+        return isset($page['kind']) && $page['kind'] == 'split';
+    }
+
+    /**
+     * Helper to strip temporary prepended id string
+     *
+     * @param mixed $page
+     *
+     * @return string
+     */
+    private function cleanId($page)
+    {
+        return str_replace('cid-', '', $page['id']);
+    }
+
+    /**
+     * Helper to choose which value to use for legacy xor id
+     *
+     * @param mixed $page Page data
+     *
+     * @return string id with ':' replaced by ';' to prevent conflicts
+     */
+    private function whichXorId($page)
+    {
+        $hex_id = $this->isSplit($page)
+            ? $page['_meta']['id']
+            : $page['xor_hex_id'];
+
+        return str_replace(':', ';', $hex_id);
+
+    }
+    /**
+     * Helper to create composite id wordpress uses to identify assets
+     *
+     * @param mixed $page Page data
+     *
+     * @return string
+     */
+    private function makeCompositeId($page)
+    {
+        $hex_id = $this->whichXorId($page);
+        $page_id = $this->cleanId($page);
+        return $hex_id . ':' . $page_id;
     }
 
     protected function fetchPages($refresh_cache = false)
