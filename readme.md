@@ -4,6 +4,10 @@
 A WordPress plugin to easily use your Leadpages pages and Leadboxes inside your WordPress site.
 
 ***Change Log***
+* 2.1.6.18
+    * Fix issue with failing to fetch split tests
+    * Fix dropdown to correctly select the relevent page
+    * General bug fixes
 
 * 2.1.6.17
     * Fix problem with auto-slugs on edit page populating the default slug
