@@ -5,7 +5,7 @@ Plugin Name: Leadpages Connector
 Plugin URI: https://leadpages.net
 Description: Connect your Leadpages account to your WordPress site to import Leadpages and Leadboxes
 Author: Leadpages
-Version: 2.1.6.18
+Version: 2.1.6.20
 Author URI: http://leadpages.net
 */
 
@@ -32,7 +32,7 @@ require_once __DIR__ . '/App/Config/App.php';
 require_once $leadpagesConfig['basePath'] . 'Framework/ServiceContainer/ServiceContainer.php';
 require_once $leadpagesConfig['basePath'] . 'App/Config/RegisterProviders.php';
 
-$leadpages_connector_plugin_version = '2.1.6.18';
+$leadpages_connector_plugin_version = '2.1.6.20';
 
 define('REQUIRED_PHP_VERSION', 5.4);
 

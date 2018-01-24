@@ -55,8 +55,7 @@
                         var stats = data.published + ' &bull; ';
 
                         if (data.issplit) {
-                            stats += 'Split Test &bull; '
-                                  + data.variations + ' variations';
+                            stats += 'Split Test';
 
                         } else {
                             stats += data.views + ' views &bull; '

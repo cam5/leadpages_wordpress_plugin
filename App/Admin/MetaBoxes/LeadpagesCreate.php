@@ -26,7 +26,6 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
 
         $this->pagesApi      = $leadpagesApp['pagesApi'];
         $this->postTypeModel = $leadpagesApp['lpPostTypeModel'];
-        $this->splitTestApi  = $leadpagesApp['splitTestApi'];
         add_action('wp_ajax_get_pages_dropdown', [$this, 'generateSelectList']);
         add_action('wp_ajax_get_pages_dropdown_nocache', [$this, 'generateSelectListNoCache']);
         add_action('wp_ajax_nopriv_get_pages_dropdown', [$this, 'generateSelectList']);
@@ -239,7 +238,6 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
 
         $id = sanitize_text_field($_POST['id']);
         $currentPage = LeadPagesPostTypeModel::getMetaPageId($id);
-
         if (!$currentPage) {
             $currentPage = $leadpagesApp['lpPostTypeModel']->getPageByXORId($id);
         }
@@ -247,35 +245,18 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
         $pages = $this->fetchPages($refresh_cache);
         $cached_at = $pages['timestamp'];
         $human_diff = $pages['time_since'];
-        $splitTest = $leadpagesApp['splitTestApi']->getActiveSplitTests();
-        $items['_items'] = array_merge($pages['_items'], $splitTest);
+        $items['_items'] = $pages['_items'];
         $items = $leadpagesApp['pagesApi']->sortPages($items);
-        $size = count($items['_items']);
         $optionString = '<select data-human-diff="' . $human_diff . '"'
                             . ' data-timestamp="'. $cached_at. '"'
                             . ' id="select_leadpages" '
                             . 'class="leadpage_select_dropdown" name="leadpages_my_selected_page">';
 
         foreach ($items['_items'] as $page) {
-            if (isset($page['splitTestId'])) {
-                continue;
-            }
-
             $pageId = $page['id'];
-            $is_split = 'false';
-            $variations = 1;
-            if ($this->isSplit($page)) {
-                $is_split = 'true';
-                $last_published_at = $page['_meta']['updated'];
-                $last_published = date('Y-m-d', strtotime($last_published_at));
-                $url_parts = parse_url($page['_meta']['controlUrl']);
-                $slug = str_replace('/', '', $url_parts['path']);
-                $variations = $page['_meta']['variationsCount'];
-                $page['xor_hex_id'] = $page['_meta']['id'];
-            } else {
-                $last_published = date('Y-m-d', $page['updated']);
-                $slug = $page['slug'];
-            }
+            $is_split = $page['isSplit'];
+            $last_published = date('Y-m-d', $page['updated']);
+            $slug = $page['slug'];
 
             $composite_id = $this->makeCompositeId($page);
 
@@ -288,7 +269,6 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
             $optionString .= "
                 <option data-slug='{$slug}'
                         data-issplit='{$is_split}'
-                        data-variations='{$variations}'
                         data-published='{$last_published}'
                         data-optins='{$optins}'
                         data-views='{$views}'
@@ -296,13 +276,30 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
                         data-publish-url='{$publish_url}'
                         data-edit-url='{$edit_url}'
                         value='{$composite_id}'"
-                . ($currentPage == $pageId ? ' selected="selected"' : '')
+                        . ($this->isCurrentPage($page, $currentPage) ? ' selected="selected"' : '')
                 .">{$page['name']}</option>";
         }
 
         $optionString .= '</select>';
         echo $optionString;
         die();
+    }
+
+    /**
+     * Helper to compare selected page id variations with current
+     *
+     * @param mixed  $page          page api row
+     * @param string $currentPageId active edit page's id
+     *
+     * @return bool
+     */
+    private function isCurrentPage($page, $currentPageId)
+    {
+        return $page['id'] == $currentPageId
+            || $page['xor_hex_id'] == $currentPageId
+            || $page['publicMetaId'] == $currentPageId
+            || $page['contentUuid'] == $currentPageId
+            || $this->makeCompositeId($page) == $currentPageId;
     }
 
     /**
@@ -314,7 +311,7 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
      */
     private function isSplit($page)
     {
-        return isset($page['kind']) && $page['kind'] == 'split';
+        return isset($page['isSplit']) && (bool)$page['isSplit'];
     }
 
     /**
@@ -369,7 +366,7 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
             global $leadpagesApp;
             $pages = $leadpagesApp['pagesApi']->getAllUserPages();
             $pages['timestamp'] = Carbon::now();
-            set_transient('user_leadpages', $pages, 900);
+            set_transient('user_leadpages', $pages, 120);
         }
 
         $pages['time_since'] = 'just now';
