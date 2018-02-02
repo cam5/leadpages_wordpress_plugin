@@ -5,7 +5,6 @@ namespace LeadpagesWP\Admin\MetaBoxes;
 use LeadpagesWP\Admin\CustomPostTypes\LeadpagesPostType;
 use LeadpagesWP\models\LeadPagesPostTypeModel;
 use TheLoop\Contracts\MetaBox;
-use Carbon\Carbon;
 
 class LeadpagesCreate extends LeadpagesPostType implements MetaBox
 {
@@ -243,13 +242,9 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
         }
 
         $pages = $this->fetchPages($refresh_cache);
-        $cached_at = $pages['timestamp'];
-        $human_diff = $pages['time_since'];
         $items['_items'] = $pages['_items'];
         $items = $leadpagesApp['pagesApi']->sortPages($items);
-        $optionString = '<select data-human-diff="' . $human_diff . '"'
-                            . ' data-timestamp="'. $cached_at. '"'
-                            . ' id="select_leadpages" '
+        $optionString = '<select id="select_leadpages" '
                             . 'class="leadpage_select_dropdown" name="leadpages_my_selected_page">';
 
         foreach ($items['_items'] as $page) {
@@ -365,14 +360,9 @@ class LeadpagesCreate extends LeadpagesPostType implements MetaBox
         if (false === ($pages = get_transient('user_leadpages'))) {
             global $leadpagesApp;
             $pages = $leadpagesApp['pagesApi']->getAllUserPages();
-            $pages['timestamp'] = Carbon::now();
             set_transient('user_leadpages', $pages, 120);
         }
 
-        $pages['time_since'] = 'just now';
-        if (isset($pages['timestamp'])) {
-            $pages['time_since'] = Carbon::parse($pages['timestamp'])->diffForHumans();
-        }
 
         return $pages;
     }
