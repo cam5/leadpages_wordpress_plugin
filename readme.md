@@ -4,6 +4,10 @@
 A WordPress plugin to easily use your Leadpages pages and Leadboxes inside your WordPress site.
 
 ***Change Log***
+* 2.1.6.21
+    * Removes Carbon library
+    * Removes listing cache due to sped up backend
+
 * 2.1.6.20
     * Fixes for duplicate split test options in drop down
 
