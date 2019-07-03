@@ -1,0 +1,22 @@
+#!/usr/bin/php
+<?php
+
+$files = [
+  'guzzle/src/Message/MessageFactory.php:197',
+  'guzzle/src/Message/MessageFactory.php:216',
+  'guzzle/src/Message/MessageFactory.php:254',
+  'guzzle/src/Message/MessageFactory.php:357',
+  'ringphp/src/Client/CurlFactory.php:363',
+  'ringphp/src/Client/CurlFactory.php:382',
+];
+
+foreach ($files as $file) {
+  list($file, $ln) = explode(':', $file);
+  exec(
+    sprintf(
+      'sed -i \'\' \'%ss/continue/continue 2/\' vendor/guzzlehttp/%s',
+      $ln,
+      $file
+    )
+  );
+}
